@@ -9,12 +9,13 @@
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" href="css/style-header.css">
+    <link rel="stylesheet" href="css/style-footer.css">
     <link rel="stylesheet" href="css/style.css">
     <title>Josue Muñoz</title>
 </head>
 <body>
     <!--- HEADER -->
-    <nav class="bg-dark">
+    <nav class="bg-dark mb-3">
         <div class="navbar navbar-inverse justify-content-around">
             <div class="navbar-header d-flex">
                 <img src="img/yo.png" class="myPhoto" alt="mi foto">
@@ -23,21 +24,27 @@
             <div class="navigation">
                 <ul class=" ps-0 justify-content-center">
                     <li class="list active">
-                        <a href="#">
+                        <a href="index.html">
                             <span class="icon"><i class="fa fa-home"></i></span>
                             <span class="text">Inicio</span>
                         </a>
                     </li>
                     <li class="list">
                         <a href="#">
-                            <span class="icon"><i class="fa fa-comments"></i></span>
-                            <span class="text">Contacto</span>
+                            <span class="icon"><i class="fa fa-user"></i></span>
+                            <span class="text">Acerca de</span>
                         </a>
                     </li>
                     <li class="list">
                         <a href="#">
-                            <span class="icon"><i class="fa fa-user"></i></span>
-                            <span class="text">Acerca de</span>
+                            <span class="icon"><i class="fa fa-briefcase"></i></span>
+                            <span class="text">Proyectos</span>
+                        </a>
+                    </li>
+                    <li class="list">
+                        <a href="#">
+                            <span class="icon"><i class="fa fa-comments"></i></span>
+                            <span class="text">Contacto</span>
                         </a>
                     </li>
                     <div class="indicator"></div>
@@ -48,8 +55,26 @@
     
     <!--- CONTENT -->
     <div class="container text-light"> 
-        
     </div>
+
+    <!--- FOOTER -->
+    <footer>
+        <div class="waves">
+            <div class="wave" id="wave1"></div>
+            <div class="wave" id="wave2"></div>
+            <div class="wave" id="wave3"></div>
+            <div class="wave" id="wave4"></div>
+        </div>
+        <ul class="social_icon">
+            <li><a href="#"><i class="fa fa-envelope"></i></a></li>
+            <li><a href="#"><i class="fa fa-whatsapp"></i></a></li>
+            <li><a href="#"><i class="fa fa-github"></i></a></li>
+        </ul>
+        <!--<ul class="menu">
+            <li><a href="#"></a></li>
+        </ul>-->
+        <p>Todos los derechos reservados</p>
+    </footer>
 
     <script src="js/bootstrap.min.js"></script>
     <script src="js/header.js"></script>
