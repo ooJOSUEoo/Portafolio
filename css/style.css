@@ -74,11 +74,12 @@ body {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    width: 100%;
+    width: 80%;
+    margin: 0 auto;
 }
 
 .habilidades__items{
-    margin: 0 10px;
+    margin: 0 15px;
     border: red 2px solid;
     border-radius: 20px;
     overflow: hidden;
@@ -93,8 +94,11 @@ body {
     transform: translateY(10px);
 }
 
-.habilidades_icon{
+.habilidades_icon,
+.habilidades_icon img{
     font-size: 35px;
+    width: 35px;
+    height: 35px;
 }
 
 .habilidades_button.habilidades__active-progress{
@@ -114,6 +118,12 @@ body {
 }
 .text-green {
     color: #00ee00;
+}
+.text-orange {
+    color: #ffa500;
+}
+.text-purple {
+    color: #800080;
 }
 
 @media screen and (max-width: 550px) {
