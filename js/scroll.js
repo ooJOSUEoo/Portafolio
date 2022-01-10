@@ -7,7 +7,7 @@ const btn_contacto = document.getElementById('btn_contacto');
 const btn_proyectos = document.getElementById('btn_proyectos');
 
 acerca_de_Y = acerca_de.offsetTop;
-contacto_Y = contacto.offsetTop;
+contacto_Y = 999999;
 proyectos_Y = proyectos.offsetTop;
 
 btn_acerca_de.addEventListener('click', (e) => {
