@@ -70,6 +70,48 @@ body {
     margin: 0 10px;
 }
 
+.habilidades{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.habilidades__items{
+    margin: 0 10px;
+    border: red 2px solid;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.5s;
+    margin-bottom: 10px;
+}
+
+.habilidades_button{
+    border: 0;
+    cursor: pointer;
+    background: transparent;
+    transform: translateY(10px);
+}
+
+.habilidades_icon{
+    font-size: 35px;
+}
+
+.habilidades_button.habilidades__active-progress{
+    font-size: 25px;
+    transform: translateY(-5px);
+    transition: all 0.5s;
+}
+
+.habilidades_progress{
+    color: rgba(255, 255, 255, 0.7);
+    transform: scale(0);
+}
+
+.habilidades_button.habilidades__active-progress p.habilidades_progress{
+    transform: scale(1);
+    font-size: 15px;
+}
 .text-green {
     color: #00ee00;
 }
