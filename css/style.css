@@ -79,6 +79,7 @@ body {
 .proyect__text{
     text-align: justify;
     padding: 5px;
+    line-height: 20px;
 }
 
 .proyect__view {
@@ -149,6 +150,38 @@ body {
     color: #800080;
 }
 
+/*media queries*/
+
+@media screen and (max-width: 850px) {
+    .proyect__container-img {
+        height: 200px;
+    }    
+}
+
+@media screen and (max-width: 730px) {
+    .proyect__container {
+        width: 35%;
+    }
+}
+    
+@media screen and (max-width: 600px) {
+    .proyect__container {
+        width: 45%;
+    }
+}
+
+@media screen and (max-width: 444px) {
+    .proyect__container {
+        width: 60%;
+    }
+}
+
+@media screen and (max-width: 350px) {
+    .proyect__container {
+        width: 70%;
+    }
+}
+
 @media screen and (max-width: 550px) {
     .myInfo {
         display: block;
@@ -164,4 +197,9 @@ body {
         height: 150px;
     }
 
+}
+
+@media screen and (max-width: 400px) {
+    
+    
 }
