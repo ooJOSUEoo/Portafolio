@@ -9,6 +9,17 @@ const color = {
     color_footer: '#888889'
 }
 
+const boxShadow = {
+    dark: '0px 0px 10px rgb(148, 148, 148)',
+    light: '0px 0px 10px rgb(57, 56, 56)',
+    transparent: '0px 0px 10px transparent',
+}
+
+const urlWaves = {
+    waveDark: 'url(./img/wave.png)',
+    waveLight: 'url(./img/wave-azul.png)'
+}
+
 const theme_btn = document.getElementById('theme-btn');
 const theme_check = document.getElementById('theme-check');
 const icon_theme = document.getElementById('icon-theme');
@@ -30,6 +41,9 @@ const wave = document.querySelectorAll('.wave');
 
 isThemeDark();
 
+setInterval(hover_cv, 500);
+setInterval(hover_proyect__container, 500);
+
 function isThemeDark() {
     if (!localStorage.getItem('ThemeDark')) {
         localStorage.setItem('ThemeDark', 'true');
@@ -43,7 +57,6 @@ function isThemeDark() {
             theme_check.checked = true;
             localStorage.setItem('ThemeDark', 'true');
         }
-
         changeStyle();
     });
     changeStyle();
@@ -60,6 +73,50 @@ function isChecked() {
     return theme_check.checked;
 }
 
+function hover_cv() { //funcion para cambiar el color del cv al pasar el mouse
+    if (!isChecked()) {
+        btn_cvs.addEventListener('mouseover', () => {
+            btn_cvs.style.backgroundColor = color.tertiary_color;
+            btn_cvs.style.color = color.sky_blue;
+        });
+    
+        btn_cvs.addEventListener('mouseout', () => {
+            changeStyle();
+        });
+    }else{
+        btn_cvs.addEventListener('mouseover', () => {
+            btn_cvs.style.backgroundColor = color.tertiary_color;
+            btn_cvs.style.color = color.secondary_color;
+        });
+    
+        btn_cvs.addEventListener('mouseout', () => {
+            changeStyle();
+        });
+    }
+}
+
+function hover_proyect__container(){ //funcion para cambiar el color del proyecto al pasar el mouse
+    if(!isChecked()){
+        proyect__container.forEach(proyect => {
+            proyect.addEventListener('mouseover', () => {
+                proyect.style.boxShadow = boxShadow.light;
+            });
+            proyect.addEventListener('mouseout', () => {
+                proyect.style.boxShadow = boxShadow.transparent;
+
+            });
+        });
+    }else{
+        proyect__container.forEach(proyect => {
+            proyect.addEventListener('mouseover', () => {
+                proyect.style.boxShadow = boxShadow.dark;
+            });
+            proyect.addEventListener('mouseout', () => {
+                proyect.style.boxShadow = boxShadow.transparent;
+            });
+        });
+    }
+}
 
 function changeStyle() {
     if (localStorage.getItem('ThemeDark') == 'true') { //si el tema es oscuro
@@ -87,11 +144,11 @@ function changeStyle() {
             text.classList.remove('text-dark');
         });
 
+        btn_cvs.style.backgroundColor = color.secondary_color;
+        btn_cvs.style.color = color.tertiary_color;
+
         main.classList.add('text-light');
         main.classList.remove('text-dark');
-
-        btn_cvs.style.background = color.secondary_color;
-        btn_cvs.style.color = color.tertiary_color;
 
         proyect__container.forEach(proyect => {
             proyect.style.borderColor = color.quinary_color;
@@ -123,8 +180,9 @@ function changeStyle() {
         footer.style.background = color.color_footer
 
         wave.forEach(wave => {
-            wave.style.backgroundImage = 'url(./img/wave.png)';
+            wave.style.backgroundImage = urlWaves.waveDark;
         });
+
     } else {
         theme_btn.style.backgroundColor = color.quaternary_color;
         theme_btn.style.borderColor = color.tertiary_color;
@@ -150,11 +208,11 @@ function changeStyle() {
             text.classList.remove('text-light');
         });
 
+        btn_cvs.style.backgroundColor = color.sky_blue;
+        btn_cvs.style.color = color.tertiary_color;
+
         main.classList.add('text-dark');
         main.classList.remove('text-light');
-
-        btn_cvs.style.background = color.sky_blue;
-        btn_cvs.style.color = color.tertiary_color;
 
         proyect__container.forEach(proyect => {
             proyect.style.borderColor = color.sky_blue;
@@ -186,7 +244,7 @@ function changeStyle() {
         footer.style.background = color.sky_blue
 
         wave.forEach(wave => {
-            wave.style.backgroundImage = 'url(./img/wave-azul.png)';
+            wave.style.backgroundImage = urlWaves.waveLight;
         });
     }
 }
