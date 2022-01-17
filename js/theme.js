@@ -120,7 +120,7 @@ function changeStyle() {
         footer.style.background = color.color_footer
 
         wave.forEach(wave => {
-            wave.style.backgroundImage = 'url(../img/wave.png)';
+            wave.style.backgroundImage = 'url(./img/wave.png)';
         });
     } else {
         theme_btn.style.backgroundColor = color.quaternary_color;
@@ -182,7 +182,7 @@ function changeStyle() {
         footer.style.background = color.sky_blue
 
         wave.forEach(wave => {
-            wave.style.backgroundImage = 'url(../img/wave-azul.png)';
+            wave.style.backgroundImage = 'url(./img/wave-azul.png)';
         });
     }
 }
