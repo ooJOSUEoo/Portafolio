@@ -56,6 +56,8 @@ function isChecked() {
     } else {
         theme_check.checked = false; 
     }
+
+    return theme_check.checked;
 }
 
 
@@ -89,6 +91,7 @@ function changeStyle() {
         main.classList.remove('text-dark');
 
         btn_cvs.style.background = color.secondary_color;
+        btn_cvs.style.color = color.tertiary_color;
 
         proyect__container.forEach(proyect => {
             proyect.style.borderColor = color.quinary_color;
@@ -151,6 +154,7 @@ function changeStyle() {
         main.classList.remove('text-light');
 
         btn_cvs.style.background = color.sky_blue;
+        btn_cvs.style.color = color.tertiary_color;
 
         proyect__container.forEach(proyect => {
             proyect.style.borderColor = color.sky_blue;
