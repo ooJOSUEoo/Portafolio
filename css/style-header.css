@@ -68,39 +68,29 @@
     transform: translateX(calc(70px * 2.5));
 }
 .navigation ul li:nth-child(4).active ~ .indicator{
-    background: #13c0f5;
-    box-shadow: 0 15px 25px #13c0f599;
+    background: #c4f513;
+    box-shadow: 0 15px 25px #d3f51399;
     transform: translateX(calc(70px * 3.5));
 }
 .navigation ul li:nth-child(5).active ~ .indicator{
-    background: #db8a2d;
-    box-shadow: 0 15px 25px #db8a2d99;
+    background: #2dc1db;
+    box-shadow: 0 15px 25px #2db8db99;
     transform: translateX(calc(70px * 4.5));
 }
 @media screen and (max-width: 350px) {
     .navigation ul li:nth-child(1).active ~ .indicator{
-        background: #f53b57;
-        box-shadow: 0 15px 25px #f53b5799;
         transform: translateX(calc(70px * .25));
     }
     .navigation ul li:nth-child(2).active ~ .indicator{
-        background: #5d62fb;
-        box-shadow: 0 15px 25px #5d62fb99;
         transform: translateX(calc(70px * 1.25));
     }
     .navigation ul li:nth-child(3).active ~ .indicator{
-        background: #00ee00;
-        box-shadow: 0 15px 25px #00ee0099;
         transform: translateX(calc(70px * 2.25));
     }
     .navigation ul li:nth-child(4).active ~ .indicator{
-        background: #13c0f5;
-        box-shadow: 0 15px 25px #13c0f599;
         transform: translateX(calc(70px * 3.25));
     }
     .navigation ul li:nth-child(5).active ~ .indicator{
-        background: #db8a2d;
-        box-shadow: 0 15px 25px #db8a2d99;
         transform: translateX(calc(70px * 4.25));
     }
 }

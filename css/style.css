@@ -1,10 +1,54 @@
+*{
+    --primary-color: #333;
+    --secondary-color: rgb(221, 63, 63);
+    --tertiary-color: #fff;
+    --quaternary-color: #000;
+    --quinary-color: #ff0000;
+    --green: #00ee00;
+    --orange: #ffa500;
+    --purple: #800080;
+    --yellow: #ffff00;
+}
+
 body {
     min-height: 100vh;
-    background: #333;
+    background: var(--primary-color);
+    transition: all 0.5s;
 }
 
 .espacio{
     height: 115px;
+}
+
+#header{
+    transition: all 0.5s;
+}
+
+.btn-theme{
+    position: absolute;
+    top: -10px;
+    right: 0;
+    margin-right: 15px;
+    border-radius: 50px;
+    background: var(--quaternary-color);
+    color: var(--tertiary-color);
+    padding: 5px 10px;
+}
+
+.fa-sun{
+    color: var(--yellow);
+    margin: 0 10px;
+    font-size: 20px;
+}
+
+.fa-moon{
+    color: var(--quaternary-color);
+    margin: 0 10px;
+    font-size: 20px;
+}
+
+.fa{
+    -webkit-text-stroke: .5px black;
 }
 
 .myPhoto {
@@ -21,9 +65,9 @@ body {
 }
 
 .btn-cvs{
-    background: rgb(221, 63, 63);
-    color: rgb(255, 255, 255);
-    border: 1px solid #333;
+    background: var(--secondary-color);
+    color: var(--tertiary-color);
+    border: 1px solid var(--primary-color);
     border-radius: 20px;
     padding: 15px 25px;
     margin-top: 20px;
@@ -34,8 +78,8 @@ body {
 }
 
 .btn-cvs:hover{
-    background: rgb(255, 255, 255);
-    color: rgb(221, 63, 63);
+    background: var(--tertiary-color) !important;
+    color: var(--secondary-color) !important;
     text-decoration: none;
 }
 
@@ -48,7 +92,7 @@ body {
 .proyect__container {
     width: 25%;
     margin-left: 20px;
-    border: red 2px solid;
+    border: var(--quinary-color) 2px solid;
     border-radius: 20px;
     padding: 10px 0;
     overflow: hidden;
@@ -86,7 +130,7 @@ body {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    background-color: #ff0000;
+    background-color: var(--quinary-color);
 }
 
 .proyect__enlace{
@@ -104,11 +148,12 @@ body {
 
 .habilidades__items{
     margin: 0 15px;
-    border: red 2px solid;
+    border: var(--quinary-color) 2px solid;
     border-radius: 20px;
     overflow: hidden;
     transition: all 0.5s;
     margin-bottom: 10px;
+    padding: 0 5px;
 }
 
 .habilidades_button{
@@ -132,7 +177,6 @@ body {
 }
 
 .habilidades_progress{
-    color: rgba(255, 255, 255, 0.7);
     transform: scale(0);
 }
 
@@ -141,13 +185,13 @@ body {
     font-size: 15px;
 }
 .text-green {
-    color: #00ee00;
+    color: var(--green);
 }
 .text-orange {
-    color: #ffa500;
+    color: var(--orange);
 }
 .text-purple {
-    color: #800080;
+    color: var(--purple);
 }
 
 /*media queries*/

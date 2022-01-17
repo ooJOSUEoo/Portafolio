@@ -6,7 +6,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+        integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" href="css/style-header.css">
@@ -17,35 +20,35 @@
 
 <body>
     <!--- HEADER -->
-    <nav class="bg-dark mb-3" style="z-index: 1;">
+    <nav class="mb-3" id="header" style="z-index: 1;">
         <div class="navbar navbar-inverse justify-content-around">
             <div class="navbar-header d-flex">
                 <img src="img/yo.png" class="myPhoto" alt="mi foto">
-                <p class="navbar-brand text-light fw-bold">Josue Muñoz Avila</p>
+                <p class="navbar-brand fw-bold">Josue Muñoz Avila</p>
             </div>
             <div class="navigation">
                 <ul class=" ps-0 justify-content-center">
                     <li class="list active">
                         <a href="index.html">
-                            <span class="icon"><i class="fa fa-home"></i></span>
+                            <span class="icon"><i class="fa fa-home icons_header"></i></span>
                             <span class="text">Inicio</span>
                         </a>
                     </li>
                     <li class="list">
                         <a href="#" id="btn_acerca_de">
-                            <span class="icon"><i class="fa fa-user"></i></span>
+                            <span class="icon"><i class="fa fa-user icons_header"></i></span>
                             <span class="text">Acerca de</span>
                         </a>
                     </li>
                     <li class="list">
                         <a href="#" id="btn_proyectos">
-                            <span class="icon"><i class="fa fa-briefcase"></i></span>
+                            <span class="icon"><i class="fa fa-briefcase icons_header"></i></span>
                             <span class="text">Proyectos</span>
                         </a>
                     </li>
                     <li class="list">
                         <a href="#" id="btn_contacto">
-                            <span class="icon"><i class="fa fa-comments"></i></span>
+                            <span class="icon"><i class="fa fa-comments icons_header"></i></span>
                             <span class="text">Contacto</span>
                         </a>
                     </li>
@@ -57,15 +60,17 @@
     <!--<div class="espacio"></div>-->
 
     <!--- CONTENT -->
-    <div class="container-xl text-light mb-3">
+    <div class="container-xl mb-3 position-relative" id="main">
+        <input type="checkbox" class="d-none" id="theme-check">
+        <button class="btn btn-theme" id="theme-btn"><i class="fa fa-moon" id="icon-theme"></i></button>
         <div class="row align-items-center myInfo mb-3">
             <div class="col d-flex justify-content-center">
                 <img src="img/yo.png" class="myPhoto-lg" alt="mi foto">
             </div>
-            <div class="col d-flex justify-content-center flex-column" id="acerca_de">
-                <h1 class="text-center">Acerca de mi</h1>
-                <p class="text-center">
-                    Soy un desarrollador web y móvil (principalmente web), 
+            <div class="col d-flex justify-content-center flex-column">
+                <h1 class="text-center" >Acerca de mi</h1>
+                <p class="text-center" id="acerca_de">
+                    Soy un desarrollador web y móvil (principalmente web),
                     apasionado por la tecnología y la programación.
                     <br>
                     Me considero una persona responsable, con una gran capacidad de trabajo y
@@ -90,7 +95,8 @@
                 </div>
                 <p class="proyect__text">Sitio web de un e-commerce para venta de productos para el hogar</p>
                 <div class="proyect__view">
-                    <a href="https://elenas--shop.000webhostapp.com/"><i class="fa fa-eye text-primary proyect__enlace"></i></a>
+                    <a href="https://elenas--shop.000webhostapp.com/"><i
+                            class="fa fa-eye proyect__enlace"></i></a>
                 </div>
             </div>
             <div class="proyect__container">
@@ -99,8 +105,10 @@
                 </div>
                 <p class="proyect__text">Es un juego de la serpiente hecho con JS y canvas</p>
                 <div class="proyect__view">
-                    <a href="https://github.com/josuema2002/juego_serpiente.git"><i class="fa fa-github text-dark proyect__enlace"></i></a>
-                    <a href="https://josuema2002.github.io/juego_serpiente/index.html"><i class="fa fa-eye text-primary proyect__enlace"></i></a>
+                    <a href="https://github.com/josuema2002/juego_serpiente.git"><i
+                            class="fa fa-github proyect__enlace"></i></a>
+                    <a href="https://josuema2002.github.io/juego_serpiente/index.html"><i
+                            class="fa fa-eye proyect__enlace"></i></a>
                 </div>
             </div>
             <div class="proyect__container">
@@ -109,7 +117,8 @@
                 </div>
                 <p class="proyect__text">Sitio web de servicios de cómputo elaborado con Laravel</p>
                 <div class="proyect__view">
-                    <a href="https://github.com/josuema2002/ServiciosComputo_SOA.git"><i class="fa fa-github text-dark proyect__enlace"></i></a>
+                    <a href="https://github.com/josuema2002/ServiciosComputo_SOA.git"><i
+                            class="fa fa-github proyect__enlace"></i></a>
                 </div>
             </div>
 
@@ -119,7 +128,8 @@
                 </div>
                 <p class="proyect__text">Sitio web de un blog personal con PHP y MySQL</p>
                 <div class="proyect__view">
-                    <a href="https://github.com/josuema2002/blog_practica.git"><i class="fa fa-github text-dark proyect__enlace"></i></a>
+                    <a href="https://github.com/josuema2002/blog_practica.git"><i
+                            class="fa fa-github proyect__enlace"></i></a>
                 </div>
             </div>
             <div class="proyect__container">
@@ -128,8 +138,10 @@
                 </div>
                 <p class="proyect__text">Juego de laberinto elaborado con canvas y JS</p>
                 <div class="proyect__view">
-                    <a href="https://github.com/josuema2002/juego_laberinto.git"><i class="fa fa-github text-dark proyect__enlace"></i></a>
-                    <a href="https://josuema2002.github.io/juego_laberinto/index.html"><i class="fa fa-eye text-primary proyect__enlace"></i></a>
+                    <a href="https://github.com/josuema2002/juego_laberinto.git"><i
+                            class="fa fa-github proyect__enlace"></i></a>
+                    <a href="https://josuema2002.github.io/juego_laberinto/index.html"><i
+                            class="fa fa-eye proyect__enlace"></i></a>
                 </div>
             </div>
             <div class="proyect__container">
@@ -138,7 +150,8 @@
                 </div>
                 <p class="proyect__text">App móvil en Android para guardar tiendas favoritas usando SQLite</p>
                 <div class="proyect__view">
-                    <a href="https://github.com/josuema2002/Stores_DA.git"><i class="fa fa-github text-dark proyect__enlace"></i></a>
+                    <a href="https://github.com/josuema2002/Stores_DA.git"><i
+                            class="fa fa-github proyect__enlace"></i></a>
                 </div>
             </div>
         </div>
@@ -146,105 +159,105 @@
         <div class="row">
             <div class="col-12">
                 <h1 class="text-center">Lenguajes y tecnologías</h1>
-        </div>
+            </div>
 
-        <div class="habilidades">
-            <div class="habilidades__items">
-                <button class="habilidades_button">
-                    <span class="habilidades_icon"><i class="fa fa-html5 text-orange"></i></span>
-                    <p class="habilidades_progress"> 90%</p>
-                </button>
-            </div>
-            <div class="habilidades__items">
-                <button class="habilidades_button">
-                    <span class="habilidades_icon"><i class="fa fa-css3 text-primary"></i></span>
-                    <p class="habilidades_progress">75%</p>
-                </button>
-            </div>
-            <div class="habilidades__items">
-                <button class="habilidades_button">
-                    <span class="habilidades_icon"><i class="fa fa-js text-warning"></i></span>
-                    <p class="habilidades_progress">60%</p>
-                </button>
-            </div>
-            <div class="habilidades__items">
-                <button class="habilidades_button">
-                    <span class="habilidades_icon"><i class="fa fa-php text-purple"></i></span>
-                    <p class="habilidades_progress">75%</p>
-                </button>
-            </div>
-            <div class="habilidades__items">
-                <button class="habilidades_button">
-                    <span class="habilidades_icon"><img src="img/servidor-sql.png" alt=""></span>
-                    <p class="habilidades_progress">80%</p>
-                </button>
-            </div>
-            <div class="habilidades__items">
-                <button class="habilidades_button">
-                    <span class="habilidades_icon"><img src="img/mysql.png" alt=""></span>
-                    <p class="habilidades_progress">75%</p>
-                </button>
-            </div>
-            <div class="habilidades__items">
-                <button class="habilidades_button">
-                    <span class="habilidades_icon"><i class="fa fa-git text-danger"></i></span>
-                    <p class="habilidades_progress">60%</p>
-                </button>
-            </div>
-            <!-- <div class="habilidades__items">
+            <div class="habilidades">
+                <div class="habilidades__items">
+                    <button class="habilidades_button">
+                        <span class="habilidades_icon"><i class="fa fa-html5 text-orange"></i></span>
+                        <p class="habilidades_progress"> 90%</p>
+                    </button>
+                </div>
+                <div class="habilidades__items">
+                    <button class="habilidades_button">
+                        <span class="habilidades_icon"><i class="fa fa-css3 text-primary"></i></span>
+                        <p class="habilidades_progress">75%</p>
+                    </button>
+                </div>
+                <div class="habilidades__items">
+                    <button class="habilidades_button">
+                        <span class="habilidades_icon"><i class="fa fa-js text-warning"></i></span>
+                        <p class="habilidades_progress">60%</p>
+                    </button>
+                </div>
+                <div class="habilidades__items">
+                    <button class="habilidades_button">
+                        <span class="habilidades_icon"><i class="fa fa-php text-purple"></i></span>
+                        <p class="habilidades_progress">75%</p>
+                    </button>
+                </div>
+                <div class="habilidades__items">
+                    <button class="habilidades_button">
+                        <span class="habilidades_icon"><img src="img/servidor-sql.png" alt=""></span>
+                        <p class="habilidades_progress">80%</p>
+                    </button>
+                </div>
+                <div class="habilidades__items">
+                    <button class="habilidades_button">
+                        <span class="habilidades_icon"><img src="img/mysql.png" alt=""></span>
+                        <p class="habilidades_progress">75%</p>
+                    </button>
+                </div>
+                <div class="habilidades__items">
+                    <button class="habilidades_button">
+                        <span class="habilidades_icon"><i class="fa fa-git text-danger"></i></span>
+                        <p class="habilidades_progress">60%</p>
+                    </button>
+                </div>
+                <!-- <div class="habilidades__items">
                 <button class="habilidades_button">
                     <span class="habilidades_icon"><img src="img/xml.png" alt=""></span>
                     <p class="habilidades_progress">55%</p>
                 </button>
             </div> -->
-            <div class="habilidades__items">
-                <button class="habilidades_button">
-                    <span class="habilidades_icon"><i class="fa fa-java text-primary"></i></span>
-                    <p class="habilidades_progress">75%</p>
-                </button>
+                <div class="habilidades__items">
+                    <button class="habilidades_button">
+                        <span class="habilidades_icon"><i class="fa fa-java text-primary"></i></span>
+                        <p class="habilidades_progress">75%</p>
+                    </button>
+                </div>
+                <div class="habilidades__items">
+                    <button class="habilidades_button">
+                        <span class="habilidades_icon"><img src="img/jquery.png" alt=""></span>
+                        <p class="habilidades_progress">75%</p>
+                    </button>
+                </div>
+                <div class="habilidades__items">
+                    <button class="habilidades_button">
+                        <span class="habilidades_icon"><img src="img/laravel.png" alt=""></span>
+                        <p class="habilidades_progress">65%</p>
+                    </button>
+                </div>
+                <div class="habilidades__items">
+                    <button class="habilidades_button">
+                        <span class="habilidades_icon"><img src="img/ajax.png" alt=""></span>
+                        <p class="habilidades_progress">65%</p>
+                    </button>
+                </div>
+                <div class="habilidades__items">
+                    <button class="habilidades_button">
+                        <span class="habilidades_icon"><img src="img/poo.png" alt=""></span>
+                        <p class="habilidades_progress">70%</p>
+                    </button>
+                </div>
+                <div class="habilidades__items">
+                    <button class="habilidades_button">
+                        <span class="habilidades_icon"><img src="img/kotlin.png" alt=""></span>
+                        <p class="habilidades_progress">65%</p>
+                    </button>
+                </div>
+                <div class="habilidades__items">
+                    <button class="habilidades_button">
+                        <span class="habilidades_icon"><img src="img/firebase.png" alt=""></span>
+                        <p class="habilidades_progress">65%</p>
+                    </button>
+                </div>
             </div>
-            <div class="habilidades__items">
-                <button class="habilidades_button">
-                    <span class="habilidades_icon"><img src="img/jquery.png" alt=""></span>
-                    <p class="habilidades_progress">75%</p>
-                </button>
-            </div>
-            <div class="habilidades__items">
-                <button class="habilidades_button">
-                    <span class="habilidades_icon"><img src="img/laravel.png" alt=""></span>
-                    <p class="habilidades_progress">65%</p>
-                </button>
-            </div>
-            <div class="habilidades__items">
-                <button class="habilidades_button">
-                    <span class="habilidades_icon"><img src="img/ajax.png" alt=""></span>
-                    <p class="habilidades_progress">65%</p>
-                </button>
-            </div>
-            <div class="habilidades__items">
-                <button class="habilidades_button">
-                    <span class="habilidades_icon"><img src="img/poo.png" alt=""></span>
-                    <p class="habilidades_progress">70%</p>
-                </button>
-            </div>
-            <div class="habilidades__items">
-                <button class="habilidades_button">
-                    <span class="habilidades_icon"><img src="img/kotlin.png" alt=""></span>
-                    <p class="habilidades_progress">65%</p>
-                </button>
-            </div>
-            <div class="habilidades__items">
-                <button class="habilidades_button">
-                    <span class="habilidades_icon"><img src="img/firebase.png" alt=""></span>
-                    <p class="habilidades_progress">65%</p>
-                </button>
-            </div>
-        </div>
         </div>
     </div>
 
     <!--- FOOTER -->
-    <footer>
+    <footer id="footer">
         <div class="waves">
             <div class="wave" id="wave1"></div>
             <div class="wave" id="wave2"></div>
@@ -259,7 +272,8 @@
             </div>
             <div class="row">
                 <div class="col-12">
-                    <p class="text-center">Si quieres contactar conmigo, puedes hacerlo a través de los siguientes medios:</p>
+                    <p class="text-center">Si quieres contactar conmigo, puedes hacerlo a través de los siguientes
+                        medios:</p>
                 </div>
             </div>
         </div>
@@ -278,6 +292,7 @@
     <script src="js/header.js"></script>
     <script src="js/habilidades.js"></script>
     <script src="js/scroll.js"></script>
+    <script src="js/theme.js"></script>
 </body>
 
 </html>

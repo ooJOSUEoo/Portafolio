@@ -3,7 +3,6 @@ footer{
     margin-top: 90px;
     position: relative;
     width: 100%;
-    background: #888889;
     min-height: 100px;
     padding: 20px 50px;
     display: flex;
@@ -44,7 +43,6 @@ footer .menu li a:hover{
     opacity: 1;
 }
 footer p{
-    color: #fff;
     text-align: center;
     margin-top: 15px;
     margin-bottom: 10px;
@@ -57,7 +55,6 @@ footer .wave{
     left: 0;
     width: 100%;
     height: 70px; 
-    background: url('../img/wave.png');
     background-size: 1000px 100px;
 }
 
