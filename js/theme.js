@@ -6,7 +6,7 @@ const color = {
     quinary_color: '#ff0000',
     primary_color_light: '#d8e0e3',
     sky_blue: '#00bfff',
-    color_footer: '#888889'
+    color_footer: '#808080'
 }
 
 const boxShadow = {
