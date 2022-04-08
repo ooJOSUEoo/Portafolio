@@ -71,7 +71,6 @@
                 <h1 class="text-center">Acerca de mi</h1>
                 <p class="text-center" id="acerca_de">
                     Soy un desarrollador web y móvil (principalmente web),
-                    esperimentado en las metodologias ágiles y tradicionales.
                     apasionado por la tecnología y la programación.
                     <br><br>
                     Me considero una persona responsable, honestas, respetuosa, flexible, creativa, autonoma,
@@ -163,7 +162,8 @@
                 <div class="proyect__container-img">
                     <img src="img/nilo-partner.png" class="proyect__img" alt="Proyecto 7">
                 </div>
-                <p class="proyect__text">App movil para Android hecha con Kotlin que utiliza Firebase (Auth y Firestore) la cual funciona como parte de
+                <p class="proyect__text">App movil para Android hecha con Kotlin que utiliza Firebase (Auth y Firestore)
+                    la cual funciona como parte de
                     administración de una tienda online.</p>
                 <div class="proyect__view">
                     <a href="https://github.com/josuema2002/Nilo_Parther_App.git"><i
@@ -176,7 +176,8 @@
                 <div class="proyect__container-img">
                     <img src="img/StoresApp.png" class="proyect__img" alt="Proyecto 7">
                 </div>
-                <p class="proyect__text">App movil para Android hecha con Kotlin que utiliza ROOM, la cual administra tiendas.</p>
+                <p class="proyect__text">App movil para Android hecha con Kotlin que utiliza ROOM, la cual administra
+                    tiendas.</p>
                 <div class="proyect__view">
                     <a href="https://github.com/josuema2002/Stores_DA.git"><i
                             class="fa fa-github proyect__enlace"></i></a>
@@ -330,6 +331,47 @@
                         medios:</p>
                 </div>
             </div>
+            <form action="" id="form-contact" class="container">
+                <!--- Alerta que se quita despues de 3 segundos -->
+                <div class="alert alert-success alert-dismissible fade show d-none d-flex justify-content-center align-items-center"
+                    role="alert" id="alert-contact">
+                    <strong id="b-alert">¡Mensaje enviado!</strong>
+                    <p id="p-alert"></p>
+                </div>
+                <div class="row g-2 mb-3">
+                    <div class="col-md">
+                        <div class="form-floating">
+                            <input type="email" class="form-control" id="contc-email" name="email"
+                                placeholder="name@example.com">
+                            <label for="contc-email">Correo electronico</label>
+                        </div>
+                    </div>
+                    <div class="col-md">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="contc-name" name="name"
+                                placeholder="name@example.com">
+                            <label for="contc-name">Nombre completo</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-2 mb-3">
+                    <div class="col-md">
+                        <div class="form-floating">
+                            <input type="number" min="0" class="form-control" id="contc-tel" name="tel"
+                                placeholder="name@example.com">
+                            <label for="contc-tel">Telefono</label>
+                        </div>
+                    </div>
+                    <div class="form-floating">
+                        <textarea class="form-control" placeholder="Leave a comment here" name="message"
+                            id="contc-message" style="height: 100px"></textarea>
+                        <label for="contc-message">Mensaje</label>
+                    </div>
+                </div>
+                <div class="d-grid gap-2">
+                    <button class="btn btn-outline-dark" id="btn-form-contc" type="submit">Enviar</button>
+                </div>
+            </form>
         </div>
         <ul class="social_icon">
             <li><a href="mailto:sjosue5082002@gmail.com"><i class="fa fa-envelope text-warning"></i></a></li>
@@ -348,6 +390,13 @@
     <script src="js/habilidades.js"></script>
     <script src="js/scroll.js"></script>
     <script src="js/theme.js"></script>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        emailjs.init('VKvjM8rk8J5jMydBP')
+    </script>
+    <script src="js/form-contact.js"></script>
+
 </body>
 
 </html>

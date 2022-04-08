@@ -16,6 +16,10 @@ body {
     transition: all 0.5s;
 }
 
+label {
+    color: rgba(0, 0, 0, 0.5);
+}
+
 .espacio{
     height: 115px;
 }
@@ -241,4 +245,26 @@ body {
 @media screen and (max-width: 400px) {
     
     
+}
+
+
+/*escroll bar*/
+
+::-webkit-scrollbar-track
+{
+	border-radius: 10px;
+  background-color:transparent;
+}
+
+::-webkit-scrollbar
+{
+	width: 12px;
+  background-color:transparent;
+}
+
+::-webkit-scrollbar-thumb
+{
+	border-radius: 15px;
+	-webkit-box-shadow: inset 0 0 6px rgba(255,255,255,.7);
+	background-color: rgba(0,0,0,.7);
 }
