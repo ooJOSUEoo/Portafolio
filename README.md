@@ -4,7 +4,25 @@ Josue Muñoz Avila
 
 Actualmente en la Versión: ^2.0.0
 
-## Visión 2.0.0
+Nota para probar la versión 2:
+
+    Nesesita instalar los módulos: `npm install`
+    Para ver use `npm start`
+    Para reconstruir el proyecto use `npm run build`
+
+## Versión 2.0.1 - 2.0.9
+
+    Que trae?
+        2.0.1:
+        * Intalacion de dependencias
+            - redux
+            - react-router-dom
+            - node-sass
+            - validator
+        * Creación de la carpeta de desarrollo
+        * Creacion de store.js para el manejo de estados en redux
+
+## Versión 2.0.0
 
     Que trae?
         * Migracion a React.js
