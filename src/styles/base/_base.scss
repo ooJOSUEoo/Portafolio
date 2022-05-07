@@ -1,0 +1,25 @@
+ 
+.nav-link.active {
+  background-color: transparent !important;
+}
+
+.h100vh {
+  height: 100vh !important;
+}
+
+.imgForm{
+  box-shadow: rgba(17, 17, 17, 0.4) 5px 5px, rgba(17, 17, 17, 0.3) 10px 10px, rgba(17, 17, 17, 0.2) 15px 15px, rgba(17, 17, 17, 0.1) 20px 20px, rgba(17, 17, 17, 0.5) 25px 25px;
+}
+
+.zi--100 {
+  z-index: -100;
+}
+.zi--200 {
+  z-index: -200;
+}
+.zi-100{
+  z-index: 100;
+}
+.zi-200{
+  z-index: 200;
+}

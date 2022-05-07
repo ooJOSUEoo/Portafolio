@@ -13,6 +13,14 @@ Nota para probar la versión 2:
 ## Versión 2.0.1 - 2.0.9
 
     Que trae?
+        2.0.3:
+        * Instalación de firebase 8.10.0
+        * Implentacion de rutas privadas y publicas
+        * Autenticación de admin con firebase (login)
+            - Primeras acciones de autenticación
+            - Uso de hook de formulario
+        * Mejora en diseño de componentes
+
         2.0.2:
         * Implementacion de rutas (basicas)
         * Creacion de primeros reducers
