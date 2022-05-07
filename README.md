@@ -13,6 +13,12 @@ Nota para probar la versión 2:
 ## Versión 2.0.1 - 2.0.9
 
     Que trae?
+        2.0.2:
+        * Implementacion de rutas (basicas)
+        * Creacion de primeros reducers
+        * Creacion de primeros componentes (solo la estructura)
+
+
         2.0.1:
         * Intalacion de dependencias
             - redux
