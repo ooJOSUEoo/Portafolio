@@ -13,6 +13,14 @@ Nota para probar la versión 2:
 ## Versión 2.0.1 - 2.0.9
 
     Que trae?
+        2.0.4:
+        * Panel administrativo para administrar las secciones
+            - seccion acerca de
+            - seccion proyectos
+            - seccion contacto
+        * Formularios para administrar las secciones (sin acciones)
+        * Log Out del usuario
+
         2.0.3:
         * Instalación de firebase 8.10.0
         * Implentacion de rutas privadas y publicas

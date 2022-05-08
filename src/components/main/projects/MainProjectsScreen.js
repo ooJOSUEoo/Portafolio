@@ -1,10 +1,10 @@
 import React from 'react'
 
-export const MainProyectsScreen = () => {
+export const MainProjectsScreen = () => {
   return (
     <div>
        
-       <h1>MainProyectsScreen</h1>
+       <h1>MainProjectsScreen</h1>
        
     </div>
   )

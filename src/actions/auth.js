@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { firebase } from "../Firebase/firebase-config";
 import { types } from "../types/types";
@@ -40,3 +39,17 @@ export const login = (uid, displayName, email, photoURL) => ({
         photoURL
     }
 })
+
+export const Logout = () => {
+    return (dispatch) => {
+        firebase.auth().signOut()
+        .then(() => {
+            dispatch({
+                type: types.logout
+            });
+        })
+        .catch(e => {
+            startAlert(e.message);
+        })
+    }
+}

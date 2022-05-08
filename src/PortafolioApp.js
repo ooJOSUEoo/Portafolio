@@ -4,6 +4,7 @@ import { AppRouter } from './routers/AppRouter'
 import { store } from './store/store'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/js/bootstrap'
 import './styles/styles.scss'
 import './Fontawesome_PRO/css/all.css'
 

@@ -66,8 +66,8 @@ export const Footer = () => {
         </div>
         <ul className="social_icon">
             <li><a href="mailto:sjosue5082002@gmail.com"><i className="fa fa-envelope text-warning"></i></a></li>
-            <li><a href="https://wa.me/5212411853099"><i className="fa fa-whatsapp text-green"></i></a></li>
-            <li><a href="https://github.com/josuema2002/"><i className="fa fa-github text-dark"></i></a></li>
+            <li><a href="https://wa.me/5212411853099"><i className="fab fa-whatsapp text-green"></i></a></li>
+            <li><a href="https://github.com/josuema2002/"><i className="fab fa-github text-dark"></i></a></li>
         </ul>
         {/* <!--<ul className="menu">
             <li><a href="#"></a></li>

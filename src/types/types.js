@@ -13,12 +13,12 @@ export const types = {
     uiFinishPercentUpload: '[UI] Finish Percent Upload',
 
 
-    proyectoAdd: '[Proyecto Admin] Add Proyecto',
-    proyectoUpdate: '[Proyecto Admin] Update Proyecto',
-    proyectoDelete: '[Proyecto Admin] Delete Proyecto',
-    proyectoSetActive: '[Proyecto Admin] Set Active Proyecto',
-    proyectoChangeToNew: '[Proyecto Admin] Change To New',
-    proyectoChangeToEdit: '[Proyecto Admin] Change To Edit',
+    projectAdd: '[project Admin] Add project',
+    projectUpdate: '[project Admin] Update project',
+    projectDelete: '[project Admin] Delete project',
+    projectSetActive: '[project Admin] Set Active project',
+    projectChangeToNew: '[project Admin] Change To New',
+    projectChangeToEdit: '[project Admin] Change To Edit',
 
     lenguajeAdd: '[Lenguaje Admin] Add Lenguaje',
     lenguajeUpdate: '[Lenguaje Admin] Update Lenguaje',

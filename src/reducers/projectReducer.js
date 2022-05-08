@@ -3,7 +3,7 @@ import { types } from "../types/types";
 /*
 
     {
-        proyects: [],
+        projects: [],
         isNewProyect: false,
         proyectActive: {}
     }
@@ -11,41 +11,41 @@ import { types } from "../types/types";
 */
 
 
-export const proyectReducer = (state = {}, action) => {
+export const projectReducer = (state = {}, action) => {
     switch (action.type) {
-        case types.proyectoAdd:
+        case types.projectAdd:
             return {
                 ...state,
-                proyects: [...state.proyects, action.payload]
+                projects: [...state.projects, action.payload]
             }
         
-        case types.proyectoUpdate:
+        case types.projectUpdate:
             return {
                 ...state,
-                proyects: state.proyects.map(
+                projects: state.projects.map(
                     proyect => proyect.id === action.payload.id ? action.payload.proyect : proyect
                 )
             }
 
-        case types.proyectoDelete:
+        case types.projectDelete:
             return {
                 ...state,
-                proyects: state.proyects.filter(proyect => proyect.id !== action.payload)
+                projects: state.projects.filter(proyect => proyect.id !== action.payload)
             }
 
-        case types.proyectoSetActive:
+        case types.projectSetActive:
             return {
                 ...state,
-                proyectActive: state.proyects.find(proyect => proyect.id === action.payload)
+                proyectActive: state.projects.find(proyect => proyect.id === action.payload)
             }
 
-        case types.proyectoChangeToNew:
+        case types.projectChangeToNew:
             return {
                 ...state,
                 isNewProyect: true
             }
 
-        case types.proyectoChangeToEdit:
+        case types.projectChangeToEdit:
             return {
                 ...state,
                 isNewProyect: false
