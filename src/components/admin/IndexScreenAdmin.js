@@ -46,14 +46,14 @@ export const IndexScreenAdmin = () => {
               </div>
             </div>
           </Link>
-          <Link className="col-md-6 mb-3" to='/'>
+          <Link className="col-md-6 mb-3" to='/admin/languages'>
             <div className="card">
               <div className="card-header">
-                <h4>Index public</h4>
+                <h4>Languages</h4>
               </div>
               <div className="card-body">
                 <p>
-                  Regresar a la página principal.
+                  Sección de lenguajes de programación, herramientas, frameworks, etc.
                 </p>
               </div>
             </div>

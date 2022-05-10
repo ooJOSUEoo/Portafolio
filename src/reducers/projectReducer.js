@@ -9,10 +9,21 @@ import { types } from "../types/types";
     }
 
 */
+const initialState = {
+    projects: [],
+    isNewProyect: false,
+    proyectActive: {},
+}
 
-
-export const projectReducer = (state = {}, action) => {
+export const projectReducer = (state = initialState, action) => {
     switch (action.type) {
+
+        case types.projectsLoad:
+            return{
+                ...state,
+                projects: action.payload
+            }
+
         case types.projectAdd:
             return {
                 ...state,
@@ -36,7 +47,7 @@ export const projectReducer = (state = {}, action) => {
         case types.projectSetActive:
             return {
                 ...state,
-                proyectActive: state.projects.find(proyect => proyect.id === action.payload)
+                projectActive: action.payload
             }
 
         case types.projectChangeToNew:

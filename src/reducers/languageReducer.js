@@ -10,9 +10,15 @@ import { types } from "../types/types";
 
 */
 
-
 export const languageReducer = (state = {}, action) => {
     switch (action.type) {
+
+        case types.languagesLoad:
+            return {
+                ...state,
+                languages: action.payload
+            }
+
         case types.lenguajeAdd:
             return {
                 ...state,
@@ -36,7 +42,7 @@ export const languageReducer = (state = {}, action) => {
         case types.lenguajeSetActive:
             return {
                 ...state,
-                languageActive: state.languages.find(language => language.id === action.payload)
+                languageActive: action.payload
             }
 
         case types.lenguajeChangeToNew:

@@ -1,52 +1,88 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux';
+import { projectsSetActive, startSetProject } from '../../../actions/projects';
+import { startLoading } from '../../../actions/ui';
+import { useForm } from '../../../hooks/useForm';
 
 export const FormProjectsScreen = () => {
+
+  const dispatch = useDispatch();
+
+  const [values, handleInputChange, handleFileChange, handleCheckboxChange,] = useForm({
+    name: '',
+    description: '',
+    image: '',
+    git: '',
+    demo: '',
+    init: '',
+    end: '',
+    favorite: false,
+  });
+
+  useEffect(() => {
+    dispatch(projectsSetActive(values))
+  }, [dispatch, values])
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(startLoading())
+    dispatch(startSetProject(values))
+  }
+
   return (
     <div className='container mt-3'>
-       <form className='d-flex flex-column'>
-          <div class="form-floating mb-3">
+       <form className='d-flex flex-column' onSubmit={handleSubmit}>
+          <div className="form-floating mb-3">
             <input
               type="text"
-              class="form-control" name="name" id="name" placeholder="Name" />
-            <label for="floatingLabel">Name</label>
+              className="form-control" name="name" id="name" placeholder="Name" 
+              value={values.name} onChange={handleInputChange} />
+            <label form="floatingLabel">Name</label>
           </div>
           <div className="form-floating mb-3">
               <textarea
               style={{height: '200px'}}
-                  className="form-control" name="description" id="description" placeholder="Descripcion"></textarea>
+                  className="form-control" name="description" id="description" placeholder="Descripcion"
+                  value={values.description} onChange={handleInputChange}></textarea>
             <label form="floatingLabel">Description</label>
           </div>
           <div className="mb-3">
             <label form="image" className="form-label text-light">Image</label>
-            <input type="file" className="form-control" name="image" id="image" placeholder="Image" />
+            <input type="file" className="form-control" name="image" id="image" placeholder="Image" accept="image/*"
+              onChange={handleFileChange} />
           </div>
-          <div class="form-floating mb-3">
+          <div className="form-floating mb-3">
             <input
               type="text"
-              class="form-control" name="git" id="git" placeholder="GitHub" />
-            <label for="floatingLabel">GitHub</label>
+              className="form-control" name="git" id="git" placeholder="GitHub" 
+              value={values.git} onChange={handleInputChange} />
+            <label form="floatingLabel">GitHub</label>
           </div>
-          <div class="form-floating mb-3">
+          <div className="form-floating mb-3">
             <input
               type="text"
-              class="form-control" name="demo" id="demo" placeholder="Demo" />
-            <label for="floatingLabel">Demo</label>
+              className="form-control" name="demo" id="demo" placeholder="Demo" 
+              value={values.demo} onChange={handleInputChange} />
+            <label form="floatingLabel">Demo</label>
           </div>
-          <div class="form-floating mb-3">
+          <div className="form-floating mb-3">
             <input
               type="date"
-              class="form-control" name="init" id="init" placeholder="Init Date" />
-            <label for="floatingLabel">Init Date</label>
+              className="form-control" name="init" id="init" placeholder="Init Date" 
+              value={values.init} onChange={handleInputChange} />
+            <label form="floatingLabel">Init Date</label>
           </div>
-          <div class="form-floating mb-3">
+          <div className="form-floating mb-3">
             <input
               type="date"
-              class="form-control" name="end" id="end" placeholder="End Date" />
-            <label for="floatingLabel">End Date</label>
+              className="form-control" name="end" id="end" placeholder="End Date" 
+              value={values.end} onChange={handleInputChange} />
+            <label form="floatingLabel">End Date</label>
           </div>
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" name="favorite" id="favorite" checked={false} />
-            <label class="form-check-label text-light" for="favorite">
+          <div className="form-check">
+            <input type="checkbox" className="form-check-input" name="favorite" id="favorite" 
+            checked={values.favorite} onChange={handleCheckboxChange} />
+            <label className="form-check-label text-light" form="favorite">
               Favorite
             </label>
           </div>

@@ -26,6 +26,13 @@ export const useForm = ( initialState = {} ) => {
         }
     }
 
-    return [ values, handleInputChange, handleFileChange, reset ];
+    const handleCheckboxChange = (e) => {
+        setValues({
+            ...values,
+            [ e.target.name ]: e.target.checked
+        });
+    }
+
+    return [ values, handleInputChange, handleFileChange, handleCheckboxChange, reset ];
 
 }

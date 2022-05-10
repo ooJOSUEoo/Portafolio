@@ -1,8 +1,14 @@
 import React from 'react'
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 export const AllProjectsScreenAdmin = () => {
+
+  const { projects } = useSelector(state => state.projects);
+
   return (
     <div className='table-responsive'> 
+    <h3>All</h3>
        <table className="table text-light">
          <thead className="thead-default">
            <tr>
@@ -19,8 +25,35 @@ export const AllProjectsScreenAdmin = () => {
            </tr>
            </thead>
            <tbody>
-             <tr>
-                <th scope='row'>1</th>
+              {
+                projects.map((project, i) => (
+                  <tr key={project.id}>
+                    <th scope="row">{i+1}</th>
+                    <td>{project.name}</td>
+                    <td>{project.description}</td>
+                    <td>
+                      <img src={project.image} alt="project" className="img-fluid" />
+                    </td>
+                    <td>
+                      <Link to={project.git}> Ir a GitHub </Link>
+                    </td>
+                    <td>
+                      <Link to={project.demo}> Ir a Demo </Link>
+                    </td>
+                    <td>{project.init}</td>
+                    <td>{project.end}</td>
+                    <td>{project.favorite ? 'Yes' : 'No'}</td>
+                    <td>
+                      <div className='d-flex justify-content-center'>
+                        <button className="btn btn-danger"><i className="fas fa-trash-alt"></i></button>
+                        &nbsp;
+                        <button className="btn btn-primary"><i className="fas fa-edit"></i></button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              }
+                {/* <th scope='row'>1</th>
                 <td>Project 1</td>
                 <td>Description 1</td>
                 <td>Image 1</td>
@@ -33,8 +66,8 @@ export const AllProjectsScreenAdmin = () => {
                   <button type="button" className="btn btn-primary"><i className="fas fa-edit"></i></button>
                   &nbsp;
                   <button type="button" className="btn btn-danger"><i className="fas fa-trash-alt"></i></button>
-                </td>
-             </tr>
+                </td> */}
+
            </tbody>
        </table>       
     </div>

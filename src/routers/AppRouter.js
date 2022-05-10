@@ -22,26 +22,40 @@ import { FavoriteProjectsScreen } from '../components/admin/projects/FavoritePro
 import { AllProjectsScreenAdmin } from '../components/admin/projects/AllProjectsScreenAdmin'
 import { IndexContactScreen } from '../components/admin/contact/IndexContactScreen'
 import { AllContactScreen } from '../components/admin/contact/AllContactScreen'
-import { FromContactScreen } from '../components/admin/contact/FromContactScreen'
+import { FormContactScreen } from '../components/admin/contact/FormContactScreen'
+import { startLoadingAbouth } from '../actions/abouth'
+import { startLoadingProjects } from '../actions/projects'
+import { startLoadingContacts } from '../actions/contact'
+import { AllLanguagesScreen } from '../components/admin/languages/AllLanguagesScreen'
+import { FormLanguagesScreen } from '../components/admin/languages/FormLanguagesScreen'
+import { IndexLanguagesScreen } from '../components/admin/languages/IndexLanguagesScreen'
+import { startLoadingLanguages } from '../actions/languages'
 
 export const AppRouter = () => {
 
   const dispatch = useDispatch();
   const [checking, setChecking] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [dataUser, setDataUser] = useState(null)
+  
+  const doc = 'doc'
+
+  
+  useEffect(() => {
+    dispatch(startLoadingProjects(doc));
+    dispatch(startLoadingAbouth(doc));
+    dispatch(startLoadingLanguages(doc));
+    dispatch(startLoadingContacts(doc));
+  }, [])
+
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged(async(user) => {
       if (user) {
         dispatch(login(user.uid, user.displayName, user.email, user.photoURL));
         setIsLoggedIn(true);
-        setDataUser(user);
         
-        //dispatch(startLoadingPosts(user.uid));
       } else {
         setIsLoggedIn(false);
-        setDataUser(null);
       }
       setTimeout(() => {
         setChecking(false);
@@ -97,10 +111,16 @@ export const AppRouter = () => {
                   <Route path="/new" element={<FormProjectsScreen />} />
                 </Routes>
               </IndexProjectsScreen>} />
+              <Route path="/languages/*" element={<IndexLanguagesScreen>
+                <Routes>
+                  <Route path="/*" element={<AllLanguagesScreen />} />
+                  <Route path="/new" element={<FormLanguagesScreen />} />
+                </Routes>
+              </IndexLanguagesScreen>} />
               <Route path="/contact/*" element={<IndexContactScreen>
                 <Routes>
                   <Route path="/*" element={<AllContactScreen />} />
-                  <Route path="/new" element={<FromContactScreen />} />
+                  <Route path="/new" element={<FormContactScreen />} />
                 </Routes>
               </IndexContactScreen>} />  
             </Routes>

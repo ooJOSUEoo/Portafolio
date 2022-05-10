@@ -54,6 +54,9 @@ export const NavBarAdmin = () => {
                     <NavLink className="nav-link" to='/admin/projects'>Projects</NavLink>
                 </li>
                 <li className="nav-item">
+                    <NavLink className="nav-link" to='/admin/languages'>Languages</NavLink>
+                </li>
+                <li className="nav-item">
                     <NavLink className="nav-link" to='/admin/contact'>Contact</NavLink>
                 </li>
                 <li className="nav-item">

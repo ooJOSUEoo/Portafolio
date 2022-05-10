@@ -23,3 +23,11 @@
 .zi-200{
   z-index: 200;
 }
+
+input[type=range]{
+  background-image:linear-gradient(to right,  #dc1717 0, #dc7d17 calc(var(--value)*2.5%), #d7c35d calc(var(--value)*8%), #90de54 calc(var(--value)*10%), #00fe1e calc(var(--value)*33.3%), black 0);
+}
+
+.img-fluid{
+  max-width: 250px !important;
+}

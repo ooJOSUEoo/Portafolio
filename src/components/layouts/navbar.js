@@ -7,10 +7,9 @@ export const Navbar = () => {
         let list = document.querySelectorAll('.list');
         list.forEach(item => {
           item.classList.remove('active') 
-          console.log(item.tagName)
         })
           target.tagName === 'LI' && target.classList.add('active')
-          target.tagName === 'A' && target.parentNode.classList.add('active')
+          target.tagName === 'P' && target.parentNode.classList.add('active')
           target.tagName === 'SPAN' && target.parentNode.parentNode.classList.add('active')
           target.tagName === 'I' && target.parentNode.parentNode.parentNode.classList.add('active')
     }
@@ -24,30 +23,30 @@ export const Navbar = () => {
             </div>
             <div className="navigation">
                 <ul className=" ps-0 justify-content-center">
-                    <li className="list active" onMouseOver={setActiveClass}>
-                        <NavLink to='/'>
+                    <NavLink to='/' className="list" onMouseOver={setActiveClass}>
+                        <p>
                             <span className="icon"><i className="fa fa-home icons_header"></i></span>
                             <span className="text">Inicio</span>
-                        </NavLink>
-                    </li>
-                    <li className="list" onMouseOver={setActiveClass}>
-                        <NavLink to='/abouth' id="btn_acerca_de">
+                        </p>
+                    </NavLink>
+                    <NavLink to='/abouth' className="list" onMouseOver={setActiveClass}>
+                        <p>
                             <span className="icon"><i className="fa fa-user icons_header"></i></span>
                             <span className="text">Acerca de</span>
-                        </NavLink>
-                    </li>
-                    <li className="list" onMouseOver={setActiveClass}>
-                        <NavLink to='/projects' id="btn_proyectos">
+                        </p>
+                    </NavLink>
+                    <NavLink to='/projects' className="list" onMouseOver={setActiveClass}>
+                        <p>
                             <span className="icon"><i className="fa fa-briefcase icons_header"></i></span>
                             <span className="text">Proyectos</span>
-                        </NavLink>
-                    </li>
-                    <li className="list" onMouseOver={setActiveClass}>
-                        <NavLink to='/contact' id="btn_contacto">
+                        </p>
+                    </NavLink>
+                    <NavLink to='/contact' className="list" onMouseOver={setActiveClass}>
+                        <p>
                             <span className="icon"><i className="fa fa-comments icons_header"></i></span>
                             <span className="text">Contacto</span>
-                        </NavLink>
-                    </li>
+                        </p>
+                    </NavLink>
                     <div className="indicator"></div>
                 </ul>
             </div>

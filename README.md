@@ -13,6 +13,14 @@ Nota para probar la versión 2:
 ## Versión 2.0.1 - 2.0.9
 
     Que trae?
+        2.0.5:
+        * Acciones a los formularios
+            - Enviaran los datos a la base de datos
+            - Si hay archivos, se enviaran a firestorage en cu respectiva carpeta
+        * Mostrar mensajes de éxito y error
+        * Mostrar los datos de la base de datos en tablas
+        * Implementación de mas reducers
+
         2.0.4:
         * Panel administrativo para administrar las secciones
             - seccion acerca de

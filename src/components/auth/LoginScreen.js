@@ -1,5 +1,6 @@
 import React from 'react'
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { startLoginWithEmailPassword } from '../../actions/auth';
 import { useForm } from '../../hooks/useForm';
 
@@ -25,7 +26,10 @@ export const LoginScreen = () => {
         <div className="row d-flex justify-content-center align-items-center h-100">
           <div className="col-12 col-md-8 col-lg-6 col-xl-5">
             <div className="card bg-dark text-white" style={{ borderRadius: '1em' }}>
-              <form className="card-body p-5 text-center" onSubmit={handleSubmit}>
+              <form className="card-body p-5 text-center position-relative" onSubmit={handleSubmit}>
+                <Link to='/' className="btn btn-lg px-5 position-absolute top-0 start-0 text-light">
+                  <i className="fas fa-angle-left"></i>
+                </Link>
 
                 <div className="mb-md-5 mt-md-4 pb-5">
 

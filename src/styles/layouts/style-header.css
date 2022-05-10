@@ -5,14 +5,14 @@
     height: 70px;
 }
 .navigation ul{ display: flex; }
-.navigation ul li{
+.navigation ul a{
     position: relative;
     list-style: none;
     width: 70px;
     height: 70px;
     z-index: 1;
 }
-.navigation ul li a{
+.navigation ul a p{
     position: relative;
     display: flex;
     justify-content: center;
@@ -21,17 +21,17 @@
     color: #fff;
     text-align: center;
 }
-.navigation ul li a .icon{
+.navigation ul a p .icon{
     position: relative;
     line-height: 75px;
     transition: 0.5s;
     font-size: 30px;
 }
-.navigation ul li.active a .icon{
+.navigation ul a.active p .icon{
     font-size: 20px;
     transform: translateY(-8px);
 }
-.navigation ul li a .text{
+.navigation ul a p .text{
     position: absolute;
     font-size: 12px;
     color: #fff;
@@ -41,7 +41,7 @@
     text-transform: uppercase;
     transform: scale(0);
 }
-.navigation ul li.active a .text{
+.navigation ul a.active p .text{
     transform: scale(1);
 }
 .indicator{
@@ -52,45 +52,45 @@
     border-radius: 10px;
     transition: 0.5s;
 }
-.navigation ul li:nth-child(1).active ~ .indicator{
+.navigation ul a:nth-child(1).active ~ .indicator{
     background: #f53b57;
     box-shadow: 0 15px 25px #f53b5799;
     transform: translateX(calc(70px * .5));
 }
-.navigation ul li:nth-child(2).active ~ .indicator{
+.navigation ul a:nth-child(2).active ~ .indicator{
     background: #5d62fb;
     box-shadow: 0 15px 25px #5d62fb99;
     transform: translateX(calc(70px * 1.5));
 }
-.navigation ul li:nth-child(3).active ~ .indicator{
+.navigation ul a:nth-child(3).active ~ .indicator{
     background: #00ee00;
     box-shadow: 0 15px 25px #00ee0099;
     transform: translateX(calc(70px * 2.5));
 }
-.navigation ul li:nth-child(4).active ~ .indicator{
+.navigation ul a:nth-child(4).active ~ .indicator{
     background: #c4f513;
     box-shadow: 0 15px 25px #d3f51399;
     transform: translateX(calc(70px * 3.5));
 }
-.navigation ul li:nth-child(5).active ~ .indicator{
+.navigation ul a:nth-child(5).active ~ .indicator{
     background: #2dc1db;
     box-shadow: 0 15px 25px #2db8db99;
     transform: translateX(calc(70px * 4.5));
 }
 @media screen and (max-width: 350px) {
-    .navigation ul li:nth-child(1).active ~ .indicator{
+    .navigation ul a:nth-child(1).active ~ .indicator{
         transform: translateX(calc(70px * .25));
     }
-    .navigation ul li:nth-child(2).active ~ .indicator{
+    .navigation ul a:nth-child(2).active ~ .indicator{
         transform: translateX(calc(70px * 1.25));
     }
-    .navigation ul li:nth-child(3).active ~ .indicator{
+    .navigation ul a:nth-child(3).active ~ .indicator{
         transform: translateX(calc(70px * 2.25));
     }
-    .navigation ul li:nth-child(4).active ~ .indicator{
+    .navigation ul a:nth-child(4).active ~ .indicator{
         transform: translateX(calc(70px * 3.25));
     }
-    .navigation ul li:nth-child(5).active ~ .indicator{
+    .navigation ul a:nth-child(5).active ~ .indicator{
         transform: translateX(calc(70px * 4.25));
     }
 }
