@@ -13,10 +13,17 @@ Nota para probar la versión 2:
 ## Versión 2.0.1 - 2.0.9
 
     Que trae?
+        2.0.6:
+        * Editar datos de las secciones de administración
+            - si hay imagen, la remplaza
+        * Eliminar datos las secciones de administración
+            - si hay imagen, la elimina
+        * Paginación en las tablas de cada sección
+
         2.0.5:
         * Acciones a los formularios
             - Enviaran los datos a la base de datos
-            - Si hay archivos, se enviaran a firestorage en cu respectiva carpeta
+            - Si hay archivos, se enviaran a firestorage en su respectiva carpeta
         * Mostrar mensajes de éxito y error
         * Mostrar los datos de la base de datos en tablas
         * Implementación de mas reducers

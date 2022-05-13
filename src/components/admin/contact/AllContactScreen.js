@@ -1,9 +1,24 @@
 import React from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { activeEditContact, contactsSetActive, deleteContactDB } from '../../../actions/contact';
 
 export const AllContactScreen = () => {
 
-  const { socials } = useSelector(state => state.socials);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { contacts } = useSelector(state => state.contacts);
+
+
+  const handleEdit = (data) => {
+    dispatch(activeEditContact())
+    dispatch(contactsSetActive(data));
+    navigate('/admin/contact/new');
+  }
+
+  const handleDelete = (id) => {
+    dispatch(deleteContactDB(id));
+  }
 
   return (
     <div>
@@ -12,22 +27,22 @@ export const AllContactScreen = () => {
         <thead className="thead-default">
           <tr>
             <th>ID</th>
-            <th>Social Network</th>
+            <th>Contact Network</th>
             <th>Link</th>
             <th>Actions</th>
           </tr>
           </thead>
           <tbody>
-            {socials.map((social,i) => (
-              <tr key={social.id}>
-                <th scope="row">{i+1}</th>
-                <td>{social.name}</td>
-                <td>{social.link}</td>
+            {contacts.map((contact,i) => (
+              <tr key={contact.id}>
+                <th key={contact.id} scope="row">{i+1}</th>
+                <td>{contact.name}</td>
+                <td>{contact.link}</td>
                 <td>
                   <div className='d-flex justify-content-center'>
-                    <button className="btn btn-danger"><i className="fas fa-trash-alt"></i></button>
+                    <button className="btn btn-primary" onClick={()=>handleEdit(contact)}><i className="fas fa-edit"></i></button>
                     &nbsp;
-                    <button className="btn btn-primary"><i className="fas fa-edit"></i></button>
+                    <button className="btn btn-danger" onClick={()=>handleDelete(contact.id)}><i className="fas fa-trash-alt"></i></button>
                   </div>
                 </td>
               </tr>

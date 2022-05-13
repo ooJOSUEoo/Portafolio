@@ -1,15 +1,15 @@
 import Swal from "sweetalert2";
 import { db } from "../Firebase/firebase-config";
-import { fileLoad } from "../helpers/fileUpload";
+import { deleteFile, fileLoad } from "../helpers/fileUpload";
 import { loadLanguages } from "../helpers/loadLanguages";
 import { types } from "../types/types";
 import { finishLoading } from "./ui";
 
 
-const startAlert = (text) => {
+const startAlert = (text, icon='error', title='Error') => {
     return Swal.fire({
-        icon: 'error',
-        title: 'Error',
+        icon: icon,
+        title: title,
         text: text
     });
 }
@@ -35,48 +35,59 @@ export const setLanguages = (languages) => ({  ///se ocupa
 });
 
 
-export const startSetLanguage = (values) => {
+export const startSetLanguage = () => {
     return (dispatch, getState) => {
-        const {  languageActive } = getState().languages;
+        const {  isNewLanguage, languageActive } = getState().languages;
         const {image} = languageActive
+        let id
 
 
         const values = {
             ...languageActive,
-            image: ''
         }
-        const {id: idDoc} = db.collection('languages/').doc()
-        
+        if (!languageActive.id) {
+           id = db.collection('languages/').doc().id
+        }else id = languageActive.id
         const load = () => {
             if(typeof image !== 'string' && image){
-                fileLoad(image, idDoc, 'languages/image', dispatch, (url) => {
+                fileLoad(image, id, 'languages/image', dispatch, (url) => {
                     console.log(url);
                     values.image = url;
-                    saveLanguage(values, idDoc, dispatch);
+                    saveLanguage(values, id, dispatch, isNewLanguage);
                 })
             }
         }
-        if(image){
+        if(image && typeof image !== 'string'){
             load()
         }else{
-            saveLanguage(values, idDoc, dispatch);
+            saveLanguage(values, id, dispatch, isNewLanguage);
         }
+        
     }
 }
 
-export const saveLanguage = (values, idDoc, dispatch) => {
-    console.log(values);
-    db.collection('languages/').doc(idDoc).set(values)
-        .then(() => {
-            dispatch(setNewLanguage(values));
-            Swal.fire({
-                icon: 'success',
-                title: 'Success',
-                text: 'Abouth updated successfully!'
-            });
-        }).catch(err => {
-            startAlert(err.message);
-        })
+export const saveLanguage = (values, id, dispatch, isNewLanguage) => {
+    isNewLanguage ? (
+        db.collection('languages/').doc(id).set(values)
+            .then(() => {
+                dispatch(setNewLanguage(values))
+
+                startAlert('Lenguaje guardado correctamente', 'success', 'Lenguaje guardado')
+            }).catch(err => {
+                startAlert(err.message);
+            })
+    ) : (
+        db.collection('languages/').doc(id).update(values)
+            .then(() => {
+                console.log(values);
+                dispatch(setEditLanguage(values))
+
+                startAlert('Lenguaje actualizado correctamente', 'success', 'Lenguaje actualizado')
+            }).catch(err => {
+                startAlert(err.message);
+            })
+    )
+
     dispatch(finishLoading())
 }
 
@@ -84,3 +95,43 @@ export const setNewLanguage = (values) => ({
     type: types.lenguajeAdd,
     payload: values
 });
+
+export const activeEditLanguage = (values) => ({
+    type: types.lenguajeChangeToEdit,
+});
+
+export const setEditLanguage = (values) => ({
+    type: types.lenguajeUpdate,
+    payload: values
+})
+
+export const changeToNewLanguage = () => ({
+    type: types.lenguajeChangeToNew,
+})
+
+export const deleteLanguage = (id) => {
+    return (dispatch, getState) => {
+        const { languages } = getState().languages;
+        const language = languages.filter(language => language.id === id);
+        const { image } = language[0];
+        if (image) {
+            deleteFile(id, 'languages/image')
+        } 
+        deleteLanguageDB(id,dispatch);
+    }
+}
+
+export const deleteLanguageDB = (id,dispatch) => {
+    db.collection('languages/').doc(id).delete()
+    .then(() => {
+        dispatch(deleteLanguageSuccess(id))
+        startAlert('Lenguaje eliminado correctamente', 'success', 'Lenguaje eliminado')
+    }).catch(err => {
+        startAlert(err.message);
+    })
+}
+
+export const deleteLanguageSuccess = (id) => ({
+    type: types.lenguajeDelete,
+    payload: id
+})

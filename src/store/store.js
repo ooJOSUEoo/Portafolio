@@ -4,7 +4,7 @@ import { abouthReducer } from "../reducers/abouthReducer";
 import { authReducer } from "../reducers/authReducer";
 import { languageReducer } from "../reducers/languageReducer";
 import { projectReducer } from "../reducers/projectReducer";
-import { socialReducer } from "../reducers/socialReducer";
+import { contactReducer } from "../reducers/socialReducer";
 import { uiReducer } from "../reducers/uiReducer";
 
 
@@ -16,7 +16,7 @@ const reducers = combineReducers({
     abouth: abouthReducer,
     projects: projectReducer,
     languages: languageReducer,
-    socials: socialReducer
+    contacts: contactReducer
 });
 
 export const store = createStore(

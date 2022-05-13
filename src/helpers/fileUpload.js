@@ -46,3 +46,13 @@ export const fileLoad = (file, uid, route, dispatch, _callback) => {
         })
     })
 }
+
+export const deleteFile = (uid, route) => {
+
+    const deleteFile = storageRef.child(`${route}/${uid}`).delete();
+    deleteFile.then(() => {
+        return true
+    }).catch(err => {
+        startAlert(err.message);
+    })
+}

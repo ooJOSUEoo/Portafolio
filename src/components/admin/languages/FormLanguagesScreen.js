@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { languagesSetActive, startSetLanguage } from '../../../actions/languages';
 import { startLoading } from '../../../actions/ui';
 import { useForm } from '../../../hooks/useForm';
@@ -7,21 +7,34 @@ import { useForm } from '../../../hooks/useForm';
 
 export const FormLanguagesScreen = () => {
 
+  const {isNewLanguage, languageActive} = useSelector(state => state.languages);
   const dispatch = useDispatch();
   const [image, setImage] = useState(null)
 
   const [formValues, handleInputChange, handleFileChange] = useForm({
     name: '',
     image: '',
-    range: 0,
+    range: 0
   })
+  useEffect(() => {
+    if(!isNewLanguage){
+      formValues.id = languageActive.id;
+      formValues.name = languageActive.name;
+      formValues.image = languageActive.image;
+      formValues.range = languageActive.range;
+      setImage(languageActive.image);
+    }
+  }, [])
+    
 
   useEffect(() => {
     const inp = document.querySelector('input[type="range"]')
     dispatch(languagesSetActive(formValues))
 
-    typeof formValues.image !== 'string' && setImage(URL.createObjectURL(document.getElementById('image').files[0]))
-    console.log(formValues);
+    // document.getElementById('image').addEventListener('change', (e)=>{
+    //   setImage(URL.createObjectURL(e.target.files[0]))
+    // })
+    typeof formValues.image === 'object' && setImage(URL.createObjectURL(formValues.image))
     inp.style.setProperty('--value', formValues.range)
     inp.addEventListener('input', (e) => { 
       inp.style.setProperty('--value', inp.value) 
@@ -31,7 +44,7 @@ export const FormLanguagesScreen = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(startLoading());
-    dispatch(startSetLanguage(formValues));
+    dispatch(startSetLanguage())
   }
 
   return (

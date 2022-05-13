@@ -1,12 +1,15 @@
-import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import { projectsSetActive, startSetProject } from '../../../actions/projects';
 import { startLoading } from '../../../actions/ui';
 import { useForm } from '../../../hooks/useForm';
 
 export const FormProjectsScreen = () => {
 
+  const {isNewProject, projectActive} = useSelector(state => state.projects);
   const dispatch = useDispatch();
+  const [image, setImage] = useState(null)
+
 
   const [values, handleInputChange, handleFileChange, handleCheckboxChange,] = useForm({
     name: '',
@@ -16,17 +19,35 @@ export const FormProjectsScreen = () => {
     demo: '',
     init: '',
     end: '',
+    company: '',
     favorite: false,
   });
 
   useEffect(() => {
+    if(!isNewProject){
+      values.id = projectActive.id;
+      values.name = projectActive.name;
+      values.description = projectActive.description;
+      values.image = projectActive.image;
+      values.git = projectActive.git;
+      values.demo = projectActive.demo;
+      values.init = projectActive.init;
+      values.end = projectActive.end;
+      values.company = projectActive.company;
+      values.favorite = projectActive.favorite;
+      setImage(projectActive.image);
+    }
+  }, [])
+
+  useEffect(() => {
     dispatch(projectsSetActive(values))
+    typeof values.image === 'object' && setImage(URL.createObjectURL(values.image))
   }, [dispatch, values])
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(startLoading())
-    dispatch(startSetProject(values))
+    dispatch(startSetProject())
   }
 
   return (
@@ -50,6 +71,7 @@ export const FormProjectsScreen = () => {
             <label form="image" className="form-label text-light">Image</label>
             <input type="file" className="form-control" name="image" id="image" placeholder="Image" accept="image/*"
               onChange={handleFileChange} />
+            <img src={image} alt="Icon" className="img-fluid w-25" />
           </div>
           <div className="form-floating mb-3">
             <input
@@ -78,6 +100,13 @@ export const FormProjectsScreen = () => {
               className="form-control" name="end" id="end" placeholder="End Date" 
               value={values.end} onChange={handleInputChange} />
             <label form="floatingLabel">End Date</label>
+          </div>
+          <div className="form-floating mb-3">
+            <input
+              type="text"
+              className="form-control" name="company" id="company" placeholder="Company" 
+              value={values.company} onChange={handleInputChange} />
+            <label form="floatingLabel">Company</label>
           </div>
           <div className="form-check">
             <input type="checkbox" className="form-check-input" name="favorite" id="favorite" 

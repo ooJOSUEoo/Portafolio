@@ -31,13 +31,13 @@ export const types = {
     lenguajeChangeToNew: '[Lenguaje] Change To New',
     lenguajeChangeToEdit: '[Lenguaje] Change To Edit',
 
-    socialLoad: '[Social] Load',
-    socialAdd: '[Social] Add Social',
-    socialUpdate: '[Social] Update Social',
-    socialDelete: '[Social] Delete Social',
-    socialSetActive: '[Social] Set Active Social',
-    socialChangeToNew: '[Social] Change To New',
-    socialChangeToEdit: '[Social] Change To Edit',
+    contactLoad: '[Contact] Load',
+    contactAdd: '[Contact] Add Contact',
+    contactUpdate: '[Contact] Update Contact',
+    contactDelete: '[Contact] Delete Contact',
+    contactSetActive: '[Contact] Set Active Contact',
+    contactChangeToNew: '[Contact] Change To New',
+    contactChangeToEdit: '[Contact] Change To Edit',
 
 
     // postAddNew: '[Post] Add New',

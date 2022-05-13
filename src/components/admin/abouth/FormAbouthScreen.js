@@ -22,6 +22,8 @@ export const FormAbouthScreen = () => {
     setTimeout(() => {
       abouth.forEach(abouth => {
         formValues.description = abouth.description;
+        formValues.cv = abouth.cv;
+        formValues.photo = abouth.photo;
         setCv(abouth.cv);
         setPhoto(abouth.photo);
       })

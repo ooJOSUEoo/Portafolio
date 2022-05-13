@@ -3,14 +3,13 @@ import { firebase } from "../Firebase/firebase-config";
 import { types } from "../types/types";
 
 
-const startAlert = (text) => {
+const startAlert = (text, icon='error', title='Error') => {
     return Swal.fire({
-        icon: 'error',
-        title: 'Error',
+        icon: icon,
+        title: title,
         text: text
     });
 }
-
 
 export const startLoginWithEmailPassword = (email, password) => {
     return (dispatch) => {

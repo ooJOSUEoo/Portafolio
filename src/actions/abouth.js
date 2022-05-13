@@ -6,10 +6,10 @@ import { types } from "../types/types";
 import { finishLoading } from "./ui";
 
 
-const startAlert = (text) => {
+const startAlert = (text, icon='error', title='Error') => {
     return Swal.fire({
-        icon: 'error',
-        title: 'Error',
+        icon: icon,
+        title: title,
         text: text
     });
 }
@@ -42,10 +42,8 @@ export const startSetAbouth = (values) => {
 
         const values = {
             ...abouthActive,
-            cv: '',
-            photo: ''
         }
-        if (abouth && abouth.cv ) {
+        if (abouth && (abouth.cv || abouth.photo) ) {
             values.cv = abouth.cv;
             values.photo = abouth.photo;
         }
@@ -65,6 +63,9 @@ export const startSetAbouth = (values) => {
                     saveAbouth(values, uid, dispatch);
                 })
             }
+            if(typeof cv === 'string' && typeof photo === 'string'){
+                saveAbouth(values, uid, dispatch);
+            }
         }
         if(cv || photo){
             load()
@@ -79,11 +80,7 @@ export const saveAbouth = (values, uid, dispatch) => {
     db.collection('abouth').doc(uid).set(values)
         .then(() => {
             dispatch(setAbouth(values));
-            Swal.fire({
-                icon: 'success',
-                title: 'Success',
-                text: 'Abouth updated successfully!'
-            });
+            startAlert('Abouth saved', 'success', 'Success');
         }).catch(err => {
             startAlert(err.message);
         })

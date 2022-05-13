@@ -1,10 +1,23 @@
 import React from 'react'
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { activeEditProject, deleteProject, projectsSetActive } from '../../../actions/projects';
 
 export const FavoriteProjectsScreen = () => {
 
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { projects } = useSelector(state => state.projects);
+
+  const handleEdit = (data) => {
+    dispatch(activeEditProject())
+    dispatch(projectsSetActive(data));
+    navigate('/admin/projects/new');
+  }
+
+  const handleDelete = (id) => {
+    dispatch(deleteProject(id));
+  }
 
   return (
     <div className='table-responsive'> 
@@ -20,6 +33,7 @@ export const FavoriteProjectsScreen = () => {
               <th>Link Demo</th>
               <th>Init Date</th>
               <th>End Date</th>
+              <th>Company</th>
               <th>Actions</th>
            </tr>
            </thead>
@@ -42,11 +56,12 @@ export const FavoriteProjectsScreen = () => {
                     </td>
                     <td>{project.init}</td>
                     <td>{project.end}</td>
+                    <td>{project.company}</td>
                     <td>
                       <div className='d-flex justify-content-center'>
-                        <button className="btn btn-danger"><i className="fas fa-trash-alt"></i></button>
+                        <button className="btn btn-primary" onClick={()=>handleEdit(project)}><i className="fas fa-edit"></i></button>
                         &nbsp;
-                        <button className="btn btn-primary"><i className="fas fa-edit"></i></button>
+                        <button className="btn btn-danger" onClick={()=>handleDelete(project.id)}><i className="fas fa-trash-alt"></i></button>
                       </div>
                     </td>
                   </tr>

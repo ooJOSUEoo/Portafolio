@@ -1,16 +1,13 @@
 import { types } from "../types/types";
 
-/*
 
-    {
-        languages: [],
-        isNewLanguage: false,
-        languageActive: {}
-    }
+const initialState = {
+    languages: [],
+    isNewLanguage: true,
+    languageActive: {}
+}
 
-*/
-
-export const languageReducer = (state = {}, action) => {
+export const languageReducer = (state = initialState, action) => {
     switch (action.type) {
 
         case types.languagesLoad:
@@ -29,7 +26,13 @@ export const languageReducer = (state = {}, action) => {
             return {
                 ...state,
                 languages: state.languages.map(
-                    language => language.id === action.payload.id ? action.payload.language : language
+                    language => {
+                        if (language.id === action.payload.id) {
+                            return action.payload
+                        } else {
+                            return language
+                        }
+                    }
                 )
             }
 
@@ -48,7 +51,12 @@ export const languageReducer = (state = {}, action) => {
         case types.lenguajeChangeToNew:
             return {
                 ...state,
-                isNewLanguage: true
+                isNewLanguage: true,
+                //eliminar el id de languageActive
+                languageActive: {
+                    ...state.languageActive,
+                    id: null
+                }
             }
 
         case types.lenguajeChangeToEdit:

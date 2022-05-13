@@ -11,7 +11,7 @@ import { types } from "../types/types";
 */
 const initialState = {
     projects: [],
-    isNewProyect: false,
+    isNewProject: true,
     proyectActive: {},
 }
 
@@ -34,7 +34,13 @@ export const projectReducer = (state = initialState, action) => {
             return {
                 ...state,
                 projects: state.projects.map(
-                    proyect => proyect.id === action.payload.id ? action.payload.proyect : proyect
+                    proyect => {
+                        if (proyect.id === action.payload.id) {
+                            return action.payload;
+                        } else {
+                            return proyect;
+                        }
+                    }
                 )
             }
 
@@ -53,13 +59,17 @@ export const projectReducer = (state = initialState, action) => {
         case types.projectChangeToNew:
             return {
                 ...state,
-                isNewProyect: true
+                isNewProject: true,
+                proyectActive: {
+                    ...state.proyectActive,
+                    id: null
+                }
             }
 
         case types.projectChangeToEdit:
             return {
                 ...state,
-                isNewProyect: false
+                isNewProject: false
             }
         
         default:

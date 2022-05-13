@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { contactsSetActive, startSetContact } from '../../../actions/contact';
 import { startLoading } from '../../../actions/ui';
 import { useForm } from '../../../hooks/useForm';
 
 export const FormContactScreen = () => {
 
+  const { isNewContact, contactActive } = useSelector(state => state.contacts);
   const dispatch = useDispatch();
 
   const [option, setOption] = useState([
@@ -28,20 +29,28 @@ export const FormContactScreen = () => {
   });
 
   useEffect(() => {
+    if (!isNewContact) {
+      values.id = contactActive.id;
+      values.name = contactActive.name;
+      values.link = contactActive.link;
+    }
+  }, [])
+
+  useEffect(() => {
     dispatch(contactsSetActive(values))
   }, [dispatch, values])
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(startLoading())
-    dispatch(startSetContact(values))
+    dispatch(startSetContact(values.id, isNewContact))
   }
 
   return (
     <div className='container mt-3'>
        <form className='d-flex flex-column' onSubmit={handleSubmit}>
             <div className="mb-3">
-                <label form="name" className="form-label text-light">Social Network</label>
+                <label form="name" className="form-label text-light">Contact Network</label>
                 <select className="form-control form-control-lg" name="name" id="name"
                 value={values.name} onChange={handleInputChange}>
                   {option.map((option) => (

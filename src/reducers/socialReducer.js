@@ -3,60 +3,75 @@ import { types } from "../types/types";
 /*
 
     {
-        socials: [],
-        isNewSocial: false,
-        socialActive: {}
+        contacts: [],
+        isNewContact: false,
+        contactActive: {}
     }
 
 */
 
+const initialState = {
+    contacts: [],
+    isNewContact: true,
+    contactActive: {}
+};
 
-export const socialReducer = (state = {}, action) => {
+export const contactReducer = (state = initialState, action) => {
     switch (action.type) {
 
-        case types.socialLoad:
+        case types.contactLoad:
             return {
                 ...state,
-                socials: action.payload
+                contacts: action.payload
             }
 
-        case types.socialAdd:
+        case types.contactAdd:
             return {
                 ...state,
-                socials: [...state.socials, action.payload]
+                contacts: [...state.contacts, action.payload]
             }
         
-        case types.socialUpdate:
+        case types.contactUpdate:
             return {
                 ...state,
-                socials: state.socials.map(
-                    social => social.id === action.payload.id ? action.payload.social : social
+                contacts: state.contacts.map(
+                    contact => {
+                        if (contact.id === action.payload.id) {
+                            return action.payload
+                        } else {
+                            return contact
+                        }
+                    }
                 )
 
             }
 
-        case types.socialDelete:
+        case types.contactDelete:
             return {
                 ...state,
-                socials: state.socials.filter(social => social.id !== action.payload)
+                contacts: state.contacts.filter(contact => contact.id !== action.payload)
             }
 
-        case types.socialSetActive:
+        case types.contactSetActive:
             return {
                 ...state,
-                socialActive: action.payload
+                contactActive: action.payload
             }
 
-        case types.socialChangeToNew:
+        case types.contactChangeToNew:
             return {
                 ...state,
-                isNewSocial: true
+                isNewContact: true,
+                contactActive: {
+                    ...state.contactActive,
+                    id: null
+                }
             }
 
-        case types.socialChangeToEdit:
+        case types.contactChangeToEdit:
             return {
                 ...state,
-                isNewSocial: false
+                isNewContact: false
             }
         
         default:
