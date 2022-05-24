@@ -137,6 +137,62 @@ label {
     margin: 0 10px;
 }
 
+.allP__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    width: 100%;
+    transition: all 1s;
+}
+
+.allP__container-proyect {
+    width: 95%;
+    border: var(--quinary-color) 2px solid;
+    border-radius: 5px;
+    padding: 10px 0;
+    overflow: hidden;
+    transition: all 1s;
+    margin-bottom: 10px;
+}
+
+.allP__btn{
+    border: 0;
+    background-color: transparent;
+    color: var(--quinary-color);
+}
+
+.allP__click {
+    display: none;
+    transition: all 1s;
+}
+
+.active {
+    display: block !important;
+}
+
+.allP__links {
+    font-size: 25px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    /* background-image: linear-gradient(to bottom, var(--quaternary-color), var(--quinary-color)); */
+}
+
+.allP__container-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.allP__container-img img {
+    width: auto;
+    height: 250px;
+    padding: 0 5px;
+    transition: all 0.5s;
+}
+
 .habilidades{
     display: flex;
     justify-content: center;
@@ -191,6 +247,26 @@ label {
 }
 .text-purple {
     color: var(--purple);
+}
+
+.social_icon{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+    flex-wrap: wrap;
+}
+.social_icon li{ list-style: none;}
+.social_icon li a{
+    font-size: 2em;
+    color: #fff;
+    margin: 0 10px;
+    display: inline-block;
+    transition: 0.5s;
+}
+.social_icon li a:hover{
+    transform: translateY(-10px);
 }
 
 /*media queries*/

@@ -13,6 +13,10 @@ Nota para probar la versión 2:
 ## Versión 2.0.1 - 2.0.9
 
     Que trae?
+        2.0.7:
+        * Mostrado de datos en la pagina publica
+            - con estilos
+
         2.0.6:
         * Editar datos de las secciones de administración
             - si hay imagen, la remplaza

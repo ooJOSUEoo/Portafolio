@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { BrowserRouter as Router, Navigate, Route, Routes  } from 'react-router-dom'
@@ -65,8 +66,8 @@ export const AppRouter = () => {
   
   if(checking) {
     return ( 
-      <div className='d-flex justify-content-center align-items-center'>  
-        <img src='https://cdn.dribbble.com/users/2973561/screenshots/5757826/loading__.gif' className='' alt='loading' />
+      <div className='d-flex justify-content-center align-items-center h100vh'>  
+        <img src='https://mir-s3-cdn-cf.behance.net/project_modules/max_632/04de2e31234507.564a1d23645bf.gif' className='' alt='loading' />
       </div>
     );
   }
@@ -83,7 +84,7 @@ export const AppRouter = () => {
               <Route path="/*" element={<IndexScreen />} />
               <Route path="/abouth" element={<AbouthScreen />} />
               <Route path="/projects" element={<MainProjectsScreen />} />
-              <Route path="/allprojects" element={<AllProjectsScreen />} />
+              <Route path="/projects/all" element={<AllProjectsScreen />} />
               <Route path="/contact" element={<ContactScreen />} />
             </Routes>
             <Footer />

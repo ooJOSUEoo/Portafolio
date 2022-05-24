@@ -1,7 +1,10 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 
 export const Navbar = () => {
+
+    const { abouth } = useSelector(state => state.abouth)
 
     const setActiveClass=({target}) => { 
         let list = document.querySelectorAll('.list');
@@ -16,9 +19,9 @@ export const Navbar = () => {
 
   return (
     <nav className="mb-3 zi-100 bg-dark" id="header">{/*<--bg-dark*/}
-        <div className="navbar navbar-inverse justify-content-around text-light"> {/*<--text-light*/}
+        <div className="navbar navbar-expand-lg navbar-inverse justify-content-around text-light"> {/*<--text-light*/}
             <div className="navbar-header d-flex">
-                <img src="https://avatars.githubusercontent.com/u/51724709?s=40&v=4" className="myPhoto" alt="mi foto" />
+                <img src={abouth[0].photo} className="myPhoto" alt="mi foto" />
                 <p className="navbar-brand fw-bold">Josue Muñoz Avila</p>
             </div>
             <div className="navigation">

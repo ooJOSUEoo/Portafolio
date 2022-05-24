@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { abouthSetActive, startSetAbouth } from '../../../actions/abouth';
@@ -56,7 +57,7 @@ export const FormAbouthScreen = () => {
            </div>
            <div className="mb-3">
              <label form="cv" className="form-label text-light">CV</label>
-             <input type="file" className="form-control" name="cv" id="cv" placeholder="CV" accept="image/*"
+             <input type="file" className="form-control" name="cv" id="cv" placeholder="CV" accept="application/pdf"
                     onChange={handleFileChange} />
            </div>
            <img src={cv} alt="cv" className="img-fluid w-25" />

@@ -12,7 +12,6 @@ export const loadAbouth = async (uid) => {
             ...snapHijo.data()
         })
     });
-    console.log(abouth);
-
+    
     return abouth;
 }
