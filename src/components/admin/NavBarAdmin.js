@@ -24,7 +24,7 @@ export const NavBarAdmin = () => {
     }
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark" id='headerAdmin'>
         <div className="container">
             <button
             className="navbar-toggler"

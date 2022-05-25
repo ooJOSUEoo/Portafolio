@@ -14,7 +14,7 @@ export const MainProjectsScreen = () => {
             Todos los proyectos
           </Link>
         </div>
-        <div className="proyect">
+        <div className="proyect text-dark">
         {
           projects.map(project => (
             project.favorite &&

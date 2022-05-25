@@ -44,7 +44,7 @@ export const AllProjectsScreen = () => {
   return (
     <div>
        
-      <div className='allP__container'>
+      <div className='allP__container text-dark'>
 
         {
           projects.map(project => (

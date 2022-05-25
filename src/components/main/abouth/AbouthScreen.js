@@ -15,7 +15,7 @@ export const AbouthScreen = () => {
         <div className="col d-flex justify-content-center">
           <img src={photo} className="myPhoto-lg" alt="mi foto" />
         </div>
-        <div className="col d-flex justify-content-center flex-column">
+        <div className="col d-flex justify-content-center flex-column text-dark">
           <h1 className="text-center">Acerca de mi</h1>
           <p className="text-center" id="acerca_de">
             

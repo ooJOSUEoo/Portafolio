@@ -1,4 +1,11 @@
-*{
+
+body {
+    min-height: 100vh;
+    background: var(--primary-color);
+    transition: all 0.5s;
+}
+
+body.dark{
     --primary-color: #333;
     --secondary-color: rgb(221, 63, 63);
     --tertiary-color: #fff;
@@ -8,12 +15,20 @@
     --orange: #ffa500;
     --purple: #800080;
     --yellow: #ffff00;
+    --color-footer: rgb(128, 128, 128);
 }
 
-body {
-    min-height: 100vh;
-    background: var(--primary-color);
-    transition: all 0.5s;
+body.light{
+    --primary-color: #fff;
+    --secondary-color: rgb(221, 63, 63);
+    --tertiary-color: rgb(34, 33, 33);
+    --quaternary-color: #000;
+    --quinary-color: #33beff8e;
+    --green: #00ee00;
+    --orange: #ffa500;
+    --purple: #800080;
+    --yellow: #ffff00;
+    --color-footer: rgb(0, 191, 255);
 }
 
 label {
@@ -28,27 +43,48 @@ label {
     transition: all 0.5s;
 }
 
+.nav-link{
+    color: var(--primary-color) !important;
+}
+
+.nav-link.active{
+    color: var(--tertiary-color) !important;
+}
+
 .btn-theme{
-    position: absolute;
-    top: -10px;
-    right: 0;
+    width: 90px;
+    height: 30px;
+    float: right;
+    position: relative;
     margin-right: 15px;
-    border-radius: 50px;
+    margin-bottom: 15px;
+    border-radius: 20px;
     background: var(--quaternary-color);
     color: var(--tertiary-color);
-    padding: 5px 10px;
+    padding: 0 !important;
+    border: 2px solid var(--quinary-color);
+    transition: all 0.5s;
+}
+
+#icon-theme{
+    transition: all 0.5s;
+    position: absolute;
 }
 
 .fa-sun{
     color: var(--yellow);
     margin: 0 10px;
-    font-size: 20px;
+    font-size: 17px;
+    top: 0;
+    left: 0;
 }
 
 .fa-moon{
-    color: var(--quaternary-color);
+    color: var(--tertiary-color);
     margin: 0 10px;
-    font-size: 20px;
+    font-size: 17px;
+    top: 0;
+    right: 0;
 }
 
 .fa{
@@ -69,7 +105,7 @@ label {
 }
 
 .btn-cvs{
-    border: 1px solid var(--primary-color);
+    border: 1px solid var(--tertiary-color);
     border-radius: 20px;
     padding: 15px 25px;
     margin-top: 20px;
@@ -77,6 +113,8 @@ label {
     text-decoration: none;
     font-weight: bold;
     text-align: center;
+    background-color: var(--quinary-color);
+    color: var(--tertiary-color);
 }
 
 .btn-cvs:hover{
@@ -135,6 +173,7 @@ label {
 .proyect__enlace{
     font-size: 30px;
     margin: 0 10px;
+    color: var(--tertiary-color);
 }
 
 .allP__container {
@@ -144,7 +183,7 @@ label {
     align-items: center;
     margin-top: 20px;
     width: 100%;
-    transition: all 1s;
+    transition: all 0.5s;
 }
 
 .allP__container-proyect {
@@ -153,7 +192,7 @@ label {
     border-radius: 5px;
     padding: 10px 0;
     overflow: hidden;
-    transition: all 1s;
+    transition: all 0.5s;
     margin-bottom: 10px;
 }
 
@@ -165,7 +204,7 @@ label {
 
 .allP__click {
     display: none;
-    transition: all 1s;
+    transition: all 0.5s;
 }
 
 .active {
@@ -178,6 +217,10 @@ label {
     justify-content: space-around;
     align-items: center;
     /* background-image: linear-gradient(to bottom, var(--quaternary-color), var(--quinary-color)); */
+}
+
+.allP__enlace{
+    color: var(--tertiary-color);
 }
 
 .allP__container-img {
@@ -254,7 +297,7 @@ label {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 10px 0;
+    margin: 20px 0;
     flex-wrap: wrap;
 }
 .social_icon li{ list-style: none;}

@@ -23,21 +23,21 @@ export const SocialMediaScreen = () => {
         {
           contacts.map(contact => (
             <li key={contact.id}>
-              <a href={contact.link} target="_blank" rel="noopener noreferrer">
+              <a href={contact.link} className="text-decoration-none" target="_blank" rel="noopener noreferrer">
                 <i className={icons[contact.name]}></i>
                 {
                   contact.name === '2'&& (
-                    <span className="fs-5">{contact.link}</span>
+                    <span className="fs-5 text-dark">{contact.link}</span>
                   )
                 }
                 {
                   contact.name === '9'&& (
-                    <span className="fs-5">{contact.link}</span>
+                    <span className="fs-5 text-dark">{contact.link}</span>
                   )
                 }
                 {
                   contact.name === '10'&& (
-                    <span className="fs-5">{contact.link}</span>
+                    <span className="fs-5 text-dark">{contact.link}</span>
                   )
                 }
               </a>

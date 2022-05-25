@@ -18,7 +18,7 @@ export const Navbar = () => {
     }
 
   return (
-    <nav className="mb-3 zi-100 bg-dark" id="header">{/*<--bg-dark*/}
+    <nav className="mb-3 zi-100 bg-info" id="header">{/*<--bg-dark*/}
         <div className="navbar navbar-expand-lg navbar-inverse justify-content-around text-light"> {/*<--text-light*/}
             <div className="navbar-header d-flex">
                 <img src={abouth[0].photo} className="myPhoto" alt="mi foto" />

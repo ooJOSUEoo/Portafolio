@@ -31,6 +31,7 @@ import { AllLanguagesScreen } from '../components/admin/languages/AllLanguagesSc
 import { FormLanguagesScreen } from '../components/admin/languages/FormLanguagesScreen'
 import { IndexLanguagesScreen } from '../components/admin/languages/IndexLanguagesScreen'
 import { startLoadingLanguages } from '../actions/languages'
+import { BtnTheme } from '../components/layouts/BtnTheme'
 
 export const AppRouter = () => {
 
@@ -80,6 +81,7 @@ export const AppRouter = () => {
         <Route path="/*" element={
           <PublicRoute isLoggedIn={isLoggedIn}>
             <Navbar />
+            <BtnTheme />
             <Routes>
               <Route path="/*" element={<IndexScreen />} />
               <Route path="/abouth" element={<AbouthScreen />} />
@@ -102,6 +104,7 @@ export const AppRouter = () => {
         <Route path="/admin/*" element={
           <PrivateRoute isLoggedIn={isLoggedIn}>
             <NavBarAdmin />
+            <BtnTheme />
             <Routes>
               <Route path="/*" element={<IndexScreenAdmin />} />
               <Route path="/abouth" element={<FormAbouthScreen />} />

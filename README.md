@@ -13,6 +13,12 @@ Nota para probar la versión 2:
 ## Versión 2.0.1 - 2.0.9
 
     Que trae?
+
+        2.0.8:
+        * Implementación de cambio de tema
+            - claro
+            - oscuro
+
         2.0.7:
         * Mostrado de datos en la pagina publica
             - con estilos

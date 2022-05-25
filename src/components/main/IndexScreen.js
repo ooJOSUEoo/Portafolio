@@ -2,7 +2,7 @@ import React from 'react'
 
 export const IndexScreen = () => {
   return (
-    <div className='container'>
+    <div className='container text-dark'>
        
       <h1>Descripción del portafolio</h1>
 

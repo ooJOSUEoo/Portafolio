@@ -5,7 +5,7 @@ import { SocialMediaScreen } from './SocialMediaScreen'
 export const ContactScreen = () => {
   return (
     <div>
-       <div className="container">
+       <div className="container text-dark">
             <div className="row">
                 <div className="col-12">
                     <h1 className="text-center">Contacto</h1>

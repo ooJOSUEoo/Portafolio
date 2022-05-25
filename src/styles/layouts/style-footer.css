@@ -1,4 +1,3 @@
-
 footer{
     margin-top: 90px;
     position: relative;
@@ -9,9 +8,10 @@ footer{
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background-color: #808080;
+    background-color: var(--color-footer);
 }
 footer .menu{
+    padding: 0;
     position: relative;
     display: flex;
     justify-content: center;
@@ -23,7 +23,7 @@ footer .menu li{ list-style: none;}
 
 footer .menu li p{
     font-size: 1.2em;
-    color: #fff;
+    color: var(--tertiary-color);
     margin: 0 10px;
     display: inline-block;
     transition: 0.5s;
@@ -46,7 +46,7 @@ footer .wave{
     left: 0;
     width: 100%;
     height: 70px; 
-    background-image: url("../../../src/assets/imgs/wave.png"); /*Theme dark*/
+    /* background-image: url("../../../src/assets/imgs/wave.png"); Theme dark */
     background-size: 1000px 100px;
 }
 
