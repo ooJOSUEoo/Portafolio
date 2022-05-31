@@ -40,6 +40,11 @@ export const BtnTheme = () => {
             document.querySelectorAll('.wave').forEach(item => {
                 item.style.backgroundImage = `url(${imageD})`
             })
+
+            document.getElementById('btn-form-contc') && 
+            document.getElementById('btn-form-contc').classList.add('btn-outline-light')
+            document.getElementById('btn-form-contc') && 
+            document.getElementById('btn-form-contc').classList.remove('btn-outline-dark')
             
         }else{
             document.body.classList.add('light')
@@ -58,6 +63,11 @@ export const BtnTheme = () => {
             document.querySelectorAll('.wave').forEach(item => {
                 item.style.backgroundImage = `url(${imageL})`
             })
+
+            document.getElementById('btn-form-contc') &&
+            document.getElementById('btn-form-contc').classList.add('btn-outline-dark') 
+            document.getElementById('btn-form-contc') &&
+            document.getElementById('btn-form-contc').classList.remove('btn-outline-light')
         }
 
     }, [Active, formValue, ruta.pathname])

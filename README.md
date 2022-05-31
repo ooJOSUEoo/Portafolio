@@ -2,17 +2,29 @@
 Mi portafolio web:
 Josue Muñoz Avila
 
-Actualmente en la Versión: ^2.0.0
+Actualmente en la Versión: 2...
 
 Nota para probar la versión 2:
 
-    Nesesita instalar los módulos: `npm install`
-    Para ver use `npm start`
-    Para reconstruir el proyecto use `npm run build`
+    codigo: 
+        Nesesita instalar los módulos: `npm install`
+        Para ver use `npm start`
+        Para reconstruir el proyecto use `npm run build`
+    Firebase:
+        Active la autenticación con email y contraseña
+        Crear una cuenta de usuario (no olvidar)
+        Active firestore en la consola de firebase
+        Active firestorage en la consola de firebase
+        Busque el archivo `firebase-config.public` en la carpeta `firebase` y haga lo que le pide
 
 ## Versión 2.0.1 - 2.0.9
 
     Que trae?
+
+        2.0.9:
+        * Acciones al formulario de contacto
+            - usando EmailJS
+            - validando el formulario con regex
 
         2.0.8:
         * Implementación de cambio de tema
@@ -28,7 +40,6 @@ Nota para probar la versión 2:
             - si hay imagen, la remplaza
         * Eliminar datos las secciones de administración
             - si hay imagen, la elimina
-        * Paginación en las tablas de cada sección
 
         2.0.5:
         * Acciones a los formularios

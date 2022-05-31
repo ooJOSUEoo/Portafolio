@@ -25,7 +25,7 @@ export const SocialMediaScreen = () => {
             <li key={contact.id}>
               <a href={contact.link} className="text-decoration-none" target="_blank" rel="noopener noreferrer">
                 <i className={icons[contact.name]}></i>
-                {
+                {/* {
                   contact.name === '2'&& (
                     <span className="fs-5 text-dark">{contact.link}</span>
                   )
@@ -39,7 +39,7 @@ export const SocialMediaScreen = () => {
                   contact.name === '10'&& (
                     <span className="fs-5 text-dark">{contact.link}</span>
                   )
-                }
+                } */}
               </a>
             </li>
           ))

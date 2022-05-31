@@ -21,7 +21,7 @@ export const Navbar = () => {
     <nav className="mb-3 zi-100 bg-info" id="header">{/*<--bg-dark*/}
         <div className="navbar navbar-expand-lg navbar-inverse justify-content-around text-light"> {/*<--text-light*/}
             <div className="navbar-header d-flex">
-                <img src={abouth[0].photo} className="myPhoto" alt="mi foto" />
+                <img src={abouth&&abouth[0].photo} className="myPhoto" alt="mi foto" />
                 <p className="navbar-brand fw-bold">Josue Muñoz Avila</p>
             </div>
             <div className="navigation">

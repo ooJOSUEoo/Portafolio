@@ -24,16 +24,16 @@ firebase.initializeApp(firebaseConfig);
 
 //Usar
 //↓
-// const db = firebase.firestore();
-// const storage = firebase.storage();
-// const storageRef = storage.ref();
+const db = firebase.firestore();
+const storage = firebase.storage();
+const storageRef = storage.ref();
 
 
 //exportar
 //↓
-// export {
-//     db,
-//     storage,
-//     storageRef,
-//     firebase
-// }
+export {
+    db,
+    storage,
+    storageRef,
+    firebase
+}
