@@ -60,7 +60,8 @@ export const FormAbouthScreen = () => {
              <input type="file" className="form-control" name="cv" id="cv" placeholder="CV" accept="application/pdf"
                     onChange={handleFileChange} />
            </div>
-           <img src={cv} alt="cv" className="img-fluid w-25" />
+           <a href={cv} target="_blank" rel="noopener noreferrer">{cv ? 'Ver CV' : ''}</a>
+           {/* <img src={cv} alt="cv" className="img-fluid w-25" /> */}
            <div className="mb-3">
              <label form="photo" className="form-label text-light">Photo</label>
              <input type="file" className="form-control" name="photo" id="photo" placeholder="Photo" accept="image/*"

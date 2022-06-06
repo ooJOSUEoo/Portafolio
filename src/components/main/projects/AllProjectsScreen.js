@@ -1,8 +1,18 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
+import { useLocation } from 'react-router-dom'
+import { Pagination } from '../../layouts/Pagination'
 
 export const AllProjectsScreen = () => {
   const { projects } = useSelector(state => state.projects)
+
+
+  const location = useLocation()
+  const num = parseInt(location.hash.split('/')[1] ? location.hash.split('/')[1] : 0)
+  const num1 = num <= 0 ? 0 : (num*10)
+  const num2 = num <= 0 ? 10 : (num*10)+10
+  const array = projects.length > 5 ? projects.slice(num1, num2) : projects
+
 
   const [arrrow, setArrrow] = useState(null)
   const [active, setActive] = useState(false)
@@ -47,26 +57,26 @@ export const AllProjectsScreen = () => {
       <div className='allP__container text-dark'>
 
         {
-          projects.map(project => (
+          array.map(project => (
             <div className="allP__container-proyect" key={project.id}>
               <div className='row px-1'>
                 <h3 className="allP__title col-8">{project.name}</h3>
                 <p className="allP__company col-4">{project.company}</p>
-                <p className="allP__description col-10">
+                <div className="allP__description col-10">
                   {
                     arrrow === project.id ?
                     (
-                      project.description 
+                      project.description.split('\n').map((item, i) => <p key={i}>{item}</p>)
                     )
                     :(
                       //los primeros 100 caracteres
                       project.description.length > 100 ?
-                        project.description.substring(0, 100) + '...'
+                        <p>{project.description.substring(0, 100) + '...'}</p>
                         :
-                        project.description
+                        <p>{project.description }</p>
                     )
                   }
-                </p>
+                </div>
                 <button className="allP__btn col-2" id={project.id} onClick={handleClickShowMore}>
                   {
                     arrrow === project.id  ? <i className="fa-solid fa-caret-up fs-2" id={project.id}></i>
@@ -100,8 +110,8 @@ export const AllProjectsScreen = () => {
           ))
         }
 
+       <Pagination data={projects} num={num} />
       </div>
-       
     </div>
   )
 }

@@ -8,6 +8,9 @@ export const AbouthScreen = () => {
   //const { cv, description, experience, education, skills, languages, hobbies } = abouth
   const { cv, description, photo } = abouth[0]
 
+  //saber si descripcion tiene \n
+  const descriptionArray = description.split('\n')
+  
   return (
     <div className='container'>
        
@@ -17,12 +20,19 @@ export const AbouthScreen = () => {
         </div>
         <div className="col d-flex justify-content-center flex-column text-dark">
           <h1 className="text-center">Acerca de mi</h1>
-          <p className="text-center" id="acerca_de">
+          <div className="text-center" id="acerca_de">
             
-            {description}
+            {/* {description} */}
 
-          </p>
-          <a href={cv} className="btn-cvs">Ver mi CV</a>
+            {
+              //reemplazar \n por <br>
+              descriptionArray.map((item, i) => {
+                return <p key={i}>{item}</p>
+              })
+            }
+
+          </div>
+          <a href={cv} target='_blank' className="btn-cvs" rel="noreferrer">Ver mi CV</a>
         </div>
       </div>
 

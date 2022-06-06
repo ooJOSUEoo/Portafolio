@@ -1,8 +1,9 @@
 @import './base/base';
 @import './base/scroll';
-@import './base/normalize.css';
-@import './base/style.css';
+@import './base/normalize';
+@import './base/style';
+@import './base/styleAdmin';
 
 //layouts
-@import './layouts/style-header.css';
-@import './layouts/style-footer.css';
+@import './layouts/style-header';
+@import './layouts/style-footer';

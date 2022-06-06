@@ -1,7 +1,8 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { activeEditContact, contactsSetActive, deleteContactDB } from '../../../actions/contact';
+import { Pagination } from '../../layouts/Pagination';
 
 export const AllContactScreen = () => {
 
@@ -9,6 +10,11 @@ export const AllContactScreen = () => {
   const dispatch = useDispatch();
   const { contacts } = useSelector(state => state.contacts);
 
+  const location = useLocation()
+  const num = parseInt(location.hash.split('/')[1] ? location.hash.split('/')[1] : 0)
+  const num1 = num <= 0 ? 0 : (num*10)
+  const num2 = num <= 0 ? 10 : (num*10)+10
+  const array = contacts.length > 5 ? contacts.slice(num1, num2) : contacts
 
   const handleEdit = (data) => {
     dispatch(activeEditContact())
@@ -33,9 +39,9 @@ export const AllContactScreen = () => {
           </tr>
           </thead>
           <tbody>
-            {contacts.map((contact,i) => (
+            {array.map((contact,i) => (
               <tr key={contact.id}>
-                <th key={contact.id} scope="row">{i+1}</th>
+                <th key={contact.id} scope="row">{num*10+i+1}</th>
                 <td>{contact.name}</td>
                 <td>{contact.link}</td>
                 <td>
@@ -59,7 +65,7 @@ export const AllContactScreen = () => {
             </tr> */}
           </tbody>
       </table>
-       
+      <Pagination data={contacts} num={num} />
     </div>
   )
 }

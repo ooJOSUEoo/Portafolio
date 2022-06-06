@@ -11,7 +11,7 @@ export const FormProjectsScreen = () => {
   const [image, setImage] = useState(null)
 
 
-  const [values, handleInputChange, handleFileChange, handleCheckboxChange,] = useForm({
+  const [values, handleInputChange, handleFileChange, handleCheckboxChange, reset] = useForm({
     name: '',
     description: '',
     image: '',
@@ -50,8 +50,18 @@ export const FormProjectsScreen = () => {
     dispatch(startSetProject())
   }
 
+  const handleReset = () => {
+    reset();
+    setImage(null);
+  }
+
   return (
     <div className='container mt-3'>
+      <div className='d-flex justify-content-center mb-2'>
+        <button className='btn btn-warning' onClick={handleReset}>
+          <i className='fas fa-times'></i> Reset
+        </button>
+      </div>
        <form className='d-flex flex-column' onSubmit={handleSubmit}>
           <div className="form-floating mb-3">
             <input

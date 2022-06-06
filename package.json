@@ -2,6 +2,7 @@
   "name": "portafolio-v2",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://www.josue-web.ml/",
   "dependencies": {
     "@emailjs/browser": "^3.6.2",
     "@popperjs/core": "^2.11.5",
@@ -24,6 +25,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -48,6 +51,7 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-optional-chaining": "^7.17.12"
+    "@babel/plugin-proposal-optional-chaining": "^7.17.12",
+    "gh-pages": "^4.0.0"
   }
 }

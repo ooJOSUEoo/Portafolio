@@ -15,7 +15,36 @@ Nota para probar la versión 2:
         Crear una cuenta de usuario (no olvidar)
         Active firestore en la consola de firebase
         Active firestorage en la consola de firebase
-        Busque el archivo `firebase-config.public` en la carpeta `firebase` y haga lo que le pide
+        Busque el archivo `firebase-config.public` en la carpeta `./src/firebase` y haga lo que le pide
+
+## Version 2.1.0
+
+    Que trae?
+
+        * Ajustes al salto de linea
+            - En About
+            - En Projects
+        * Implementacion de HashRouter en AppRouter para que funcione en el hosting
+        * Implementacion de gh-pages para mandar el proyecto a github pages
+        * Mejora en media queries de header publico
+        * Clickeable en el proyecto para ver mas informacion
+        * Mejora en las validaciones del formulario de contacto usando validator
+            - email
+        * Mejora en el formulario de nuevo proyecto
+            - Agregar boton para resetear el formulario
+        * Que los elemtos de array sean aleatorios
+            - Languages
+            - En MainProjects
+            - Contacts
+        * Implementacion de una vista 404 para cuando no se encuentra la pagina
+            - seccion publica
+        *Implementacion de paginacion
+            Public
+            - AllProjects
+            Admin
+            - AllProjects
+            - Languages
+            - Contacts
 
 ## Versión 2.0.1 - 2.0.9
 

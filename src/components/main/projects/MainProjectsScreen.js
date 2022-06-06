@@ -16,16 +16,18 @@ export const MainProjectsScreen = () => {
         </div>
         <div className="proyect text-dark">
         {
-          projects.map(project => (
+          projects.sort(()=> .5 - Math.random()).map(project => (
             project.favorite &&
               <div className="proyect__container" key={project.id}>
                 <div className='row px-1'>
                   <h3 className="proyect__title col-8">{project.name}</h3>
                   <p className="proyect__company col-4">{project.company}</p>
                 </div>
-                <div className="proyect__container-img">
-                  <img src={project.image} className="proyect__img" alt="Proyecto 1" />
-                </div>
+                <Link to={`/projects/${project.id}`} className="proyect__container-img">
+                  <div className='overflow-hidden'>
+                    <img src={project.image} className="proyect__img" alt="Proyecto 1" />
+                  </div>
+                </Link>
                 <p className="proyect__text">{
                     //los primeros 100 caracteres
                     project.description.length > 100 ?

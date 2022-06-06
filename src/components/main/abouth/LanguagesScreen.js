@@ -26,7 +26,7 @@ export const LanguagesScreen = () => {
   return (
     <div className="habilidades">
         {
-            languages.map(item => {
+            languages.sort(()=> .5 - Math.random()).map(item => {
                 return (
                     <div className="habilidades__items" key={item.id}>
                         <button className="habilidades_button" onMouseMove={setActiveClass}>
@@ -35,22 +35,22 @@ export const LanguagesScreen = () => {
                             </span>
                             <p className="habilidades_progress">
                             {
-                                item.range == 0 && (
+                                parseInt(item.range) === 0 && (
                                 <i className="fas fa-frown text-danger"></i>
                                 )
                             }
                             {
-                                item.range == 1 && (
+                                parseInt(item.range) === 1 && (
                                 <i className="fas fa-grin-alt text-warning"></i>
                                 )
                             }
                             {
-                                item.range == 2 && (
+                                parseInt(item.range) === 2 && (
                                 <i className="fas fa-grin-beam text-warning"></i>
                                 )
                             }
                             {
-                                item.range == 3 && (
+                                parseInt(item.range) === 3 && (
                                 <i className="fas fa-laugh-beam text-success"></i>
                                 )
                             }

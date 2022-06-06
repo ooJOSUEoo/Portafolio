@@ -4,11 +4,10 @@ export const IndexScreen = () => {
   return (
     <div className='container text-dark'>
        
-      <h1>Descripción del portafolio</h1>
+      <h1>Descripción del sitio web</h1>
 
       <p>
-        En este portafolio se muestra una descripción de los proyectos que 
-        he realizado en el transcurso de mi carrera.
+        En este sitio web se muestra una descripción de mi trabajo y una lista de mis conocimientos.
       </p>
 
       <p>

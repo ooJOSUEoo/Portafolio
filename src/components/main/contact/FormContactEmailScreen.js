@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import emailjs from '@emailjs/browser';
 import { useForm } from '../../../hooks/useForm';
+import validator from 'validator';
 
 export const FormContactEmailScreen = () => {
 
@@ -51,7 +52,6 @@ export const FormContactEmailScreen = () => {
 
     useEffect(() => {
 
-        const regexEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
         const regexTel = /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/;
         const regexName = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u;
 
@@ -62,7 +62,7 @@ export const FormContactEmailScreen = () => {
         
         if (!formValue.user_email || !formValue.user_name || !formValue.user_tel || !formValue.user_message){
             setMessage('Todos los campos son obligatorios')
-        }else if (!regexEmail.test(formValue.user_email)){
+        }else if (!validator.isEmail(formValue.user_email)){
             setMessage('El email no es válido')
         }else if (!regexTel.test(formValue.user_tel)){
             setMessage('El teléfono no es válido')
@@ -76,7 +76,7 @@ export const FormContactEmailScreen = () => {
         }
 
 
-        if (regexEmail.test(formValue.user_email)){
+        if (validator.isEmail(formValue.user_email)){
             document.getElementById('user_email').classList.remove('is-invalid')
             document.getElementById('user_email').classList.add('is-valid')
         }else{

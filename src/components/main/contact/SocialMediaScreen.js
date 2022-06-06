@@ -21,7 +21,7 @@ export const SocialMediaScreen = () => {
       <ul className="social_icon">
 
         {
-          contacts.map(contact => (
+          contacts.sort(()=> .5 - Math.random()).map(contact => (
             <li key={contact.id}>
               <a href={contact.link} className="text-decoration-none" target="_blank" rel="noopener noreferrer">
                 <i className={icons[contact.name]}></i>

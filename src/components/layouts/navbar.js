@@ -22,7 +22,7 @@ export const Navbar = () => {
         <div className="navbar navbar-expand-lg navbar-inverse justify-content-around text-light"> {/*<--text-light*/}
             <div className="navbar-header d-flex">
                 <img src={abouth&&abouth[0].photo} className="myPhoto" alt="mi foto" />
-                <p className="navbar-brand fw-bold">Josue Muñoz Avila</p>
+                <p className="navbar-brand fw-bold mb-0">Josue Muñoz Avila</p>
             </div>
             <div className="navigation">
                 <ul className=" ps-0 justify-content-center">

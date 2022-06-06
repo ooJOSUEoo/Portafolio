@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { BrowserRouter as Router, Navigate, Route, Routes  } from 'react-router-dom'
+import { HashRouter, Navigate, Route, Routes  } from 'react-router-dom'
 import { login } from '../actions/auth'
 import { IndexScreenAdmin } from '../components/admin/IndexScreenAdmin'
 import { NavBarAdmin } from '../components/admin/NavBarAdmin'
@@ -32,6 +32,8 @@ import { FormLanguagesScreen } from '../components/admin/languages/FormLanguages
 import { IndexLanguagesScreen } from '../components/admin/languages/IndexLanguagesScreen'
 import { startLoadingLanguages } from '../actions/languages'
 import { BtnTheme } from '../components/layouts/BtnTheme'
+import { SpecificProjectScreen } from '../components/main/projects/SpecificProjectScreen'
+import { View404Screen } from '../components/main/View404Screen'
 
 export const AppRouter = () => {
 
@@ -74,7 +76,7 @@ export const AppRouter = () => {
   }
 
   return (
-    <Router>
+    <HashRouter>
       <Routes>
 
         {/* Publicas */}
@@ -83,11 +85,13 @@ export const AppRouter = () => {
             <Navbar />
             <BtnTheme />
             <Routes>
-              <Route path="/*" element={<IndexScreen />} />
+              <Route path="/" element={<IndexScreen />} />
               <Route path="/abouth" element={<AbouthScreen />} />
               <Route path="/projects" element={<MainProjectsScreen />} />
-              <Route path="/projects/all" element={<AllProjectsScreen />} />
+              <Route path="/projects/all/" element={<AllProjectsScreen />} />
+              <Route path="/projects/:id" element={<SpecificProjectScreen />} />
               <Route path="/contact" element={<ContactScreen />} />
+              <Route path="*" element={<View404Screen />} />
             </Routes>
             <Footer />
           </PublicRoute>} 
@@ -130,9 +134,7 @@ export const AppRouter = () => {
             </Routes>
           </PrivateRoute>} 
         />
-        <Route path="*" element={<Navigate to='/' />} />
-
       </Routes>
-    </Router>
+    </HashRouter>
   )
 }
