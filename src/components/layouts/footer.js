@@ -16,7 +16,7 @@ export const Footer = () => {
                 Gracias por visitar mi portafolio.
                 <br />
                 <br />
-                Espero que te hayas encontrado lo que buscabas.
+                Espero que hayas encontrado lo que buscabas.
                 <br />
                 </p></li>
         </ul>

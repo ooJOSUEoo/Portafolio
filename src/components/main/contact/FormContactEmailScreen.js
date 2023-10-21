@@ -25,7 +25,7 @@ export const FormContactEmailScreen = () => {
         if (!message){
             const serviceID = 'service_2il2lxg';
             const templateID = 'template_fpo2t8y';
-            const publicKey = 'VKvjM8rk8J5jMydBP'
+            const publicKey = '1mA_Ykh5wOGGZe8uX'
             
             emailjs.sendForm(serviceID, templateID, form.current, publicKey)
             .then(res => {
