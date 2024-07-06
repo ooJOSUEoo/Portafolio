@@ -18,7 +18,7 @@ export const Footer = () => {
     }, [isDarkMode]);
 
   return (
-    <footer className={`${isDarkMode ? 'dark' : 'light'}`} id="footer">
+    <footer className={`${isDarkMode ? 'dark' : ''}`} id="footer">
         <div className="waves">
             <div className={`wave`} id="wave1" style={{ backgroundImage: `url(${imageWave})` }}></div>
             <div className={`wave`} id="wave2" style={{ backgroundImage: `url(${imageWave})` }}></div>

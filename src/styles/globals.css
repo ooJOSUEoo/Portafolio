@@ -2,18 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+body {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+  --header-color: #00bfff;
+  --footer-color: #00bfff;
+  --secondary-color: #000;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+body.dark {
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 0, 0, 0;
+  --background-end-rgb: 0, 0, 0;
+  --header-color: rgb(32, 32, 32);
+  --footer-color: #808080;
+  --secondary-color: #fff;
 }
 
 body {
