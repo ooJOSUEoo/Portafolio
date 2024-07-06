@@ -1,4 +1,24 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+// const nextConfig = {
+//   reactStrictMode: true,
+//   images: {
+//     domains: [ 
+//       "lh3.googleusercontent.com", 
+//       "cdn1.iconfinder.com",
+//     ]
+//   },
+// };
 
-export default nextConfig;
+const nextConfig = {
+    distDir: "build",
+    images: {
+      remotePatterns: [
+        {
+          protocol: "https",
+          hostname: "**",
+        }
+      ]
+    },
+  };
+  
+  export default nextConfig;
