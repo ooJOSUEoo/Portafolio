@@ -28,8 +28,8 @@ export default function RootLayout({
         children={children} 
         header={<Header />} 
         footer={<Footer />}
-        linksDontShowHeader={['/auth/login']}
-        linksDontShowFooter={['/auth/login']}
+        linksDontShowHeader={['/auth/login','/admin']}
+        linksDontShowFooter={['/auth/login','/admin']}
         />
       </Provider></body>
     </html>
