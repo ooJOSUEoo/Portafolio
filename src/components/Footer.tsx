@@ -5,20 +5,28 @@ import '@/styles/footer.css'
 import waveD from '@/assets/img/waveD.png'
 import waveL from '@/assets/img/waveL.png'
 import Image from 'next/image';
+import { useAppStore } from '@/context/appContext';
 
 export const Footer = () => {
 
-    const isDarkMode = false
+    const {theme} = useAppStore((s) => s.ui)
     const [imageWave, setImageWave] = useState('')
 
     useEffect(() => {
-        isDarkMode
-        ? setImageWave(waveD.src)
-        : setImageWave(waveL.src)
-    }, [isDarkMode]);
+      switch (theme) {
+        case '':
+          setImageWave(waveL.src)
+          break;
+        case 'dark':
+          setImageWave(waveD.src)
+          break;
+        default:
+          break;
+      }
+    }, [theme]);
 
   return (
-    <footer className={`${isDarkMode ? 'dark' : ''}`} id="footer">
+    <footer className='' id="footer">
         <div className="waves">
             <div className={`wave`} id="wave1" style={{ backgroundImage: `url(${imageWave})` }}></div>
             <div className={`wave`} id="wave2" style={{ backgroundImage: `url(${imageWave})` }}></div>

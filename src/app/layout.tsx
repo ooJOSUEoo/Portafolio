@@ -7,6 +7,7 @@ import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import Layout from "@/components/Layout";
 import Provider from "@/components/Provider";
+import BtnTheme from "@/components/BtnTheme";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -23,9 +24,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={'dark ' + inter.className}><Provider>
+      <body className={' ' + inter.className}><Provider>
         <Layout 
-        children={children} 
+        children={<><BtnTheme/>{children}</>} 
         header={<Header />} 
         footer={<Footer />}
         linksDontShowHeader={['/auth/login','/admin']}

@@ -3,6 +3,7 @@ import React, { useEffect, useState, ReactNode } from 'react';
 import LoadingGif from '@/assets/img/loading.gif';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
+import { useAppStore } from '@/context/appContext';
 
 interface LayoutProps {
   children: ReactNode;
@@ -19,11 +20,17 @@ export default function Layout({ children, header, footer, linksDontShowHeader, 
   const [showHeader, setShowHeader] = useState<Boolean>()
   const [showFooter, setShowFooter] = useState<Boolean>()
 
+  const {theme} = useAppStore((s) => s.ui)
+
   useEffect(() => {
     setTimeout(() => {
       setChecking(false);
     }, 1000);
   }, []);
+
+  useEffect(() => {
+    theme && document.body.classList.add(theme)
+  }, [theme]);
 
   useEffect(() => {
     if (linksDontShowHeader?.includes(location)) {
