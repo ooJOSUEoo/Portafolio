@@ -8,6 +8,7 @@ import { Header } from "@/components/Header";
 import Layout from "@/components/Layout";
 import Provider from "@/components/Provider";
 import BtnTheme from "@/components/BtnTheme";
+import SelectTranslate from "@/components/SelectTranslate";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -26,8 +27,13 @@ export default function RootLayout({
     <html lang="en">
       <body className={' ' + inter.className}><Provider>
         <Layout 
-        children={<><BtnTheme/>{children}</>} 
-        header={<Header />} 
+        children={children} 
+        header={<>
+        <Header />
+        <div className="flex justify-end items-center">
+          <SelectTranslate/>
+          <BtnTheme/>
+        </div></>} 
         footer={<Footer />}
         linksDontShowHeader={['/auth/login','/admin']}
         linksDontShowFooter={['/auth/login','/admin']}

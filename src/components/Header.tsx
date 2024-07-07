@@ -4,6 +4,7 @@ import React, { useEffect } from 'react'
 import '@/styles/header.css'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
+import TC from './TranslateContent'
 
 export const Header = () => {
   // const { abouth } = useSelector(state => state.abouth)
@@ -48,25 +49,25 @@ export const Header = () => {
                     <Link href='/' className="list" id="home" onMouseOver={setActiveClass}>
                         <p>
                             <span className="icon"><i className="fa fa-home icons_header"></i></span>
-                            <span className="text">Inicio</span>
+                            <span className="text"><TC>Inicio</TC></span>
                         </p>
                     </Link>
                     <Link href='/experience' className="list" id="experience" onMouseOver={setActiveClass}>
                         <p>
                             <span className="icon"><i className="fa fa-file-certificate icons_header"></i></span>
-                            <span className="text">Experiencia</span>
+                            <span className="text"><TC>Experiencia</TC></span>
                         </p>
                     </Link>
                     <Link href='/projects' className="list" id="projects" onMouseOver={setActiveClass}>
                         <p>
                             <span className="icon"><i className="fa fa-briefcase icons_header"></i></span>
-                            <span className="text">Proyectos</span>
+                            <span className="text"><TC>Proyectos</TC></span>
                         </p>
                     </Link>
                     <Link href='/contact' className="list" id="contact" onMouseOver={setActiveClass}>
                         <p>
                             <span className="icon"><i className="fa fa-comments icons_header"></i></span>
-                            <span className="text">Contacto</span>
+                            <span className="text"><TC>Contacto</TC></span>
                         </p>
                     </Link>
                     <div className="indicator"></div>

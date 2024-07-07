@@ -9,6 +9,7 @@ body {
   --header-color: #00bfff;
   --footer-color: #00bfff;
   --secondary-color: #000;
+  --alternate-color: #ff0000;
 }
 
 body.dark {
@@ -18,6 +19,16 @@ body.dark {
   --header-color: #212529;
   --footer-color: #808080;
   --secondary-color: #fff;
+  --alternate-color: #0027d4;
+}
+
+body.green {
+  --background-color: #3db37c;
+  --background-min-color: #61e6a8;
+  --background-max-color: #288d5e;
+  --header-color: #09ff00;
+  --footer-color: #00ff22;
+  --secondary-color: #000;
 }
 
 body {
