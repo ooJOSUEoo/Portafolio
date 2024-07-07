@@ -92,7 +92,7 @@ nav{
         transform: translateY(-17px);
     }
     .navigation ul a.active p .text{
-        font-size: 12px;
+        font-size: 11.5px;
     }
     .navigation ul a:nth-child(1).active ~ .indicator{
         transform: translateX(calc(50px * 1.3));

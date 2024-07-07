@@ -1,0 +1,137 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String    @id @default(cuid())
+  username      String?   @unique
+  password      String?
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  role          String?
+  accounts      Account[]
+  sessions      Session[]
+
+  createAt  DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model About {
+  id            String  @id @default(cuid())
+  name          String
+  description   String
+  cv            String
+  image         String
+
+  createAt  DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Skill {
+  id        String    @id @default(cuid())
+  name      String
+  image     String
+
+  projects  ProjectSkill[]
+
+  createAt  DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Project {
+  id          String         @id @default(cuid())
+  name        String
+  description String
+  mainImage   String
+  images      String //json array of strings
+  url         String?
+  github      String?
+  for         String
+  initialDate DateTime
+  endDate     DateTime?
+  isFavourite Boolean?
+
+  skills      ProjectSkill[]
+
+  createAt    DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model ProjectSkill {
+  projectId String
+  skillId   String
+
+  project   Project  @relation(fields: [projectId], references: [id])
+  skill     Skill    @relation(fields: [skillId], references: [id])
+
+  @@id([projectId, skillId])
+}
+
+model Experience {
+  id            String  @id @default(cuid())
+  name          String
+  description   String
+  image         String?
+  url           String?
+
+  createAt  DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Contact {
+  id            String  @id @default(cuid())
+  name          String
+  icon          String
+  url           String
+
+  createAt  DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

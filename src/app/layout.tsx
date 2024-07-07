@@ -5,7 +5,9 @@ import "@/styles/globals.css";
 import "@/assets/icons/css/all.min.css";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
-import Layout from "@/components/layout";
+import Layout from "@/components/Layout";
+import Provider from "@/components/Provider";
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,15 +23,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={' ' + inter.className}>
-        <Layout children={
-          <>
-          <Header />
-          {children}
-          <Footer />
-          </>
-        }/>
-      </body>
+      <body className={'dark ' + inter.className}><Provider>
+        <Layout 
+        children={children} 
+        header={<Header />} 
+        footer={<Footer />}
+        linksDontShowHeader={['/auth/login']}
+        linksDontShowFooter={['/auth/login']}
+        />
+      </Provider></body>
     </html>
   );
 }
