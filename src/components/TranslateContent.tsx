@@ -8,20 +8,21 @@ import translate from "translate";
  */
 export default  function TC({
     children,
+    from="es",
   }: Readonly<{
     children: string;
+    from?: string;
   }>) {
-
     const { lang } = useAppStore((s) => s.ui);
 
-    const [result, setResult] = useState("second")
+    const [result, setResult] = useState("")
 
     useEffect(() => {
         translate.engine = "google";
-        translate(children, { from: "es", to: lang }).then((res) => {
+        translate(children, { from: from, to: lang }).then((res) => {
             setResult(res)
         })
-    }, [children, lang])
+    }, [children, from, lang])
   return (
     <>{result}</>
   )

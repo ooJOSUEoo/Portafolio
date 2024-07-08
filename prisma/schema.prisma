@@ -94,7 +94,7 @@ model Project {
   images      String //json array of strings
   url         String?
   github      String?
-  for         String
+  company     String
   initialDate DateTime
   endDate     DateTime?
   isFavourite Boolean?
