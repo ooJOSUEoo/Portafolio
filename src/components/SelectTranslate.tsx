@@ -15,6 +15,12 @@ export default function SelectTranslate() {
     { value: 'es', label: 'Español' },
     { value: 'en', label: 'English' },
     { value: 'fr', label: 'Français' },
+    { value: 'it', label: 'Italiano' },
+    { value: 'de', label: 'Deutsch' },
+    { value: 'ja', label: '日本語' },
+    { value: 'ko', label: '한국어' },
+    { value: 'ru', label: 'Русский' },
+    { value: 'zh', label: '简体中文' }
   ]
 
   return (
@@ -24,6 +30,9 @@ export default function SelectTranslate() {
       menu: (styles: any) => ({ ...styles, backgroundColor: 'var(--header-color)', zIndex: 9999 }),
       option: (styles: any, { data, isDisabled, isFocused, isSelected }: any) => ({
         ...styles,
+        ":hover": {
+          backgroundColor: "rgba(255, 255, 255, 0.2)",
+        },
         backgroundColor: isDisabled
           ? null
           : isSelected
