@@ -1,30 +1,96 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import TC from '../TranslateContent'
+import axios from 'axios'
+import { signOut, useSession } from 'next-auth/react'
+import { usePathname } from 'next/navigation'
 
 export default function HeaderAdmin() {
+
+  const [showOptions, setShowOptions] = useState(false)
+  const { data: session }:any = useSession();
+
+  const location = usePathname()
+
+  useEffect(() => {
+    const section = location?.split('/')[2]
+    if(section) {
+      let list = document.querySelectorAll('.list');
+      list.forEach(item => {
+        item.classList.remove('border-b') 
+      })
+      document.getElementById(section)?.classList.add('border-b')
+    }else{
+      let list = document.querySelectorAll('.list');
+      list.forEach(item => {
+        item.classList.remove('border-b') 
+      })
+      document.getElementById('home')?.classList.add('border-b')
+    }
+  }, [location])
+
+  useEffect(() => {
+    document.body.addEventListener('click', () => setShowOptions(false))
+    return () => {
+      document.body.removeEventListener('click', () => setShowOptions(false))
+    }
+  }, [showOptions])
+
+  const handleLogout = async() => {
+    try {
+      await axios.post('/api/auth/logout',{},{
+        headers: {
+          'Authorization': `Token ${session.user.accessToken}`
+        }
+      })
+      await signOut({callbackUrl: "/"}) 
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <nav className='w-full bg-[var(--header-color)] py-4 mb-2'>
       <div className="px-5 flex justify-center items-center flex-wrap sm:justify-between">
         <div className="flex justify-center items-center flex-wrap gap-4">
           <i className='fa-solid fa-gear'></i>
-          <Link href='/admin'><TC>Tablero</TC></Link>
-          <Link href='/admin/about'><TC>Acerca de</TC></Link>
-          <Link href='/admin/skills'><TC>Habilidades</TC></Link>
-          <Link href='/admin/experience'><TC>Experiencia</TC></Link>
-          <Link href='/admin/projects'><TC>Proyectos</TC></Link>
-          <Link href='/admin/contact'><TC>Contacto</TC></Link>
+          <Link className='list' id='home' href='/admin'><TC>Tablero</TC></Link>
+          <Link className='list' id='about' href='/admin/about'><TC>Acerca de</TC></Link>
+          <Link className='list' id='skills' href='/admin/skills'><TC>Habilidades</TC></Link>
+          <Link className='list' id='experience' href='/admin/experience'><TC>Experiencia</TC></Link>
+          <Link className='list' id='projects' href='/admin/projects'><TC>Proyectos</TC></Link>
+          <Link className='list' id='contact' href='/admin/contact'><TC>Contacto</TC></Link>
         </div>
-        <div className="flex justify-center items-center gap-1">
-          <Image
-            className='border border-gray-50 rounded-full w-10 h-10'
-            src="/logo.png"
-            alt="Picture"
-            width={50}
-            height={50}
-          />
-          <i className='fa fa-angle-down'></i>
+        <div className="cursor-pointer" onClick={() => setShowOptions(!showOptions)}>
+          <div className="flex justify-center items-center gap-1">
+            <Image
+              className='border border-gray-50 rounded-full w-10 h-10'
+              src="/logo.png"
+              alt="Picture"
+              width={50}
+              height={50}
+            />
+            <i className='fa fa-angle-down'></i>
+          </div>
+          <div className="relative">
+            {
+              showOptions &&
+              <div className="w-40 absolute top-2 end-0 z-10 mr-8 bg-[var(--header-color)] border rounded-lg text-sm p-2">
+                <div className="flex text-center flex-col gap-2">
+                  <Link 
+                  className='hover:bg-[var(--alternate-color)] hover:transition-colors hover:text-white' 
+                  href='/admin/profile'><TC>Perfil</TC></Link>
+                  <Link
+                  className='hover:bg-[var(--alternate-color)] hover:transition-colors hover:text-white'
+                  href='/admin/settings'><TC>Ajustes</TC></Link>
+                  <p onClick={handleLogout}
+                  className='hover:bg-[var(--alternate-color)] hover:transition-colors hover:text-white'
+                  ><TC>Cerrar sesión</TC></p>
+                </div>
+              </div>
+            }
+          </div>
         </div>
       </div>
     </nav>

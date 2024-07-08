@@ -25,13 +25,14 @@ export default function LoginPage() {
         const resp = await signIn('credentials', {
           email: values.email, 
           password: values.password,
-          redirect: false
+          redirect: true,
+          callbackUrl: '/admin'
         });
 
-        if(resp?.error) {
+        if(resp?.ok === false) {
           toast.error(resp.error)
         } else {
-          router.push('/admin') 
+          // router.push('/admin') 
         }
        }}
        >

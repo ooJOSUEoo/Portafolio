@@ -17,7 +17,7 @@ export default function RootLayout({
         <Layout 
         children={children} 
         header={<><HeaderAdmin />
-        <div className="flex justify-end">
+        <div className="flex justify-end items-center">
           <SelectTranslate/>
           <BtnTheme/>
         </div></>} 
