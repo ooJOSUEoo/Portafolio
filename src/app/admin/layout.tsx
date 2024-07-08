@@ -5,6 +5,7 @@ import AcessRoute from "../../components/AcessRoute";
 import Layout from "@/components/Layout";
 import HeaderAdmin from "@/components/admin/Header";
 import BtnTheme from "@/components/BtnTheme";
+import SelectTranslate from "@/components/SelectTranslate";
 
 export default function RootLayout({
   children,
@@ -17,6 +18,7 @@ export default function RootLayout({
         children={children} 
         header={<><HeaderAdmin />
         <div className="flex justify-end">
+          <SelectTranslate/>
           <BtnTheme/>
         </div></>} 
         linksDontShowHeader={[]}

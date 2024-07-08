@@ -35,8 +35,8 @@ export default function RootLayout({
           <BtnTheme/>
         </div></>} 
         footer={<Footer />}
-        linksDontShowHeader={['/auth/login','/admin']}
-        linksDontShowFooter={['/auth/login','/admin']}
+        linksDontShowHeader={['/auth/login','/admin','/admin/*']}
+        linksDontShowFooter={['/auth/login','/admin','/admin/*']}
         />
       </Provider></body>
     </html>

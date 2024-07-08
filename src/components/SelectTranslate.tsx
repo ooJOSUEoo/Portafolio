@@ -21,7 +21,7 @@ export default function SelectTranslate() {
     <Select 
     styles={{
       control: (styles: any) => ({ ...styles, backgroundColor: 'var(--header-color)' }),
-      menu: (styles: any) => ({ ...styles, backgroundColor: 'var(--header-color)' }),
+      menu: (styles: any) => ({ ...styles, backgroundColor: 'var(--header-color)', zIndex: 9999 }),
       option: (styles: any, { data, isDisabled, isFocused, isSelected }: any) => ({
         ...styles,
         backgroundColor: isDisabled

@@ -38,7 +38,7 @@ export default function LoginPage() {
         {({ errors, touched }) => (
           <Form className='flex flex-col px-5 py-10 min-w-72 max-w-md w-2/3 h-2/3 rounded-xl bg-[var(--header-color)] justify-between'>
             <div className="flex justify-between">
-              <i className="fa fa-arrow-left cursor-pointer text-white text-3xl" onClick={() => {
+              <i className="fa fa-angle-left cursor-pointer text-white text-3xl" onClick={() => {
                 router.push('/')
               }}></i>
               <p className='text-3xl text-white font-semibold'>Login</p>
