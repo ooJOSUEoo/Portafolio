@@ -2,7 +2,7 @@
 import { encodeFilesToBase64, optomizeImage } from '@/helpers/fileB64';
 import { translateText } from '@/helpers/translateText';
 import { storage, storageRef, ref, getDownloadURL, deleteObject } from '@/libs/firebase';
-import { About, Skill, Experience } from '@prisma/client';
+import { About, Skill, Experience, Project } from '@prisma/client';
 import axios from 'axios';
 import { uploadBytes } from 'firebase/storage';
 import toast from 'react-hot-toast';
@@ -12,6 +12,9 @@ import { persist } from 'zustand/middleware';
 type AboutCustom = Omit<About, 'createAt' | 'updatedAt'> & Partial<Pick<About, 'createAt' | 'updatedAt'>>;
 type SkillCustom = Omit<Skill, 'id' | 'createAt' | 'updatedAt'> & Partial<Pick<Skill, 'id' | 'createAt' | 'updatedAt'>>;
 type ExperienceCustom = Omit<Experience, 'id' | 'createAt' | 'updatedAt'> & Partial<Pick<Experience, 'id' | 'createAt' | 'updatedAt'>>;
+type ProjectCustom = Omit<Project, 'id' | 'createAt' | 'updatedAt'> & Partial<Pick<Project, 'id' | 'createAt' | 'updatedAt'>>;
+
+
 export interface State {
   ui:{
     loading:boolean
@@ -32,6 +35,10 @@ export interface State {
   experiences:{
     data: ExperienceCustom[]
     experience: ExperienceCustom
+  }
+  projects:{
+    data: ProjectCustom[]
+    project: ProjectCustom
   }
 
   setLoading: (loading: boolean) => void
@@ -103,6 +110,21 @@ export const initialState: State = {
       url: '',
     }
   },
+  projects:{
+    data: [],
+    project: {
+      name: '',
+      description: '',
+      mainImage: '',
+      images: '',
+      url: '',
+      github: '',
+      company: '',
+      initialDate: new Date(),
+      endDate: new Date(),
+      isFavourite: false,
+    }
+  },
 
   //Ignore!!!!!
   setLoading: (loading: boolean) => {},
@@ -135,6 +157,8 @@ export const useAppStore = create(persist<State>((set,get) => ({
     skills: initialState.skills,
 
     experiences: initialState.experiences,
+
+    projects: initialState.projects,
 
     setLoading: (loading: boolean) => set((state) => ({ ...state, ui: { ...state.ui, loading } })),
     setError: (error: string) => set((state) => ({ ...state, ui: { ...state.ui, error } })),
@@ -260,6 +284,8 @@ export const useAppStore = create(persist<State>((set,get) => ({
       } catch (error) {
         console.log(error)
         alertError('Could not obtain skills, please reload the page')
+      } finally {
+        set((state) => ({ ...state, skills:  {...state.skills, skill: initialState.skills.skill} }))
       }
     },
     getSkill: async(id: string, token: string) => {
@@ -296,6 +322,7 @@ export const useAppStore = create(persist<State>((set,get) => ({
           }
         })
         // set((state) => ({ ...state, skills: {...state.skills, data: [...state.skills.data.map(skill => skill.id === resp.data.skill.id ? resp.data.skill : skill)]} }))
+        set((state) => ({ ...state, skills:  {...state.skills, skill: initialState.skills.skill} }))
         alertSuccess('Data has been updated')
         return true
       } catch (error) {
@@ -333,12 +360,12 @@ export const useAppStore = create(persist<State>((set,get) => ({
       try {
         if(typeof data.image !== 'string') {
           const fileImage = data.image as unknown as File
-          const storageRefImage = ref(storage, `v3/experience/${data.id}.${fileImage.type.split('/')[1]}`)
+          const storageRefImage = ref(storage, `v3/experiences/${data.id}.${fileImage.type.split('/')[1]}`)
           await uploadBytes(storageRefImage, fileImage)
           const image = await getDownloadURL(storageRefImage)
           data.image = image
         }
-        const resp = await axios.post('/api/experience', data, {
+        const resp = await axios.post('/api/experiences', data, {
           headers: {
             Authorization: `Token ${token}`
           }
@@ -356,7 +383,7 @@ export const useAppStore = create(persist<State>((set,get) => ({
     },
     getExperiences: async(token: string) => {
       try {
-        const resp = await axios.get('/api/experience', {
+        const resp = await axios.get('/api/experiences', {
           headers: {
             Authorization: `Token ${token}`
           }
@@ -368,11 +395,13 @@ export const useAppStore = create(persist<State>((set,get) => ({
         console.log(error)
         alertError('Could not obtain experiences, please try later')
         return false
+      } finally {
+        set((state) => ({ ...state, experiences: {...state.experiences, experience: initialState.experiences.experience} }))
       }
     },
     getExperience: async(id: string, token: string) => {
       try {
-        const resp = await axios.get(`/api/experience/${id}`, {
+        const resp = await axios.get(`/api/experiences/${id}`, {
           headers: {
             Authorization: `Token ${token}`
           }
@@ -389,21 +418,29 @@ export const useAppStore = create(persist<State>((set,get) => ({
     updateExperience: async(data: ExperienceCustom, id: string, token: string) => {
       get().setLoading(true)
       try {
+        if(data.image == '') {
+          if(get().experiences.experience.image !== '') {
+            const type = get().experiences.experience.image!.split('?')[0].split('.').pop()
+            const storageRefOldImage = ref(storage, `v3/experiences/${id}.${type}`)
+            await deleteObject(storageRefOldImage)
+          }
+        }
         if(typeof data.image !== 'string') {
           const fileImage = data.image as unknown as File
-          const storageRefOldImage = ref(storage, `v3/experience/${id}.${fileImage.type.split('/')[1]}`)
+          const storageRefOldImage = ref(storage, `v3/experiences/${id}.${fileImage.type.split('/')[1]}`)
           await deleteObject(storageRefOldImage)
-          const storageRefImage = ref(storage, `v3/experience/${id}.${fileImage.type.split('/')[1]}`)
+          const storageRefImage = ref(storage, `v3/experiences/${id}.${fileImage.type.split('/')[1]}`)
           await uploadBytes(storageRefImage, fileImage)
           const image = await getDownloadURL(storageRefImage)
           data.image = image
         }
-        const resp = await axios.put(`/api/experience/${id}`, data, {
+        const resp = await axios.put(`/api/experiences/${id}`, data, {
           headers: {
             Authorization: `Token ${token}`
           }
         })
-        set((state) => ({ ...state, experiences: {...state.experiences, data: [...state.experiences.data.filter(experience => experience.id !== resp.data.experience.id), resp.data.experience]} }))
+        // set((state) => ({ ...state, experiences: {...state.experiences, data: [...state.experiences.data.filter(experience => experience.id !== resp.data.experience.id), resp.data.experience]} }))
+        set((state) => ({ ...state, experiences: {...state.experiences, experience: initialState.experiences.experience} }))
         alertSuccess('Data has been updated')
         return true
       } catch (error) {
@@ -415,9 +452,14 @@ export const useAppStore = create(persist<State>((set,get) => ({
       }
     },
     deleteExperience: async(id: string, type: string, token: string) => {
+      console.log(id, type)
       get().setLoading(true)
       try {
-        const resp = await axios.delete(`/api/experience/${id}`, {
+        if(type){
+          const storageRefOldImage = ref(storage, `v3/experiences/${id}.${type}`)
+          await deleteObject(storageRefOldImage)
+        }
+        const resp = await axios.delete(`/api/experiences/${id}`, {
           headers: {
             Authorization: `Token ${token}`
           }
@@ -433,6 +475,112 @@ export const useAppStore = create(persist<State>((set,get) => ({
         get().setLoading(false)
       }
     },
+
+    setProjects: async(data: ProjectCustom[], token: string) => {
+      get().setLoading(true)
+      try {
+        const resp = await axios.post('/api/projects', data, {
+          headers: {
+            Authorization: `Token ${token}`
+          }
+        })
+        set((state) => ({ ...state, projects: {...state.projects, data: [...state.projects.data, resp.data.project]} }))
+        alertSuccess('Data has been loaded')
+        return true
+      } catch (error) {
+        console.log(error)
+        alertError('Data could not be loaded')
+        return false
+      } finally {
+        get().setLoading(false)
+      }
+    },
+    getProjects: async(token: string) => {
+      try {
+        const resp = await axios.get('/api/projects', {
+          headers: {
+            Authorization: `Token ${token}`
+          }
+        })
+        set((state) => ({ ...state, projects: {...state.projects, data: resp.data.projects} }))
+        return resp.data
+      } catch (error) {
+        set((state) => ({ ...state, projects: {...state.projects, data: initialState.projects.data} }))
+        console.log(error)
+        alertError('Could not obtain projects, please try later')
+        return false
+      } finally {
+        set((state) => ({ ...state, projects: {...state.projects, project: initialState.projects.project} }))
+      }
+    },
+    getProject: async(id: string, token: string) => {
+      try {
+        const resp = await axios.get(`/api/projects/${id}`, {
+          headers: {
+            Authorization: `Token ${token}`
+          }
+        })
+        set((state) => ({ ...state, projects: {...state.projects, project: resp.data.project} }))
+        return resp.data
+      } catch (error) {
+        set((state) => ({ ...state, projects: {...state.projects, project: initialState.projects.project} }))
+        console.log(error)
+        alertError('Could not obtain project, please try later')
+        return false
+      } finally {
+        set((state) => ({ ...state, projects: {...state.projects, project: initialState.projects.project} }))
+      }
+    },
+    updateProject: async(data: ProjectCustom, id: string, token: string) => {
+      get().setLoading(true)
+      try {
+        if(typeof data.image !== 'string') {
+          const fileImage = data.image as unknown as File
+          const storageRefOldImage = ref(storage, `v3/projects/${id}.${fileImage.type.split('/')[1]}`)
+          await deleteObject(storageRefOldImage)
+          const storageRefImage = ref(storage, `v3/projects/${id}.${fileImage.type.split('/')[1]}`)
+          await uploadBytes(storageRefImage, fileImage)
+          const image = await getDownloadURL(storageRefImage)
+          data.image = image
+        }
+        const resp = await axios.put(`/api/projects/${id}`, data, {
+          headers: {
+            Authorization: `Token ${token}`
+          }
+        })
+        // set((state) => ({ ...state, projects: {...state.projects, data: [...state.projects.data.map(project => project.id === resp.data.project.id ? resp.data.project : project)]} }))
+        set((state) => ({ ...state, projects: {...state.projects, project: initialState.projects.project} }))
+        alertSuccess('Data has been updated')
+        return true 
+      } catch (error) {
+        console.log(error)
+        alertError('Project could not be loaded')
+        return false
+      } finally {
+        get().setLoading(false)
+      }
+    },
+    deleteProject: async(id: string, token: string) => {
+      get().setLoading(true)
+      try {
+        const storageRefOldImage = ref(storage, `v3/projects/${id}.png`)
+        await deleteObject(storageRefOldImage)
+        const resp = await axios.delete(`/api/projects/${id}`, {
+          headers: {
+            Authorization: `Token ${token}`
+          }
+        })
+        set((state) => ({ ...state, projects: {...state.projects, data: [...state.projects.data.filter(project => project.id !== resp.data.project.id)]} }))
+        alertSuccess('Data has been deleted')
+        return true
+      } catch (error) {
+        console.log(error)
+        alertError('Project could not be deleted')
+        return false
+      } finally {
+        get().setLoading(false)
+      }
+    }
 }), {
   name: 'AppStore',
 }));

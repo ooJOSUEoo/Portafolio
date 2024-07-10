@@ -80,7 +80,7 @@ export function InputsFile({
               inputFile.value = '';
               inputFile.files = null;
           }
-          SetFieldValue(name, null);
+          SetFieldValue(name, '');
           setUrl('');
       };
       return (
@@ -127,7 +127,7 @@ export function InputsFile({
                   <i 
                       onClick={(e) => {
                         handleDeleteFile(e);
-                        value = '1';
+                        value = '';
                       }}
                       className='absolute top-1 right-0 -translate-x-1/2 fa fa-trash
                        text-[var(--error-color)] text-5xl-3 ml-2 p-1 hover:rounded-md hover:border hover border-[var(--error-color)]'></i>

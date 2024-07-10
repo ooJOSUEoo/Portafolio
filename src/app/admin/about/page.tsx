@@ -83,9 +83,9 @@ export default function AboutAdminPage() {
             Field={Field} TC={TC} errors={errors} touched={touched} SetFieldValue={setFieldValue}   />
 
             <InputsTexts component='textarea' rows={5} name='description' label={labels.description} value={description}
-            placeholder='John Doe' Field={Field} TC={TC} errors={errors} touched={touched} SetFieldValue={setFieldValue}  />
+            placeholder='...' Field={Field} TC={TC} errors={errors} touched={touched} SetFieldValue={setFieldValue}  />
 
-            <InputsFile name='cv' label='Curriculum vitae' Field={Field} TC={TC} errors={errors} value={cv} 
+            <InputsFile name='cv' label={labels.cv} Field={Field} TC={TC} errors={errors} value={cv} 
             touched={touched} accept='application/pdf' SetFieldValue={setFieldValue} values={values} deleteFile={true} />
 
             <InputsFile name='image' label={labels.image} Field={Field} TC={TC} errors={errors} value={image}

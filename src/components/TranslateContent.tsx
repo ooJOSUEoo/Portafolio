@@ -1,3 +1,4 @@
+import { useAppStore } from '@/context/appContext';
 import React, { useEffect, useState } from 'react';
 import translate from 'translate'; // Asegúrate de que esta importación sea correcta
 
@@ -8,7 +9,7 @@ interface TranslateContentProps {
 
 export const TC: React.FC<TranslateContentProps> = ({ children, from = 'en' }) => {
   const [result, setResult] = useState<string>('');
-  const lang = 'es'; // Idioma al que se va a traducir
+  const {lang} = useAppStore((s)=>s.ui);
 
   translate.engine = 'google';
   useEffect(() => {

@@ -11,7 +11,7 @@ import { Box } from '@mui/material';
 import Table from '@/components/Table';
 
 
-export default function ExperienceAdminPage() {
+export default function ProjectsAdminPage() {
 
     const {data: session}:any = useSession()
 

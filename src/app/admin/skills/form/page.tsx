@@ -9,6 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { useSession } from 'next-auth/react';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
+import { useTranslateText } from '@/helpers/translateText';
 
 
 
@@ -34,6 +35,10 @@ export default function SkillsAddAdminPage() {
     name: Yup.string().required('Name is required'),
     image: Yup.mixed().required("Image is required"),
   });
+  const labels={
+    name: useTranslateText('Name'),
+    image: useTranslateText('Image'),
+  }
 
   useEffect(() => {
     const id = searchParams.get('id')
@@ -87,10 +92,10 @@ export default function SkillsAddAdminPage() {
               <p className='text-3xl text-[var(--secondary-color)] font-semibold'><TC>Skills</TC></p>
             </div>
 
-            <InputsTexts type='text' name='name' label='Nombre' placeholder='John Doe' value={id ? name : ''}
+            <InputsTexts type='text' name='name' label={labels.name} placeholder='...' value={id ? name : ''}
             Field={Field} TC={TC} errors={errors} touched={touched} SetFieldValue={setFieldValue}   />
 
-            <InputsFile name='image' label='Imagen' Field={Field} TC={TC} errors={errors} value={id ? image : ''}
+            <InputsFile name='image' label={labels.image} Field={Field} TC={TC} errors={errors} value={id ? image : ''}
             touched={touched} accept='image/*' SetFieldValue={setFieldValue} values={values} deleteFile={true} />
             <div className="">
               <input 
