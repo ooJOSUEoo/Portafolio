@@ -33,6 +33,7 @@ export async function POST (request: Request) {
                 image
             },
             create: {
+                id: id,
                 name,
                 description,
                 cv,

@@ -52,12 +52,15 @@ export default function SelectTranslate() {
       placeholder: (styles: any) => ({ ...styles, color: 'var(--secondary-color)' }),
       valueContainer: (styles: any) => ({ ...styles, color: 'var(--secondary-color)' }),
       input: (styles: any) => ({ ...styles, color: 'var(--secondary-color)' }),
+      indicatorSeparator: (styles: any) => ({ ...styles, backgroundColor: 'var(--secondary-color)' }),
+      dropdownIndicator: (styles: any) => ({ ...styles, color: 'var(--secondary-color)' }),
       
     }}
     isSearchable={true}
     onChange={({ value }: any) => setLang(value)}
     defaultValue={options.find((o) => o.value === lang)}
     components={animatedComponents}
-    options={options} />
+    options={options}
+     />
   )
 }

@@ -101,7 +101,8 @@ const handler = NextAuth({
               sessionToken: sessionToken
             },
             update: {
-              expires: expireSession
+              expires: expireSession,
+              sessionToken: sessionToken
             },
             create: { 
               userId: userFind!.id,

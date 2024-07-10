@@ -45,12 +45,12 @@ export const Footer = () => {
                 <br />
                 </p></li>
         </ul>
-        <p id="contacto"><TC>Todos los derechos reservados</TC></p>
+        {/* <p id="contacto"><TC>Todos los derechos reservados</TC></p>
         <p id="contacto">
           <i className="fa fa-copyright"></i>
           <span>&nbsp;</span>
           <span>2024</span>
-        </p>
+        </p> */}
 
         <Link href='/admin'><TC>Soy admin</TC></Link>
     </footer>

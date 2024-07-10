@@ -17,6 +17,7 @@ export default async function authenticate(request: NextRequest|Request) {
   try {
       // Verificar la validez del token
       const decodedToken = jwt.verify(token, process.env.NEXT_PUBLIC_JWT_SECRET as string) as JwtPayload;
+
       if(!decodedToken.id) return { error: 'Token invalid', token, status: 401 }
       
       // Verificar si el usuario existe
@@ -39,11 +40,15 @@ export default async function authenticate(request: NextRequest|Request) {
         return { error:  'Does not exist a session with this token', token, status: 404}
       }
 
+      const dateToExpiteJWT = new Date(decodedToken.exp! * 1000)
+
       // Devolver el resultado de la autenticación exitosa
       return {
         userId,
         token,
-        status: 200
+        status: 200,
+        decodedToken,
+        dateToExpiteJWT
       };
   } catch (error) {
       // Si hay un error al verificar el token (por ejemplo, el token ha caducado o la firma es inválida), devolver un error de autenticación

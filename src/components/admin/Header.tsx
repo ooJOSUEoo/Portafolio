@@ -5,13 +5,16 @@ import TC from '../TranslateContent'
 import axios from 'axios'
 import { signOut, useSession } from 'next-auth/react'
 import { usePathname } from 'next/navigation'
+import { useAppStore } from '@/context/appContext'
 
 export default function HeaderAdmin() {
+  
+  const location = usePathname()
 
   const [showOptions, setShowOptions] = useState(false)
   const { data: session }:any = useSession();
 
-  const location = usePathname()
+  const logout = useAppStore((s) => s.logout)
 
   useEffect(() => {
     const section = location?.split('/')[2]
@@ -43,11 +46,7 @@ export default function HeaderAdmin() {
 
   const handleLogout = async() => {
     try {
-      await axios.post('/api/auth/logout',{},{
-        headers: {
-          'Authorization': `Token ${session.user.accessToken}`
-        }
-      })
+      await logout()
       await signOut({callbackUrl: "/"}) 
     } catch (error) {
       console.log(error)

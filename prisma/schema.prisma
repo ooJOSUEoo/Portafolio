@@ -71,8 +71,8 @@ model About {
   cv            String
   image         String
 
-  createAt  DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createAt      DateTime? @default(now())
+  updatedAt     DateTime? @updatedAt
 }
 
 model Skill {
@@ -82,8 +82,8 @@ model Skill {
 
   projects  ProjectSkill[]
 
-  createAt  DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  createAt  DateTime?  @default(now())
+  updatedAt DateTime?  @updatedAt
 }
 
 model Project {
@@ -101,8 +101,8 @@ model Project {
 
   skills      ProjectSkill[]
 
-  createAt    DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  createAt    DateTime?  @default(now())
+  updatedAt   DateTime?  @updatedAt
 }
 
 model ProjectSkill {
@@ -122,8 +122,8 @@ model Experience {
   image         String?
   url           String?
 
-  createAt  DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createAt  DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
 }
 
 model Contact {
@@ -132,6 +132,6 @@ model Contact {
   icon          String
   url           String
 
-  createAt  DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createAt  DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
 }

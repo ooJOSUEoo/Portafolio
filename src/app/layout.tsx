@@ -9,6 +9,7 @@ import Layout from "@/components/Layout";
 import Provider from "@/components/Provider";
 import BtnTheme from "@/components/BtnTheme";
 import SelectTranslate from "@/components/SelectTranslate";
+import { Toaster } from "react-hot-toast";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -26,6 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={' ' + inter.className}><Provider>
+        <Toaster/>
         <Layout 
         children={children} 
         header={<>
