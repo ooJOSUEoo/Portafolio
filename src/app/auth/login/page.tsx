@@ -5,15 +5,15 @@ import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { signIn } from 'next-auth/react';
 import { toast } from 'react-hot-toast';
-import TC from '@/components/TranslateContent';
+import {TC} from '@/components/TranslateContent';
 import { InputsTexts } from '@/components/Inputs';
 
 export default function LoginPage() {
   const router = useRouter()
 
   const LoginSchema = Yup.object().shape({
-    email: Yup.string().email('El email no es valido').required('El email es requerido'),
-    password: Yup.string().required('La contraseña es requerida'),
+    email: Yup.string().email('The email is not valid').required('Email is required'),
+    password: Yup.string().required('Password is required'),
   });
 
   return (
@@ -44,7 +44,7 @@ export default function LoginPage() {
               <i className="fa fa-angle-left cursor-pointer text-[var(--secondary-color)] text-3xl" onClick={() => {
                 router.push('/')
               }}></i>
-              <p className='text-3xl text-[var(--secondary-color)] font-semibold'><TC>Iniciar Sesion</TC></p>
+              <p className='text-3xl text-[var(--secondary-color)] font-semibold'><TC>Sign in</TC></p>
             </div>
             
             <InputsTexts type='email' name='email' label='Correo electronico' placeholder='example@ex.com' 

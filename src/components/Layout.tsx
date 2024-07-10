@@ -20,9 +20,9 @@ export default function Layout({
   linksDontShowHeader,
   linksDontShowFooter,
 }: LayoutProps) {
-  const [checking, setChecking] = useState(true);
   const location = usePathname();
   const { theme } = useAppStore((s) => s.ui);
+  const [checking, setChecking] = useState(true);
   const [showHeader, setShowHeader] = useState(true);
   const [showFooter, setShowFooter] = useState(true);
 

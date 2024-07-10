@@ -21,23 +21,23 @@ export async function POST (request: Request) {
     if (error) return NextResponse.json({error}, {status})
 
     try {
-        const {name, description, cv, image, id} = await request.json()
+        const data = await request.json()
         const about = await prisma.about.upsert({
             where: {
-                id
+                id: data.id
             },
             update: {
-                name,
-                description,
-                cv,
-                image
+                name: data.name,
+                description: data.description,
+                cv: data.cv,
+                image: data.image
             },
             create: {
-                id: id,
-                name,
-                description,
-                cv,
-                image
+                id: data.id,
+                name: data.name,
+                description: data.description,
+                cv: data.cv,
+                image: data.image
             }
         })
         return NextResponse.json({about}, {status: 200})

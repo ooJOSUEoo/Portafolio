@@ -21,14 +21,9 @@ export async function POST (request: Request) {
     if (error) return NextResponse.json({error}, {status})
 
     try {
-        const {name, description, url, image} = await request.json()
+        const data = await request.json()
         const experience = await prisma.experience.create({
-            data: {
-                name,
-                description,
-                url,
-                image,
-            }
+            data: data
         })
         return NextResponse.json({experience}, {status: 200})
     } catch (error) {

@@ -2,11 +2,12 @@
 import React, { useEffect, useState } from 'react'
 import { Formik, Form, Field, setIn } from 'formik';
 import * as Yup from 'yup';
-import TC from '@/components/TranslateContent';
+import {TC} from '@/components/TranslateContent';
 import { InputsFile, InputsTexts } from '@/components/Inputs';
 import { useAppStore } from '@/context/appContext';
 import { v4 as uuidv4 } from 'uuid';
 import { useSession } from 'next-auth/react';
+import { translateText, useTranslateText } from '@/helpers/translateText';
 
 export default function AboutAdminPage() {
   
@@ -23,13 +24,20 @@ export default function AboutAdminPage() {
     cv: '',
     image: ''
   });
+
+  const labels={
+    name: useTranslateText('Name'),
+    description: useTranslateText('Description'),
+    cv: useTranslateText('Curriculum vitae'),
+    image: useTranslateText('Image'),
+  }
   
 
   const AboutSchema = Yup.object().shape({
-    name: Yup.string().required('El nombre es requerido'),
-    description: Yup.string().required('La descripción es requerida'),
-    cv: Yup.mixed().required("Ingresa un CV"),
-    image: Yup.mixed().required("Ingresa una fotografia"),
+    name: Yup.string().required('Name is required'),
+    description: Yup.string().required('Description is required'),
+    cv: Yup.mixed().required("Curriculum vitae is required"),
+    image: Yup.mixed().required("Image is required"),
   });
 
   useEffect(() => {
@@ -55,34 +63,32 @@ export default function AboutAdminPage() {
        validationSchema={AboutSchema}
        onSubmit={async(values) => {
         console.log(values)
-        // await setAbout({
-        //   id: "abc",
-        //   name: values.name,
-        //   description: values.description,
-        //   cv: values.cv,
-        //   image: values.image,
-        //   createAt: null,
-        //   updatedAt: null,
-        // },session.user.accessToken)
+        await setAbout({
+          id: "abc",
+          name: values.name,
+          description: values.description,
+          cv: values.cv,
+          image: values.image,
+        },session.user.accessToken)
        }}
        >
         {({ errors, touched, setFieldValue, values }) =>{ 
           return(
           <Form className='mx-10 mb-3'>
             <div className="flex justify-between">
-              <p className='text-3xl text-[var(--secondary-color)] font-semibold'><TC>Acerca de</TC></p>
+              <p className='text-3xl text-[var(--secondary-color)] font-semibold'><TC>About</TC></p>
             </div>
 
-            <InputsTexts type='text' name='name' label='Nombre' placeholder='John Doe' value={name}
+            <InputsTexts type='text' name='name' label={labels.name} placeholder='John Doe' value={name}
             Field={Field} TC={TC} errors={errors} touched={touched} SetFieldValue={setFieldValue}   />
 
-            <InputsTexts component='textarea' rows={5} name='description' label='Descripción' value={description}
+            <InputsTexts component='textarea' rows={5} name='description' label={labels.description} value={description}
             placeholder='John Doe' Field={Field} TC={TC} errors={errors} touched={touched} SetFieldValue={setFieldValue}  />
 
-            <InputsFile name='cv' label='CV' Field={Field} TC={TC} errors={errors} value={cv} 
+            <InputsFile name='cv' label='Curriculum vitae' Field={Field} TC={TC} errors={errors} value={cv} 
             touched={touched} accept='application/pdf' SetFieldValue={setFieldValue} values={values} deleteFile={true} />
 
-            <InputsFile name='image' label='Imagen' Field={Field} TC={TC} errors={errors} value={image}
+            <InputsFile name='image' label={labels.image} Field={Field} TC={TC} errors={errors} value={image}
             touched={touched} accept='image/*' SetFieldValue={setFieldValue} values={values} deleteFile={true} />
             <div className="">
               <input 

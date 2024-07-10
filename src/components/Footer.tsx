@@ -6,7 +6,7 @@ import waveD from '@/assets/img/waveD.png'
 import waveL from '@/assets/img/waveL.png'
 import Image from 'next/image';
 import { useAppStore } from '@/context/appContext';
-import TC from './TranslateContent';
+import {TC} from './TranslateContent';
 
 export const Footer = () => {
 
@@ -38,10 +38,10 @@ export const Footer = () => {
 
         <ul className="menu">
             <li><p>
-                <TC>Gracias por visitar mi portafolio.</TC>
+                <TC>Thank you for visiting my portfolio.</TC>
                 <br />
                 <br />
-                <TC>Espero que hayas encontrado lo que buscabas.</TC>
+                <TC>I hope you found what you were looking for.</TC>
                 <br />
                 </p></li>
         </ul>
@@ -52,7 +52,7 @@ export const Footer = () => {
           <span>2024</span>
         </p> */}
 
-        <Link href='/admin'><TC>Soy admin</TC></Link>
+        <Link href='/admin'><TC>Sign in</TC></Link>
     </footer>
   )
 }

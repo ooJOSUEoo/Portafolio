@@ -1,5 +1,5 @@
 'use client'
-import { useAppStore } from '@/context/appContext';
+import { alertSuccess, useAppStore } from '@/context/appContext';
 import React from 'react'
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated';
@@ -57,7 +57,13 @@ export default function SelectTranslate() {
       
     }}
     isSearchable={true}
-    onChange={({ value }: any) => setLang(value)}
+    onChange={({ value }: any) => {
+      setLang(value)
+      alertSuccess('Language has been changed, the page will reload in a few seconds')
+      setTimeout(() => {
+        window.location.reload()
+      }, 2000)
+    }}
     defaultValue={options.find((o) => o.value === lang)}
     components={animatedComponents}
     options={options}

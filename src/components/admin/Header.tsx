@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
-import TC from '../TranslateContent'
+import {TC} from '../TranslateContent'
 import axios from 'axios'
 import { signOut, useSession } from 'next-auth/react'
 import { usePathname } from 'next/navigation'
@@ -58,13 +58,13 @@ export default function HeaderAdmin() {
       <div className="px-5 flex justify-center items-center flex-wrap sm:justify-between">
         <div className="flex justify-center items-center flex-wrap gap-4">
           <i className='fa-solid fa-gear'></i>
-          <Link className='list border-[var(--secondary-color)]' id='home' href='/admin'><TC>Tablero</TC></Link>
-          <Link className='list border-[var(--secondary-color)]' id='about' href='/admin/about'><TC>Acerca de</TC></Link>
-          <Link className='list border-[var(--secondary-color)]' id='skills' href='/admin/skills'><TC>Habilidades</TC></Link>
-          <Link className='list border-[var(--secondary-color)]' id='experience' href='/admin/experience'><TC>Experiencia</TC></Link>
-          <Link className='list border-[var(--secondary-color)]' id='projects' href='/admin/projects'><TC>Proyectos</TC></Link>
-          <Link className='list border-[var(--secondary-color)]' id='contact' href='/admin/contact'><TC>Contacto</TC></Link>
-          <Link className='' href='/'><TC>Inicio</TC></Link>
+          <Link className='list border-[var(--secondary-color)]' id='home' href='/admin'><TC>Dashboard</TC></Link>
+          <Link className='list border-[var(--secondary-color)]' id='about' href='/admin/about'><TC>About</TC></Link>
+          <Link className='list border-[var(--secondary-color)]' id='skills' href='/admin/skills'><TC>Skills</TC></Link>
+          <Link className='list border-[var(--secondary-color)]' id='experience' href='/admin/experience'><TC>Experience</TC></Link>
+          <Link className='list border-[var(--secondary-color)]' id='projects' href='/admin/projects'><TC>Projects</TC></Link>
+          <Link className='list border-[var(--secondary-color)]' id='contact' href='/admin/contact'><TC>Contact</TC></Link>
+          <Link className='' href='/'><TC>Start</TC></Link>
         </div>
         <div className="cursor-pointer" onClick={() => setShowOptions(!showOptions)}>
           <div className="flex justify-center items-center gap-1">
@@ -84,14 +84,14 @@ export default function HeaderAdmin() {
                 <div className="flex text-center flex-col gap-2" onClick={(e) => e.stopPropagation()}>
                   <Link 
                   className='hover:bg-[var(--alternate-color)] hover:transition-colors hover:text-white' 
-                  href='/admin/profile'><TC>Perfil</TC></Link>
+                  href='/admin/profile'><TC>Profile</TC></Link>
                   <Link
                   className='hover:bg-[var(--alternate-color)] hover:transition-colors hover:text-white'
-                  href='/admin/settings'><TC>Ajustes</TC></Link>
+                  href='/admin/settings'><TC>Settings</TC></Link>
                   <p
                   onClick={handleLogout}
                   className='clickable hover:bg-[var(--alternate-color)] hover:transition-colors hover:text-white'
-                  ><TC>Cerrar sesión</TC></p>
+                  ><TC>Logout</TC></p>
                 </div>
               </div>
             }

@@ -1,3 +1,4 @@
+'use client'
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { use, useEffect, useState } from 'react'
@@ -46,11 +47,11 @@ export function InputsFile({
                 setTimeout(() => {
                     SetFieldValue(name, value);
                     setUrl(value);
-                    setNameFile(name+'.'+value.split('?')[0].split('.').pop())
+                    setNameFile(label+'.'+value.split('?')[0].split('.').pop())
                 }, 100);
             }
           }
-      }, [SetFieldValue, name, value]);
+      }, [SetFieldValue, label, name, value]);
   
       const handleFileChange = (e: any) => {
           const file = e.target.files[0];
@@ -133,7 +134,7 @@ export function InputsFile({
               )}
           </div>
           {url && (
-              <Link target='_blank' href={url} className='text-[var(--success-color)]'><TC>Abrir archivo</TC></Link>
+              <Link target='_blank' href={url} className='text-[var(--success-color)]'><TC>Open File</TC></Link>
           )}
           <input type="file" id={name} name={name} accept={accept} className="hidden" multiple={isMultiple}
               onChange={handleFileChange} />

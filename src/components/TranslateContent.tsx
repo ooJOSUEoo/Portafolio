@@ -1,29 +1,24 @@
-'use client'
-import { useAppStore } from '@/context/appContext';
-import React, { useEffect, useState } from 'react'
-import translate from "translate";
+import React, { useEffect, useState } from 'react';
+import translate from 'translate'; // Asegúrate de que esta importación sea correcta
 
-/**
- * A function that translates text 
- */
-export default  function TC({
-    children,
-    from="es",
-  }: Readonly<{
-    children: string;
-    from?: string;
-  }>) {
-    const { lang } = useAppStore((s) => s.ui);
-
-    const [result, setResult] = useState("")
-
-    useEffect(() => {
-        translate.engine = "google";
-        translate(children, { from: from, to: lang }).then((res) => {
-            setResult(res)
-        })
-    }, [children, from, lang])
-  return (
-    <>{result}</>
-  )
+interface TranslateContentProps {
+  children: string;
+  from?: string;
 }
+
+export const TC: React.FC<TranslateContentProps> = ({ children, from = 'en' }) => {
+  const [result, setResult] = useState<string>('');
+  const lang = 'es'; // Idioma al que se va a traducir
+
+  translate.engine = 'google';
+  useEffect(() => {
+    translate(children, { from, to: lang }).then((res) => {
+      setResult(res);
+    }).catch((err) => {
+      console.error(err);
+    });
+  }, [children, from, lang]);
+
+  return <>{result}</>;
+};
+

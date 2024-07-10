@@ -1,14 +1,17 @@
 // import { Note } from '@prisma/client';
 import { encodeFilesToBase64, optomizeImage } from '@/helpers/fileB64';
 import { translateText } from '@/helpers/translateText';
-import { storage, storageRef, ref, getDownloadURL } from '@/libs/firebase';
-import { About, Skill } from '@prisma/client';
+import { storage, storageRef, ref, getDownloadURL, deleteObject } from '@/libs/firebase';
+import { About, Skill, Experience } from '@prisma/client';
 import axios from 'axios';
 import { uploadBytes } from 'firebase/storage';
 import toast from 'react-hot-toast';
 import create from 'zustand';
 import { persist } from 'zustand/middleware';
 
+type AboutCustom = Omit<About, 'createAt' | 'updatedAt'> & Partial<Pick<About, 'createAt' | 'updatedAt'>>;
+type SkillCustom = Omit<Skill, 'id' | 'createAt' | 'updatedAt'> & Partial<Pick<Skill, 'id' | 'createAt' | 'updatedAt'>>;
+type ExperienceCustom = Omit<Experience, 'id' | 'createAt' | 'updatedAt'> & Partial<Pick<Experience, 'id' | 'createAt' | 'updatedAt'>>;
 export interface State {
   ui:{
     loading:boolean
@@ -16,17 +19,19 @@ export interface State {
     theme:string
     lang:string
   }
-
   auth:{
     user: any
     token: string
     tokenExpires: Date|string
   }
-
-  about:About
-
+  about:AboutCustom
   skills:{
-    data: Skill[]
+    data: SkillCustom[],
+    skill: SkillCustom
+  }
+  experiences:{
+    data: ExperienceCustom[]
+    experience: ExperienceCustom
   }
 
   setLoading: (loading: boolean) => void
@@ -37,10 +42,20 @@ export interface State {
   verifyToken: (token: string) => Promise<void|boolean>
   logout: () => Promise<void>
   
-  setAbout: (data: About, token: string) => Promise<void>
+  setAbout: (data: AboutCustom, token: string) => Promise<void>
   getAbout: (token: string) => Promise<void|About>
 
-  setSkill: (data: Skill, token: string) => Promise<void>
+  setSkill: (data: SkillCustom, token: string) => Promise<void|boolean>
+  getSkills: (token: string) => Promise<void|Skill[]>
+  getSkill: (id: string, token: string) => Promise<void|Skill>
+  updateSkill: (data: SkillCustom, id: string, token: string) => Promise<void|boolean>
+  deleteSkill: (id: string, typeFile: string, token: string) => Promise<void|boolean>
+
+  setExperience: (data: ExperienceCustom, token: string) => Promise<void|boolean>
+  getExperiences: (token: string) => Promise<void|Experience[]>
+  getExperience: (id: string, token: string) => Promise<void|Experience>
+  updateExperience: (data: ExperienceCustom, id: string, token: string) => Promise<void|boolean>
+  deleteExperience: (id: string, typeFile: string, token: string) => Promise<void|boolean>
 }
 
 export async function alertSuccess(text: string){
@@ -53,7 +68,7 @@ export async function alertError(text: string){
   toast.error(msg)
 }
 
-export const initialState = {
+export const initialState: State = {
   ui:{
     loading: false,
     error: '',
@@ -71,12 +86,43 @@ export const initialState = {
     description: '',
     cv: '', 
     image: '',
-    createAt: new Date(),
-    updatedAt: new Date(),
   },
   skills: {
-    data: []
+    data: [],
+    skill: {
+      name: '',
+      image: '',
+    }
   },
+  experiences:{
+    data: [],
+    experience: {
+      name: '',
+      description: '',
+      image: '',
+      url: '',
+    }
+  },
+
+  //Ignore!!!!!
+  setLoading: (loading: boolean) => {},
+  setError: (error: string) => {},
+  setTheme: (theme: string) => {},
+  setLang: (lang: string) => {},
+  verifyToken: async () => {},
+  logout: async () => {},
+  setAbout: async () => {},
+  getAbout: async () => {},
+  setSkill: async () => {},
+  getSkills: async () => {},
+  getSkill: async () => {},
+  updateSkill: async () => {},
+  deleteSkill: async () => {},
+  setExperience: async () => {},
+  getExperiences: async () => {},
+  getExperience: async () => {},
+  updateExperience: async () => {},
+  deleteExperience: async () => {},
 }
 
 export const useAppStore = create(persist<State>((set,get) => ({
@@ -87,6 +133,8 @@ export const useAppStore = create(persist<State>((set,get) => ({
     about: initialState.about,
 
     skills: initialState.skills,
+
+    experiences: initialState.experiences,
 
     setLoading: (loading: boolean) => set((state) => ({ ...state, ui: { ...state.ui, loading } })),
     setError: (error: string) => set((state) => ({ ...state, ui: { ...state.ui, error } })),
@@ -121,9 +169,9 @@ export const useAppStore = create(persist<State>((set,get) => ({
       }))
     },
 
-    setAbout: async(data: About, token: string) => {
+    setAbout: async(data: AboutCustom, token: string) => {
+      get().setLoading(true)
       try {
-        
         if(typeof data.cv !== 'string') {
           const fileCV = data.cv as unknown as File
           const storageRefCV = ref(storage, `v3/about/about.${fileCV.type.split('/')[1]}`)
@@ -147,10 +195,12 @@ export const useAppStore = create(persist<State>((set,get) => ({
           }
         })
         set((state) => ({ ...state, about: resp.data.about }))
-        alertSuccess('Se cargaron los datos')
+        alertSuccess('Data has been loaded')
       } catch (error) {
         console.log(error)
-        alertError('No se pudieron cargar los datos')
+        alertError('Data could not be loaded')
+      } finally {
+        get().setLoading(false)
       }
     },
     getAbout: async(token: string) => {
@@ -168,18 +218,219 @@ export const useAppStore = create(persist<State>((set,get) => ({
         return resp.data.about
       } catch (error) {
         console.log(error)
-        alertError('No se pudieron cargar los datos, recargue la pagina')
+        alertError('The data could not be obtained, please reload the page')
       }
     },
 
-    setSkill: async(data: Skill, token: string) => {
+    setSkill: async(data: SkillCustom, token: string) => {
+      get().setLoading(true)
       try {
-        const resp = await axios.post('/api/skills', data)
-        set((state) => ({ ...state, skills: { data: get().skills.data.concat(resp.data) } }))
-        alertSuccess('Se cargaron las habilidades')
+
+        const fileImage = data.image as unknown as File
+        const storageRefImage = ref(storage, `v3/skills/${data.id}.${fileImage.type.split('/')[1]}`)
+        await uploadBytes(storageRefImage, fileImage)
+        const image = await getDownloadURL(storageRefImage)
+        data.image = image
+
+        const resp = await axios.post('/api/skills', data, {
+          headers: {
+            Authorization: `Token ${token}`
+          }
+        })
+        set((state) => ({ ...state, skills: {...state.skills, data: [...state.skills.data, resp.data.skill]} }))
+        alertSuccess('Data has been loaded')
+        return true
       } catch (error) {
         console.log(error)
-        alertError('No se pudieron cargar las habilidades')
+        alertError('Skill could not be loaded')
+        return false
+      } finally {
+        get().setLoading(false)
+      }
+    },
+    getSkills: async(token: string) => {
+      try {
+        const resp = await axios.get('/api/skills', {
+          headers: {
+            Authorization: `Token ${token}`
+          }
+        }) 
+        set((state) => ({ ...state, skills: {...state.skills, data: resp.data.skills} }))
+        return resp.data
+      } catch (error) {
+        console.log(error)
+        alertError('Could not obtain skills, please reload the page')
+      }
+    },
+    getSkill: async(id: string, token: string) => {
+      try {
+        const resp = await axios.get(`/api/skills/${id}`, {
+          headers: {
+            Authorization: `Token ${token}`
+          }
+        }) 
+        set((state) => ({ ...state, skills: {...state.skills, skill: resp.data.skill} }))
+        return resp.data.skill
+      } catch (error) {
+        set((state) => ({ ...state, skills: {...state.skills, skill: initialState.skills.skill} }))
+        console.log(error)
+        alertError('Could not obtain skill, please try later')
+        return false
+      }
+    },
+    updateSkill: async(data: SkillCustom, id: string, token: string) => {
+      get().setLoading(true)
+      try {
+        if(typeof data.image !== 'string') {
+          const fileImage = data.image as unknown as File
+          const storageRefOldImage = ref(storage, `v3/skills/${id}.${fileImage.type.split('/')[1]}`)
+          await deleteObject(storageRefOldImage)
+          const storageRefImage = ref(storage, `v3/skills/${id}.${fileImage.type.split('/')[1]}`)
+          await uploadBytes(storageRefImage, fileImage)
+          const image = await getDownloadURL(storageRefImage)
+          data.image = image
+        }
+        const resp = await axios.put(`/api/skills/${id}`, data, {
+          headers: {
+            Authorization: `Token ${token}`
+          }
+        })
+        // set((state) => ({ ...state, skills: {...state.skills, data: [...state.skills.data.map(skill => skill.id === resp.data.skill.id ? resp.data.skill : skill)]} }))
+        alertSuccess('Data has been updated')
+        return true
+      } catch (error) {
+        console.log(error)
+        alertError('Skill could not be loaded')
+        return false
+      } finally {
+        get().setLoading(false)
+      }
+    },
+    deleteSkill: async(id: string, typeFile: string, token: string) => {
+      get().setLoading(true)
+      try {
+        const storageRefOldImage = ref(storage, `v3/skills/${id}.${typeFile}`)
+        await deleteObject(storageRefOldImage)
+        const resp = await axios.delete(`/api/skills/${id}`, {
+          headers: {
+            Authorization: `Token ${token}`
+          }
+        })
+        set((state) => ({ ...state, skills: {...state.skills, data: [...state.skills.data.filter(skill => skill.id !== resp.data.skill.id)]} }))
+        alertSuccess('Data has been deleted')
+        return true
+      } catch (error) {
+        console.log(error)
+        alertError('Skill could not be deleted')
+        return false
+      } finally {
+        get().setLoading(false)
+      }
+    },
+
+    setExperience: async(data: ExperienceCustom, token: string) => {
+      get().setLoading(true)
+      try {
+        if(typeof data.image !== 'string') {
+          const fileImage = data.image as unknown as File
+          const storageRefImage = ref(storage, `v3/experience/${data.id}.${fileImage.type.split('/')[1]}`)
+          await uploadBytes(storageRefImage, fileImage)
+          const image = await getDownloadURL(storageRefImage)
+          data.image = image
+        }
+        const resp = await axios.post('/api/experience', data, {
+          headers: {
+            Authorization: `Token ${token}`
+          }
+        })
+        set((state) => ({ ...state, experiences: {...state.experiences, data: [...state.experiences.data, resp.data.experience]} }))
+        alertSuccess('Data has been loaded')
+        return true
+      } catch (error) {
+        console.log(error)
+        alertError('Experience could not be loaded')
+        return false
+      } finally {
+        get().setLoading(false)
+      }
+    },
+    getExperiences: async(token: string) => {
+      try {
+        const resp = await axios.get('/api/experience', {
+          headers: {
+            Authorization: `Token ${token}`
+          }
+        }) 
+        set((state) => ({ ...state, experiences: {...state.experiences, data: resp.data.experience} }))
+        return resp.data
+      } catch (error) {
+        set((state) => ({ ...state, experiences: {...state.experiences, data: initialState.experiences.data} }))
+        console.log(error)
+        alertError('Could not obtain experiences, please try later')
+        return false
+      }
+    },
+    getExperience: async(id: string, token: string) => {
+      try {
+        const resp = await axios.get(`/api/experience/${id}`, {
+          headers: {
+            Authorization: `Token ${token}`
+          }
+        }) 
+        set((state) => ({ ...state, experiences: {...state.experiences, experience: resp.data.experience} }))
+        return resp.data.experience
+      } catch (error) {
+        set((state) => ({ ...state, experiences: {...state.experiences, experience: initialState.experiences.experience} }))
+        console.log(error)
+        alertError('Could not obtain experience, please try later')
+        return false
+      }
+    },
+    updateExperience: async(data: ExperienceCustom, id: string, token: string) => {
+      get().setLoading(true)
+      try {
+        if(typeof data.image !== 'string') {
+          const fileImage = data.image as unknown as File
+          const storageRefOldImage = ref(storage, `v3/experience/${id}.${fileImage.type.split('/')[1]}`)
+          await deleteObject(storageRefOldImage)
+          const storageRefImage = ref(storage, `v3/experience/${id}.${fileImage.type.split('/')[1]}`)
+          await uploadBytes(storageRefImage, fileImage)
+          const image = await getDownloadURL(storageRefImage)
+          data.image = image
+        }
+        const resp = await axios.put(`/api/experience/${id}`, data, {
+          headers: {
+            Authorization: `Token ${token}`
+          }
+        })
+        set((state) => ({ ...state, experiences: {...state.experiences, data: [...state.experiences.data.filter(experience => experience.id !== resp.data.experience.id), resp.data.experience]} }))
+        alertSuccess('Data has been updated')
+        return true
+      } catch (error) {
+        console.log(error)
+        alertError('Experience could not be updated')
+        return false
+      } finally {
+        get().setLoading(false)
+      }
+    },
+    deleteExperience: async(id: string, type: string, token: string) => {
+      get().setLoading(true)
+      try {
+        const resp = await axios.delete(`/api/experience/${id}`, {
+          headers: {
+            Authorization: `Token ${token}`
+          }
+        })
+        set((state) => ({ ...state, experiences: {...state.experiences, data: [...state.experiences.data.filter(experience => experience.id !== resp.data.experience.id)]} }))
+        alertSuccess('Data has been deleted')
+        return true
+      } catch (error) {
+        console.log(error)
+        alertError('Experience could not be deleted')
+        return false
+      } finally {
+        get().setLoading(false)
       }
     },
 }), {
