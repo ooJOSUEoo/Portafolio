@@ -18,7 +18,7 @@ export async function GET (request: Request, {params}: Params) {
                 id: params.id
             }
         })
-        if(!experience?.id) return NextResponse.json({message: 'Experiencia no encontrada'}, {status: 404})
+        if(!experience?.id) return NextResponse.json({message: 'Experience not found'}, {status: 404})
         return NextResponse.json({experience}, {status: 200})
     } catch (error) {
         if(error instanceof Error){
@@ -36,12 +36,12 @@ export async function DELETE (request: Request, {params}: Params) {
                 id: params.id
             }
         })
-        if(!experience?.id) return NextResponse.json({message: 'Experiencia no encontrada'}, {status: 404})
-        return NextResponse.json({experience, message: 'Experiencia eliminada'}, {status: 200})
+        if(!experience?.id) return NextResponse.json({message: 'Experience not found'}, {status: 404})
+        return NextResponse.json({experience, message: 'Experience deleted'}, {status: 200})
     } catch (error) {
         if(error instanceof Prisma.PrismaClientKnownRequestError){
             if(error.code === 'P2025') 
-            return NextResponse.json({message: 'Experiencia no encontrada'}, {status: 404})
+            return NextResponse.json({message: 'Experience not found'}, {status: 404})
 
             return NextResponse.json({error: error.message}, {status: 500})
         }
@@ -64,12 +64,12 @@ export async function PUT (request: Request, {params}: Params) {
                 image,
             }
         })
-        if(!experience?.id) return NextResponse.json({message: 'Habilidad no encontrada'}, {status: 404})
+        if(!experience?.id) return NextResponse.json({message: 'Experience not found'}, {status: 404})
         return NextResponse.json({experience}, {status: 200})
     } catch (error) {
         if(error instanceof Prisma.PrismaClientKnownRequestError){
             if(error.code === 'P2025') 
-            return NextResponse.json({message: 'Habilidad no encontrada'}, {status: 404})
+            return NextResponse.json({message: 'Experience not found'}, {status: 404})
 
             return NextResponse.json({error: error.message}, {status: 500})
         }

@@ -1,0 +1,120 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table Account {
+  id String [pk]
+  userId String [not null]
+  type String [not null]
+  provider String [not null]
+  providerAccountId String [not null]
+  refresh_token String
+  access_token String
+  expires_at Int
+  token_type String
+  scope String
+  id_token String
+  session_state String
+  user User [not null]
+
+  indexes {
+    (provider, providerAccountId) [unique]
+  }
+}
+
+Table Session {
+  id String [pk]
+  sessionToken String [unique, not null]
+  userId String [not null]
+  expires DateTime [not null]
+  user User [not null]
+}
+
+Table User {
+  id String [pk]
+  username String [unique]
+  password String
+  name String
+  email String [unique]
+  emailVerified DateTime
+  image String
+  role String
+  accounts Account [not null]
+  sessions Session [not null]
+  createAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+}
+
+Table VerificationToken {
+  identifier String [not null]
+  token String [unique, not null]
+  expires DateTime [not null]
+
+  indexes {
+    (identifier, token) [unique]
+  }
+}
+
+Table About {
+  id String [pk]
+  name String [not null]
+  description String [not null]
+  cv String [not null]
+  image String [not null]
+  createAt DateTime [default: `now()`]
+  updatedAt DateTime
+}
+
+Table Skill {
+  id String [pk]
+  name String [not null]
+  image String [not null]
+  project Project [not null]
+  createAt DateTime [default: `now()`]
+  updatedAt DateTime
+}
+
+Table Project {
+  id String [pk]
+  name String [not null]
+  description String [not null]
+  mainImage String [not null]
+  images String [not null]
+  url String
+  github String
+  company String [not null]
+  initialDate DateTime [not null]
+  endDate DateTime
+  isFavourite Boolean
+  skills Skill [not null]
+  createAt DateTime [default: `now()`]
+  updatedAt DateTime
+}
+
+Table Experience {
+  id String [pk]
+  name String [not null]
+  description String [not null]
+  image String
+  url String
+  createAt DateTime [default: `now()`]
+  updatedAt DateTime
+}
+
+Table Contact {
+  id String [pk]
+  name String [not null]
+  icon String [not null]
+  url String [not null]
+  createAt DateTime [default: `now()`]
+  updatedAt DateTime
+}
+
+Table ProjectToSkill {
+  projectId String [ref: > Project.id]
+  skillsId String [ref: > Skill.id]
+}
+
+Ref: Account.userId > User.id [delete: Cascade]
+
+Ref: Session.userId > User.id [delete: Cascade]

@@ -91,25 +91,41 @@ const handler = NextAuth({
               email: session.user.email
             }
           })
-          const sessionFind = await prisma.session.findUnique({
+          if (!userFind) {
+            throw new Error('User not found');
+          }
+          // Eliminar solo sesiones expiradas
+          await prisma.session.deleteMany({
             where: {
-              sessionToken: sessionToken
-            }
-          })
-          await prisma.session.upsert({
-            where: {
-              sessionToken: sessionToken
+              userId: userFind.id,
+              expires: {
+                lt: new Date()
+              }
             },
-            update: {
-              expires: expireSession,
-              sessionToken: sessionToken
-            },
-            create: { 
-              userId: userFind!.id,
-              expires: expireSession,
-              sessionToken: sessionToken,
-            }
           });
+
+          // Verificar si existe una sesión válida
+          const existingSession = await prisma.session.findFirst({
+            where: {
+                userId: userFind.id,
+                sessionToken: sessionToken,
+                expires: {
+                    gt: new Date()
+                }
+            },
+          });
+
+          if (!existingSession) {
+            // Crea la nueva sesión si no existe una válida
+            await prisma.session.create({
+                data: {
+                    userId: userFind.id,
+                    expires: expireSession,
+                    sessionToken: sessionToken,
+                },
+            });
+          }
+
           return session;
         },
     },

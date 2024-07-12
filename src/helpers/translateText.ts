@@ -7,7 +7,16 @@ export async function translateText(text: string, from='en') {
     const { lang } = app.ui
 
     translate.engine = "google";
-    return await translate(text, { from: from, to: lang })
+    const resp = await translate(text, { from: from, to: lang })
+    if (text === text.toUpperCase()) {
+        return resp.toUpperCase();
+    } else if (text === text.toLowerCase()) {
+        return resp.toLowerCase();
+    } else if (text[0] === text[0].toUpperCase() && text.slice(1) === text.slice(1).toLowerCase()) {
+        return resp.slice(0, 1).toUpperCase() + resp.slice(1).toLowerCase();
+    } else {
+        return resp;
+    }
 }
 
 export function useTranslateText(text: string, from='en') {
@@ -20,6 +29,13 @@ export function useTranslateText(text: string, from='en') {
     translate(text, { from: from, to: lang }).then((res) => {
         setResp(res)
     })
-
-    return resp
+    if (text === text.toUpperCase()) {
+        return resp.toUpperCase();
+    } else if (text === text.toLowerCase()) {
+        return resp.toLowerCase();
+    } else if (text[0] === text[0].toUpperCase() && text.slice(1) === text.slice(1).toLowerCase()) {
+        return resp.slice(0, 1).toUpperCase() + resp.slice(1).toLowerCase();
+    } else {
+        return resp;
+    }
 }

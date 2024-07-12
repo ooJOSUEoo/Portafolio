@@ -12,7 +12,7 @@ import { persist } from 'zustand/middleware';
 type AboutCustom = Omit<About, 'createAt' | 'updatedAt'> & Partial<Pick<About, 'createAt' | 'updatedAt'>>;
 type SkillCustom = Omit<Skill, 'id' | 'createAt' | 'updatedAt'> & Partial<Pick<Skill, 'id' | 'createAt' | 'updatedAt'>>;
 type ExperienceCustom = Omit<Experience, 'id' | 'createAt' | 'updatedAt'> & Partial<Pick<Experience, 'id' | 'createAt' | 'updatedAt'>>;
-type ProjectCustom = Omit<Project, 'id' | 'createAt' | 'updatedAt'> & Partial<Pick<Project, 'id' | 'createAt' | 'updatedAt'>>;
+type ProjectCustom = Omit<Project, 'id' | 'createAt' | 'updatedAt'> & Partial<Pick<Project, 'id' | 'createAt' | 'updatedAt'>> & { skills: { id: string }[] };
 
 
 export interface State {
@@ -63,6 +63,12 @@ export interface State {
   getExperience: (id: string, token: string) => Promise<void|Experience>
   updateExperience: (data: ExperienceCustom, id: string, token: string) => Promise<void|boolean>
   deleteExperience: (id: string, typeFile: string, token: string) => Promise<void|boolean>
+
+  setProject: (data: ProjectCustom, token: string) => Promise<void|boolean>
+  getProjects: (token: string) => Promise<void|Project[]>
+  getProject: (id: string, token: string) => Promise<void|ProjectCustom>
+  updateProject: (data: ProjectCustom, id: string, token: string) => Promise<void|boolean>
+  deleteProject: (id: string, token: string) => Promise<void|boolean>
 }
 
 export async function alertSuccess(text: string){
@@ -73,6 +79,33 @@ export async function alertSuccess(text: string){
 export async function alertError(text: string){
   const msg = await translateText(text)
   toast.error(msg)
+}
+
+export async function uploadFile(file: File, location: string){
+  try {
+    let fileUpload:any = file
+    if(file.type.split('/')[0] == 'image'){
+      fileUpload = optomizeImage(file, 50)
+    }
+    const storageRefMainImage = ref(storage, `v3/${location}`)
+    await uploadBytes(storageRefMainImage, file)
+    const url = await getDownloadURL(storageRefMainImage)
+    return url
+  } catch (error) {
+    console.log(error)
+    return ''
+  }
+}
+
+export async function deleteFile(location: string){
+  try {
+    const storageRefOldImage = ref(storage, `v3/${location}`)
+    await deleteObject(storageRefOldImage)
+    return true
+  } catch (error) {
+    console.log(error)
+    return false
+  }
 }
 
 export const initialState: State = {
@@ -123,6 +156,7 @@ export const initialState: State = {
       initialDate: new Date(),
       endDate: new Date(),
       isFavourite: false,
+      skills: [],
     }
   },
 
@@ -145,6 +179,11 @@ export const initialState: State = {
   getExperience: async () => {},
   updateExperience: async () => {},
   deleteExperience: async () => {},
+  setProject: async () => {},
+  getProjects: async () => {},
+  getProject: async () => {},
+  updateProject: async () => {},
+  deleteProject: async () => {},
 }
 
 export const useAppStore = create(persist<State>((set,get) => ({
@@ -198,18 +237,12 @@ export const useAppStore = create(persist<State>((set,get) => ({
       try {
         if(typeof data.cv !== 'string') {
           const fileCV = data.cv as unknown as File
-          const storageRefCV = ref(storage, `v3/about/about.${fileCV.type.split('/')[1]}`)
-          await uploadBytes(storageRefCV, fileCV)
-          const cv = await getDownloadURL(storageRefCV)
-          data.cv = cv
+          data.cv = await uploadFile(fileCV, `about/about.${fileCV.type.split('/')[1]}`)
         }
         
         if(typeof data.image !== 'string') {
           const fileImage = data.image as unknown as File
-          const storageRefImage = ref(storage, `v3/about/image.${fileImage.type.split('/')[1]}`)
-          await uploadBytes(storageRefImage, fileImage)
-          const image = await getDownloadURL(storageRefImage)
-          data.image = image
+          data.image = await uploadFile(fileImage, `about/image.${fileImage.type.split('/')[1]}`)
         }
         // data.cv = await encodeFilesToBase64(data.cv as unknown as Blob)
         // data.image = await encodeFilesToBase64(await optomizeImage(data.image as unknown as Blob, 50))
@@ -251,10 +284,7 @@ export const useAppStore = create(persist<State>((set,get) => ({
       try {
 
         const fileImage = data.image as unknown as File
-        const storageRefImage = ref(storage, `v3/skills/${data.id}.${fileImage.type.split('/')[1]}`)
-        await uploadBytes(storageRefImage, fileImage)
-        const image = await getDownloadURL(storageRefImage)
-        data.image = image
+        data.image = await uploadFile(fileImage, `skills/${data.id}.${fileImage.type.split('/')[1]}`)
 
         const resp = await axios.post('/api/skills', data, {
           headers: {
@@ -309,12 +339,8 @@ export const useAppStore = create(persist<State>((set,get) => ({
       try {
         if(typeof data.image !== 'string') {
           const fileImage = data.image as unknown as File
-          const storageRefOldImage = ref(storage, `v3/skills/${id}.${fileImage.type.split('/')[1]}`)
-          await deleteObject(storageRefOldImage)
-          const storageRefImage = ref(storage, `v3/skills/${id}.${fileImage.type.split('/')[1]}`)
-          await uploadBytes(storageRefImage, fileImage)
-          const image = await getDownloadURL(storageRefImage)
-          data.image = image
+          await deleteFile(`skills/${id}.${fileImage.type.split('/')[1]}`)
+          data.image = await uploadFile(fileImage, `skills/${id}.${fileImage.type.split('/')[1]}`)
         }
         const resp = await axios.put(`/api/skills/${id}`, data, {
           headers: {
@@ -336,8 +362,7 @@ export const useAppStore = create(persist<State>((set,get) => ({
     deleteSkill: async(id: string, typeFile: string, token: string) => {
       get().setLoading(true)
       try {
-        const storageRefOldImage = ref(storage, `v3/skills/${id}.${typeFile}`)
-        await deleteObject(storageRefOldImage)
+        await deleteFile(`skills/${id}.${typeFile}`)
         const resp = await axios.delete(`/api/skills/${id}`, {
           headers: {
             Authorization: `Token ${token}`
@@ -360,10 +385,7 @@ export const useAppStore = create(persist<State>((set,get) => ({
       try {
         if(typeof data.image !== 'string') {
           const fileImage = data.image as unknown as File
-          const storageRefImage = ref(storage, `v3/experiences/${data.id}.${fileImage.type.split('/')[1]}`)
-          await uploadBytes(storageRefImage, fileImage)
-          const image = await getDownloadURL(storageRefImage)
-          data.image = image
+          data.image = await uploadFile(fileImage, `experiences/${data.id}.${fileImage.type.split('/')[1]}`)
         }
         const resp = await axios.post('/api/experiences', data, {
           headers: {
@@ -421,18 +443,13 @@ export const useAppStore = create(persist<State>((set,get) => ({
         if(data.image == '') {
           if(get().experiences.experience.image !== '') {
             const type = get().experiences.experience.image!.split('?')[0].split('.').pop()
-            const storageRefOldImage = ref(storage, `v3/experiences/${id}.${type}`)
-            await deleteObject(storageRefOldImage)
+            await deleteFile(`experiences/${id}.${type}`)
           }
         }
         if(typeof data.image !== 'string') {
           const fileImage = data.image as unknown as File
-          const storageRefOldImage = ref(storage, `v3/experiences/${id}.${fileImage.type.split('/')[1]}`)
-          await deleteObject(storageRefOldImage)
-          const storageRefImage = ref(storage, `v3/experiences/${id}.${fileImage.type.split('/')[1]}`)
-          await uploadBytes(storageRefImage, fileImage)
-          const image = await getDownloadURL(storageRefImage)
-          data.image = image
+          await deleteFile(`experiences/${id}.${fileImage.type.split('/')[1]}`)
+          data.image = await uploadFile(fileImage, `experiences/${id}.${fileImage.type.split('/')[1]}`)
         }
         const resp = await axios.put(`/api/experiences/${id}`, data, {
           headers: {
@@ -456,8 +473,7 @@ export const useAppStore = create(persist<State>((set,get) => ({
       get().setLoading(true)
       try {
         if(type){
-          const storageRefOldImage = ref(storage, `v3/experiences/${id}.${type}`)
-          await deleteObject(storageRefOldImage)
+          await deleteFile(`experiences/${id}.${type}`)
         }
         const resp = await axios.delete(`/api/experiences/${id}`, {
           headers: {
@@ -476,9 +492,27 @@ export const useAppStore = create(persist<State>((set,get) => ({
       }
     },
 
-    setProjects: async(data: ProjectCustom[], token: string) => {
+    setProject: async(data: ProjectCustom, token: string) => {
       get().setLoading(true)
       try {
+        const fileMainImage = data.mainImage as unknown as File
+        data.mainImage = await uploadFile(fileMainImage, `projects/${data.id}.${fileMainImage.type.split('/')[1]}`)
+
+        const fileImages = data.images as unknown as File[]
+        const types: string[] = []
+        const exe = async() => {
+          await Promise.all(fileImages.map(async (fileImage, index) => {
+            await uploadFile(fileImage, `projects/${data.id}/${index}.${fileImage.type.split('/')[1]}`)
+            types.push(fileImage.type.split('/')[1]);
+          }));
+        }
+        await exe()
+        data.images = JSON.stringify({id:data.id,num:fileImages.length,types:types})
+
+        data.initialDate = new Date(data.initialDate)
+        data.endDate = data.endDate ? new Date(data.endDate) : null
+
+        data.skills = data.skills.map(s=>{return {id:s}}) as any
         const resp = await axios.post('/api/projects', data, {
           headers: {
             Authorization: `Token ${token}`
@@ -521,28 +555,26 @@ export const useAppStore = create(persist<State>((set,get) => ({
           }
         })
         set((state) => ({ ...state, projects: {...state.projects, project: resp.data.project} }))
-        return resp.data
+        return resp.data.project
       } catch (error) {
         set((state) => ({ ...state, projects: {...state.projects, project: initialState.projects.project} }))
         console.log(error)
         alertError('Could not obtain project, please try later')
         return false
-      } finally {
-        set((state) => ({ ...state, projects: {...state.projects, project: initialState.projects.project} }))
       }
     },
     updateProject: async(data: ProjectCustom, id: string, token: string) => {
       get().setLoading(true)
       try {
-        if(typeof data.image !== 'string') {
-          const fileImage = data.image as unknown as File
-          const storageRefOldImage = ref(storage, `v3/projects/${id}.${fileImage.type.split('/')[1]}`)
-          await deleteObject(storageRefOldImage)
-          const storageRefImage = ref(storage, `v3/projects/${id}.${fileImage.type.split('/')[1]}`)
-          await uploadBytes(storageRefImage, fileImage)
-          const image = await getDownloadURL(storageRefImage)
-          data.image = image
-        }
+        // if(typeof data.image !== 'string') {
+        //   const fileImage = data.image as unknown as File
+        //   const storageRefOldImage = ref(storage, `v3/projects/${id}.${fileImage.type.split('/')[1]}`)
+        //   await deleteObject(storageRefOldImage)
+        //   const storageRefImage = ref(storage, `v3/projects/${id}.${fileImage.type.split('/')[1]}`)
+        //   await uploadBytes(storageRefImage, fileImage)
+        //   const image = await getDownloadURL(storageRefImage)
+        //   data.image = image
+        // }
         const resp = await axios.put(`/api/projects/${id}`, data, {
           headers: {
             Authorization: `Token ${token}`

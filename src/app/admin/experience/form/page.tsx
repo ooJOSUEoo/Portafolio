@@ -36,13 +36,13 @@ export default function ExperienceAddAdminPage() {
   const ExperienceSchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
     description: Yup.string().required('Description is required'),
-    url: Yup.string(),
+    url: Yup.string().url('URL is not valid'),
     image: Yup.mixed(),
   });
 
   const labels={
     name: useTranslateText('Name'),
-    description: useTranslateText("description"),
+    description: useTranslateText("Description"),
     image: useTranslateText('Image'),
     url: useTranslateText("URL")
   }
@@ -108,7 +108,7 @@ export default function ExperienceAddAdminPage() {
             <InputsTexts type='text' name='name' label={labels.name} placeholder='...' value={id ? name : ''}
             Field={Field} TC={TC} errors={errors} touched={touched} SetFieldValue={setFieldValue}   />
 
-            <InputsTexts type='text' name='description' components="textarea" label={labels.description} placeholder='' value={id ? description : ''}
+            <InputsTexts type='text' name='description' component='textarea' rows={5} label={labels.description} placeholder='' value={id ? description : ''}
             Field={Field} TC={TC} errors={errors} touched={touched} SetFieldValue={setFieldValue}   />
 
             <InputsTexts type='text' name='url' label={labels.url} placeholder='http...' value={id ? url : ''}

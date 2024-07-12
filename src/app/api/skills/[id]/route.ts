@@ -18,7 +18,7 @@ export async function GET (request: Request, {params}: Params) {
                 id: params.id
             }
         })
-        if(!skill?.id) return NextResponse.json({message: 'Habilidad no encontrada'}, {status: 404})
+        if(!skill?.id) return NextResponse.json({message: 'Skill not found'}, {status: 404})
         return NextResponse.json({skill}, {status: 200})
     } catch (error) {
         if(error instanceof Error){
@@ -36,12 +36,12 @@ export async function DELETE (request: Request, {params}: Params) {
                 id: params.id
             }
         })
-        if(!skill?.id) return NextResponse.json({message: 'Habilidad no encontrada'}, {status: 404})
-        return NextResponse.json({skill, message: 'Habilidad eliminada'}, {status: 200})
+        if(!skill?.id) return NextResponse.json({message: 'Skill not found'}, {status: 404})
+        return NextResponse.json({skill, message: 'Skill deleted'}, {status: 200})
     } catch (error) {
         if(error instanceof Prisma.PrismaClientKnownRequestError){
             if(error.code === 'P2025') 
-            return NextResponse.json({message: 'Habilidad no encontrada'}, {status: 404})
+            return NextResponse.json({message: 'Skill not found'}, {status: 404})
 
             return NextResponse.json({error: error.message}, {status: 500})
         }
@@ -62,12 +62,12 @@ export async function PUT (request: Request, {params}: Params) {
                 image
             }
         })
-        if(!skill?.id) return NextResponse.json({message: 'Habilidad no encontrada'}, {status: 404})
+        if(!skill?.id) return NextResponse.json({message: 'Skill not found'}, {status: 404})
         return NextResponse.json({skill}, {status: 200})
     } catch (error) {
         if(error instanceof Prisma.PrismaClientKnownRequestError){
             if(error.code === 'P2025') 
-            return NextResponse.json({message: 'Habilidad no encontrada'}, {status: 404})
+            return NextResponse.json({message: 'Skill not found'}, {status: 404})
 
             return NextResponse.json({error: error.message}, {status: 500})
         }

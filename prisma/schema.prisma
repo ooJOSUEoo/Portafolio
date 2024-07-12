@@ -4,6 +4,10 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
+generator dbml {
+  provider = "prisma-dbml-generator"
+}
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -80,7 +84,7 @@ model Skill {
   name      String
   image     String
 
-  projects  ProjectSkill[]
+  project   Project[]
 
   createAt  DateTime?  @default(now())
   updatedAt DateTime?  @updatedAt
@@ -91,7 +95,7 @@ model Project {
   name        String
   description String
   mainImage   String
-  images      String //json array of strings
+  images      String //json array of strings, example: ["image1.png", "image2.png"]
   url         String?
   github      String?
   company     String
@@ -99,21 +103,12 @@ model Project {
   endDate     DateTime?
   isFavourite Boolean?
 
-  skills      ProjectSkill[]
+  skills      Skill[]
 
   createAt    DateTime?  @default(now())
   updatedAt   DateTime?  @updatedAt
 }
 
-model ProjectSkill {
-  projectId String
-  skillId   String
-
-  project   Project  @relation(fields: [projectId], references: [id])
-  skill     Skill    @relation(fields: [skillId], references: [id])
-
-  @@id([projectId, skillId])
-}
 
 model Experience {
   id            String  @id @default(cuid())

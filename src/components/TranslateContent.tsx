@@ -20,6 +20,14 @@ export const TC: React.FC<TranslateContentProps> = ({ children, from = 'en' }) =
     });
   }, [children, from, lang]);
 
-  return <>{result}</>;
+  if (children === children.toUpperCase()) {
+    return <>{result.toUpperCase()}</>;
+  } else if (children === children.toLowerCase()) {
+    return <>{result.toLowerCase()}</>;
+  } else if (children[0] === children[0].toUpperCase() && children.slice(1) === children.slice(1).toLowerCase()) {
+    return <>{result.slice(0, 1).toUpperCase() + result.slice(1).toLowerCase()}</>;
+  } else {
+    return <>{result}</>;
+  }
 };
 

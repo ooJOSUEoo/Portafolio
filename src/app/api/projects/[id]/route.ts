@@ -16,9 +16,16 @@ export async function GET (request: Request, {params}: Params) {
         const project = await prisma.project.findUnique({
             where: {
                 id: params.id
+            },
+            include: {
+                skills: {
+                    select: {
+                        id: true
+                    }
+                }
             }
         })
-        if(!project?.id) return NextResponse.json({message: 'Proyecto no encontrado'}, {status: 404})
+        if(!project?.id) return NextResponse.json({message: 'Project not found'}, {status: 404})
         return NextResponse.json({project}, {status: 200})
     } catch (error) {
         if(error instanceof Error){
@@ -36,12 +43,12 @@ export async function DELETE (request: Request, {params}: Params) {
                 id: params.id
             }
         })
-        if(!project?.id) return NextResponse.json({message: 'Proyecto no encontrado'}, {status: 404})
-        return NextResponse.json({project, message: 'Proyecto eliminado'}, {status: 200})
+        if(!project?.id) return NextResponse.json({message: 'Project not found'}, {status: 404})
+        return NextResponse.json({project, message: 'Project deleted'}, {status: 200})
     } catch (error) {
         if(error instanceof Prisma.PrismaClientKnownRequestError){
             if(error.code === 'P2025') 
-            return NextResponse.json({message: 'Proyecto no encontrado'}, {status: 404})
+            return NextResponse.json({message: 'Project not found'}, {status: 404})
 
             return NextResponse.json({error: error.message}, {status: 500})
         }
@@ -74,12 +81,12 @@ export async function PUT (request: Request, {params}: Params) {
                 }
             }
         })
-        if(!project?.id) return NextResponse.json({message: 'Habilidad no encontrada'}, {status: 404})
+        if(!project?.id) return NextResponse.json({message: 'Project not found'}, {status: 404})
         return NextResponse.json({project}, {status: 200})
     } catch (error) {
         if(error instanceof Prisma.PrismaClientKnownRequestError){
             if(error.code === 'P2025') 
-            return NextResponse.json({message: 'Habilidad no encontrada'}, {status: 404})
+            return NextResponse.json({message: 'Project not found'}, {status: 404})
 
             return NextResponse.json({error: error.message}, {status: 500})
         }
