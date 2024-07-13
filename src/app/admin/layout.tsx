@@ -49,7 +49,8 @@ export default function RootLayout({
           <i className="fa-duotone fa-spinner fa-pulse fa-3x fa-fw"></i>
         </div>
       }
-      <Layout 
+      <Layout
+      footer={<div className="h-[20px]"></div>} 
       children={children} 
       header={<><HeaderAdmin />
       <div className="flex justify-end items-center">

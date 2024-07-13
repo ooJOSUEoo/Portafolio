@@ -3,8 +3,8 @@ import {prisma} from '@/libs/prisma'
 import authenticate from '@/middlewares/authenticate';
 
 export async function GET (request: Request) {
-    const {error,status} = await authenticate(request);
-    if (error) return NextResponse.json({error}, {status})
+    // const {error,status} = await authenticate(request);
+    // if (error) return NextResponse.json({error}, {status})
 
     try {
         const projects = await prisma.project.findMany()
@@ -28,7 +28,7 @@ export async function POST (request: Request) {
                 name: data.name,
                 description: data.description,
                 mainImage: data.mainImage,
-                images: data.images, //'{"id":"a","num":5,"types":["png","jpg","png","png","jpg"]}',
+                images: data.images, //'{"id":"a","num":5,"types":["png","jpg","png","png","jpg"],"urls":["","","",""]}',
                 url: data.url,
                 github: data.github,
                 company: data.company,
@@ -37,7 +37,6 @@ export async function POST (request: Request) {
                 isFavourite: data.isFavourite,
 
                 skills: {
-
                     connect: data.skills //[{id:"a"},{id:"b"}]
                 }
             }

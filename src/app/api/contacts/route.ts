@@ -3,12 +3,12 @@ import {prisma} from '@/libs/prisma'
 import authenticate from '@/middlewares/authenticate';
 
 export async function GET (request: Request) {
-    const {error,status} = await authenticate(request);
-    if (error) return NextResponse.json({error}, {status})
+    // const {error,status} = await authenticate(request);
+    // if (error) return NextResponse.json({error}, {status})
 
     try {
-        const contact = await prisma.contact.findMany()
-        return NextResponse.json({contact}, {status: 200})
+        const contacts = await prisma.contact.findMany()
+        return NextResponse.json({contacts}, {status: 200})
     } catch (error) {
         if(error instanceof Error){
             return NextResponse.json({error: error.message}, {status: 500})
@@ -21,13 +21,9 @@ export async function POST (request: Request) {
     if (error) return NextResponse.json({error}, {status})
 
     try {
-        const {name, icon, url} = await request.json()
+        const data = await request.json()
         const contact = await prisma.contact.create({
-            data: {
-                name,
-                icon,
-                url,
-            }
+            data: data
         })
         return NextResponse.json({contact}, {status: 200})
     } catch (error) {

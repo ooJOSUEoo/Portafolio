@@ -8,7 +8,7 @@ import Select from 'react-select'
 import makeAnimated from 'react-select/animated';
 
 export function InputsTexts({ 
-    label, name, placeholder, type="text", component, value,
+    label, name, placeholder, type="text", component, value, checked=false,
     errors, touched, TC, Field, SetFieldValue, className="", ...props }:any) {
     useEffect(() => {
       if(value?.length) {
@@ -20,18 +20,45 @@ export function InputsTexts({
     <div className="">
         <p className='text-[var(--secondary-color)] font-semibold'><TC>{label}</TC></p>
         <Field 
-
         className={`w-full py-2 px-2 border rounded-xl my-2 
         hover:border-slate-600 bg-[var(--background-color)] text-[var(--secondary-color)]
         ${errors[`${name}`] && touched[`${name}`] ? 'border-[var(--error-color)]' : 'border-[var(--success-color)]'} 
         ${className}`}
         type={type} component={component} name={name} id={name} placeholder={placeholder}
+        checked={checked}
         {...props}/>
         {errors[`${name}`] && touched[`${name}`] ? (
         <div className='text-[var(--error-color)]'><TC>{errors[`${name}`]}</TC></div>
         ) : null}
     </div>
   )
+}
+
+export function InputsCheckBox({ 
+  label, name, component, value,
+  errors, touched, TC, Field, SetFieldValue, className="", ...props }:any) {
+  useEffect(() => {
+    SetFieldValue(name, value)
+  }, [SetFieldValue, name, value])
+
+return (
+  <div className="">
+      <p className='text-[var(--secondary-color)] font-semibold'><TC>{label}</TC></p>
+      <Field 
+      type="checkbox"
+      className={`w-full py-2 px-2 border rounded-xl my-2 cursor-pointer h-7
+      hover:border-slate-600 bg-[var(--background-color)] text-[var(--secondary-color)]
+      ${errors[`${name}`] && touched[`${name}`] ? 'border-[var(--error-color)]' : 'border-[var(--success-color)]'} 
+      ${className}`}
+      component={component} name={name} id={name}
+      
+      onChange={(e: React.ChangeEvent<HTMLInputElement>) => SetFieldValue(name, e.target.checked)}
+      {...props}/>
+      {errors[`${name}`] && touched[`${name}`] ? (
+      <div className='text-[var(--error-color)]'><TC>{errors[`${name}`]}</TC></div>
+      ) : null}
+  </div>
+)
 }
 
 export function InputsFile({
@@ -45,7 +72,24 @@ export function InputsFile({
 
     useEffect(() => {
         if(isMultiple){
+          if (value?.length) {
+              const inputFile = document.getElementById(name) as HTMLInputElement | null;
+              if (inputFile) {
 
+                const formatedValue = JSON.parse(value) //{"id":"abc","num":3,"types":["png","png","png"],"urls":["","",""]}
+                const urls: string[] = []
+                const names: string[] = []
+                for(let i = 0; i < formatedValue.num; i++){
+                  names.push(`${i}.${formatedValue.types[i]}`)//1.png
+                  urls.push(formatedValue.urls[i])
+                }
+                setTimeout(() => {
+                  SetFieldValue(name, value);
+                  setUrl(urls);
+                  setNameFile(names);
+              }, 200);
+              }
+            }
         }else{
           if (value) {
               const inputFile = document.getElementById(name) as HTMLInputElement | null;
@@ -202,11 +246,39 @@ export function InputsSelect({
   errors, touched, TC, SetFieldValue, className="", ...props }:any) {
   
   const animatedComponents = makeAnimated();
+  const [selectedValue, setSelectedValue] = useState<any>([]);
 
+  useEffect(() => {
+    if(value?.length && options.length) {
+      if (isMultiple) {
+        const selectedOptions = options.filter((o: any) => value.includes(o.value));
+        SetFieldValue(name, selectedOptions.map((v: any) => v.value));
+        setSelectedValue(selectedOptions);
+        return
+      } else {
+        const selectedOption = options.find((o: any) => o.value === value);
+        SetFieldValue(name, selectedOption.value);
+        setSelectedValue(selectedOption);
+        return
+      }
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [options]);
+
+  const handleChange = (selected: any) => {
+    setSelectedValue(selected);
+    if (isMultiple) {
+      SetFieldValue(name, selected.map((v: any) => v.value));
+    } else {
+      SetFieldValue(name, selected.value);
+    }
+  };
   return (
     <div className="">
         <p className='text-[var(--secondary-color)] font-semibold'><TC>{label}</TC></p>
         <Select 
+        name={name}
+        id={name}
         isMulti={isMultiple}
         placeholder={placeholder}
         styles={{
@@ -241,10 +313,17 @@ export function InputsSelect({
           
         }}
         isSearchable={true}
-        onChange={( value : any) => {
-          isMultiple ? SetFieldValue(name, value.map((v : any) => v.value)) : SetFieldValue(name, value.value);
-        }}
-        defaultValue={isMultiple ? options.filter((o: any) => value.includes(o.value)) : options.find((o: any) => o.value === value)}
+        onChange={handleChange}
+        value={selectedValue ? selectedValue : null}
+        // onChange={( value : any) => {
+        //   isMultiple ? SetFieldValue(name, value.map((v : any) => v.value)) : SetFieldValue(name, value.value);
+        // }}
+        // value={value ? isMultiple ? options.filter((o: any, i: any) => {
+        //     if(value.includes(o.value)){
+        //       return options[i]
+        //     }
+        //   }) : options.find((o: any) => o.value === value) : null}
+        // defaultInputValue={value}
         components={animatedComponents}
         options={options}
         />

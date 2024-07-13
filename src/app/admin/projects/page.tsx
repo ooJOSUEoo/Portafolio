@@ -69,12 +69,14 @@ export default function ProjectsAdminPage() {
                 className='w-12 h-12 object-cover'/>
                 }
             }},
+        { field: 'images', cellClassName:classNameCel, flex: 1, headerClassName:classNameCol, 
+            headerName: '', maxWidth:.1, renderCell: () =><></>},
         { field: 'actions', headerClassName:classNameCol, flex: 1,
             headerName: useTranslateText('Actions'), maxWidth: 200, renderCell: (params) => 
             <div className='flex gap-4 text-lg items-center h-full'>
                 <Link href={{pathname: '/admin/projects/form', query: {id: params.row.id}}}><i className="fa-solid fa-pen-to-square text-[var(--warning-color)]"></i></Link>
                 <button onClick={async() => {
-                    // await deleteProject(params.row.id as string, params.row.image!.split('?')[0].split('.').pop() as string, session.user.accessToken)
+                    await deleteProject(params.row.id as string, params.row.mainImage.split('?')[0].split('.').pop() as string, params.row.images as string, session.user.accessToken)
                 }}><i className="fa-solid fa-trash text-[var(--error-color)]"></i></button>
             </div>},
     ];

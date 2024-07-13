@@ -16,7 +16,7 @@ export const TC: React.FC<TranslateContentProps> = ({ children, from = 'en' }) =
     translate(children, { from, to: lang }).then((res) => {
       setResult(res);
     }).catch((err) => {
-      console.error(err);
+      console.log(err);
     });
   }, [children, from, lang]);
 

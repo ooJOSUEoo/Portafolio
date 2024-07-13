@@ -3,8 +3,8 @@ import {prisma} from '@/libs/prisma'
 import authenticate from '@/middlewares/authenticate';
 
 export async function GET (request: Request) {
-    const {error,status} = await authenticate(request);
-    if (error) return NextResponse.json({error}, {status})
+    // const {error,status} = await authenticate(request);
+    // if (error) return NextResponse.json({error}, {status})
 
     try {
         const about = await prisma.about.findFirst()

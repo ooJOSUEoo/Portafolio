@@ -1,15 +1,15 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import {TC} from '@/components/TranslateContent';
-import { InputsFile, InputsSelect, InputsTexts } from '@/components/Inputs';
+import { InputsCheckBox, InputsFile, InputsSelect, InputsTexts } from '@/components/Inputs';
 import { useAppStore } from '@/context/appContext';
 import { v4 as uuidv4 } from 'uuid';
 import { useSession } from 'next-auth/react';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
-import { useTranslateText } from '@/helpers/translateText';
+import { translateText, useTranslateText } from '@/helpers/translateText';
 
 
 
@@ -18,6 +18,8 @@ export default function ProjectAddAdminPage() {
   const {data: session}:any = useSession()
   const searchParams = useSearchParams()
   const router = useRouter()
+  const isMounted = useRef(false);
+
 
   const {name, description, mainImage, images, url, github, company, initialDate, endDate, isFavourite, skills} = useAppStore((s) => s.projects.project)
 
@@ -43,6 +45,7 @@ export default function ProjectAddAdminPage() {
   });
   const [id, setId] = useState('')
   const [options, setOptions] = useState<any>([])
+  const [valSkills, setValSkills] = useState<any>([])
   
   const schema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
@@ -73,6 +76,20 @@ export default function ProjectAddAdminPage() {
   }
 
   useEffect(() => {
+    isMounted.current = true;
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    if(skills.length) {
+      setValSkills(skills)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [skills])
+
+  useEffect(() => {
     const gS = async() => {
       await getSkills(session.user.accessToken)
     }
@@ -83,7 +100,9 @@ export default function ProjectAddAdminPage() {
         value: s.id
       }
     })
-    setOptions(o)
+    if(isMounted.current) {
+      setOptions(o)
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -93,8 +112,7 @@ export default function ProjectAddAdminPage() {
       setId(id)
       const gS = async() => {
         const resp = await getProject(id, session.user.accessToken)
-        if(resp) {
-          console.log(resp)
+        if(resp && isMounted.current) {
           setInitialValues({
             name: resp.name,
             description: resp.description,
@@ -104,8 +122,8 @@ export default function ProjectAddAdminPage() {
             github: resp.github??"",
             company: resp.company,
             initialDate: new Date(resp.initialDate).toISOString().substr(0, 10) as any,
-            endDate: new Date(resp.endDate!).toISOString().substr(0, 10)??new Date() as any,
-            isFavourite: resp.isFavourite??false,
+            endDate: new Date(resp.endDate!).toISOString().substr(0, 10)??'' as any,
+            isFavourite: resp.isFavourite ? true : false,
             skills: resp.skills as any
           })
         }else{
@@ -121,7 +139,6 @@ export default function ProjectAddAdminPage() {
       <Formik initialValues={initialValues}
        validationSchema={schema}
        onSubmit={async(values) => {
-        console.log(values)
         if(id){
           const resp = await updateProject({
             name: values.name,
@@ -186,15 +203,11 @@ export default function ProjectAddAdminPage() {
             <InputsTexts type='date' name='initialDate' label={labels.initialDate} value={id ? new Date(initialDate).toISOString().substr(0, 10) : ''}
             Field={Field} TC={TC} errors={errors} touched={touched} SetFieldValue={setFieldValue}   />
 
-            <InputsTexts type='date' name='endDate' label={labels.endDate} value={id ? endDate ? new Date(endDate).toISOString().substr(0, 10): '' : ''}
+            <InputsTexts type='date' name='endDate' label={labels.endDate} value={id ? endDate != null ? new Date(endDate).toISOString().substr(0, 10): '' : ''}
             Field={Field} TC={TC} errors={errors} touched={touched} SetFieldValue={setFieldValue}   />
             
-            <InputsTexts type='checkbox' name='isFavourite' label={labels.isFavourite} value={id ? isFavourite : ''}
-            Field={Field} TC={TC} errors={errors} touched={touched} SetFieldValue={setFieldValue}  
-            className={`
-              cursor-pointer
-              h-7
-            `} />
+            <InputsCheckBox name='isFavourite' label={labels.isFavourite} value={id ? isFavourite : false}
+            Field={Field} TC={TC} errors={errors} touched={touched} SetFieldValue={setFieldValue} />
 
             <InputsFile name='mainImage' label={labels.mainImage} Field={Field} TC={TC} errors={errors} value={id ? mainImage : ''}
             touched={touched} accept='image/*' SetFieldValue={setFieldValue} values={values} deleteFile={true} />
@@ -203,9 +216,16 @@ export default function ProjectAddAdminPage() {
             touched={touched} accept='image/*' SetFieldValue={setFieldValue} values={values} deleteFile={true}
             isMultiple={true} />
 
-            <InputsSelect name='skills' label={labels.skills} Field={Field} TC={TC} errors={errors} value={id ? skills.map((s: any) => s.id) : ''}
-            touched={touched} SetFieldValue={setFieldValue} values={values} placeholder='...' isMultiple={true}
-            options={options} />
+            {
+              id
+              ? valSkills.length && <InputsSelect name='skills' label={labels.skills} Field={Field} TC={TC} errors={errors} value={valSkills.map((s: any) => s.id)}
+              touched={touched} SetFieldValue={setFieldValue} values={values} placeholder='...' isMultiple={true}
+              options={options} />
+              : <InputsSelect name='skills' label={labels.skills} Field={Field} TC={TC} errors={errors} value={[]}
+              touched={touched} SetFieldValue={setFieldValue} values={values} placeholder='...' isMultiple={true}
+              options={options} />
+            }
+            
             <div className="">
               <input 
               className='w-full cursor-pointer py-2 px-2 my-2 border border-transparent

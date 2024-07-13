@@ -10,8 +10,8 @@ interface Params {
 }
 
 export async function GET (request: Request, {params}: Params) {
-    const {error,status} = await authenticate(request);
-    if (error) return NextResponse.json({error}, {status})
+    // const {error,status} = await authenticate(request);
+    // if (error) return NextResponse.json({error}, {status})
     try {
         const project = await prisma.project.findUnique({
             where: {
@@ -59,25 +59,25 @@ export async function PUT (request: Request, {params}: Params) {
     const {error,status,} = await authenticate(request);
     if (error) return NextResponse.json({error}, {status})
     try {
-        const {name, description, mainImage, images, url, github, company, initialDate, endDate, isFavourite, skills} = await request.json()
+        const data = await request.json()
         const project = await prisma.project.update({
             where: {
                 id: params.id
             },
             data: {
-                name,
-                description,
-                mainImage,
-                images,
-                url,
-                github,
-                company,
-                initialDate,
-                endDate,
-                isFavourite,
+                name: data.name,
+                description: data.description,
+                mainImage: data.mainImage,
+                images: data.images,
+                url: data.url,
+                github: data.github,
+                company: data.company,
+                initialDate: data.initialDate,
+                endDate: data.endDate,
+                isFavourite: data.isFavourite,
                 
                 skills: {
-                    create: skills
+                    connect: data.skills 
                 }
             }
         })
