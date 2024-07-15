@@ -52,7 +52,7 @@ export const Footer = () => {
           <span>2024</span>
         </p> */}
 
-        <Link href='/admin'><TC>Sign in</TC></Link>
+        <Link href='/admin'><TC>Log in</TC></Link>
     </footer>
   )
 }

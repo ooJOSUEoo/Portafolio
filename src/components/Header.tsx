@@ -5,10 +5,21 @@ import '@/styles/header.css'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import {TC} from './TranslateContent'
+import { useAppStore } from '@/context/appContext'
 
 export const Header = () => {
   // const { abouth } = useSelector(state => state.abouth)
   const location = usePathname()
+
+  const {name,image} = useAppStore((state) => state.about);
+  const getAbout = useAppStore((state) => state.getAbout);
+  const getSkills = useAppStore((state) => state.getSkills);
+  
+  useEffect(() => {
+    getAbout()
+    getSkills()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   useEffect(() => {
     const section = location?.split('/')[1]
@@ -41,15 +52,15 @@ export const Header = () => {
     <nav className="xl:h-20 py-2 " id="header">{/*<--bg-dark*/}
         <div className="flex justify-around items-center flex-wrap gap-1"> {/*<--text-light*/}
             <div className="navbar-header flex items-center gap-2">
-                <Image src={'https://avatars.githubusercontent.com/u/51724709?v=4'} className="border border-gray-50 rounded-full w-14 h-14" width={100} height={100} alt="mi foto" />
-                <p className="navbar-brand font-bold mb-0">Josue Muñoz Avila</p>
+                <Image src={image??''} className="border border-gray-50 rounded-full w-14 h-14" width={100} height={100} alt="mi foto" />
+                <p className="navbar-brand font-bold mb-0">{name??''}</p>
             </div>
             <div className="navigation">
                 <ul className=" ps-0 justify-center">
                     <Link href='/' className="list" id="home" onMouseOver={setActiveClass}>
                         <p>
-                            <span className="icon"><i className="fa fa-home icons_header"></i></span>
-                            <span className="text"><TC>Start</TC></span>
+                            <span className="icon"><i className="fa fa-user icons_header"></i></span>
+                            <span className="text"><TC>About</TC></span>
                         </p>
                     </Link>
                     <Link href='/experience' className="list" id="experience" onMouseOver={setActiveClass}>

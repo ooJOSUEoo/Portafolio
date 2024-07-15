@@ -55,29 +55,29 @@ export interface State {
   logout: () => Promise<void>
   
   setAbout: (data: AboutCustom, token: string) => Promise<void>
-  getAbout: (token: string) => Promise<void|About>
+  getAbout: () => Promise<void|About>
 
   setSkill: (data: SkillCustom, token: string) => Promise<void|boolean>
-  getSkills: (token: string) => Promise<void|Skill[]>
-  getSkill: (id: string, token: string) => Promise<void|Skill>
+  getSkills: () => Promise<void|Skill[]>
+  getSkill: (id: string) => Promise<void|Skill>
   updateSkill: (data: SkillCustom, id: string, token: string) => Promise<void|boolean>
   deleteSkill: (id: string, typeFile: string, token: string) => Promise<void|boolean>
 
   setExperience: (data: ExperienceCustom, token: string) => Promise<void|boolean>
-  getExperiences: (token: string) => Promise<void|Experience[]>
-  getExperience: (id: string, token: string) => Promise<void|Experience>
+  getExperiences: () => Promise<void|Experience[]>
+  getExperience: (id: string) => Promise<void|Experience>
   updateExperience: (data: ExperienceCustom, id: string, token: string) => Promise<void|boolean>
   deleteExperience: (id: string, typeFile: string, token: string) => Promise<void|boolean>
 
   setProject: (data: ProjectCustom, token: string) => Promise<void|boolean>
-  getProjects: (token: string) => Promise<void|Project[]>
-  getProject: (id: string, token: string) => Promise<void|ProjectCustom>
+  getProjects: () => Promise<void|Project[]>
+  getProject: (id: string) => Promise<void|ProjectCustom>
   updateProject: (data: ProjectCustom, id: string, token: string) => Promise<void|boolean>
   deleteProject: (id: string, typeMainImage: string, images: string, token: string) => Promise<void|boolean>
 
   setContact: (data: ContactCustom, token: string) => Promise<void|boolean>
-  getContacts: (token: string) => Promise<void|Contact[]>
-  getContact: (id: string, token: string) => Promise<void|Contact>
+  getContacts: () => Promise<void|Contact[]>
+  getContact: (id: string) => Promise<void|Contact>
   updateContact: (data: ContactCustom, id: string, token: string) => Promise<void|boolean>
   deleteContact: (id: string, token: string) => Promise<void|boolean>
 }
@@ -286,13 +286,9 @@ export const useAppStore = create(persist<State>((set,get) => ({
         get().setLoading(false)
       }
     },
-    getAbout: async(token: string) => {
+    getAbout: async() => {
       try {
-        const resp = await axios.get('/api/about', {
-          headers: {
-            Authorization: `Token ${token}`
-          }
-        })
+        const resp = await axios.get('/api/about')
         if (resp.data.about == null) {
           set((state) => ({ ...state, about: initialState.about }))
         }else{
@@ -328,13 +324,9 @@ export const useAppStore = create(persist<State>((set,get) => ({
         get().setLoading(false)
       }
     },
-    getSkills: async(token: string) => {
+    getSkills: async() => {
       try {
-        const resp = await axios.get('/api/skills', {
-          headers: {
-            Authorization: `Token ${token}`
-          }
-        }) 
+        const resp = await axios.get('/api/skills') 
         set((state) => ({ ...state, skills: {...state.skills, data: resp.data.skills} }))
         return resp.data
       } catch (error) {
@@ -344,13 +336,9 @@ export const useAppStore = create(persist<State>((set,get) => ({
         set((state) => ({ ...state, skills:  {...state.skills, skill: initialState.skills.skill} }))
       }
     },
-    getSkill: async(id: string, token: string) => {
+    getSkill: async(id: string ) => {
       try {
-        const resp = await axios.get(`/api/skills/${id}`, {
-          headers: {
-            Authorization: `Token ${token}`
-          }
-        }) 
+        const resp = await axios.get(`/api/skills/${id}`) 
         set((state) => ({ ...state, skills: {...state.skills, skill: resp.data.skill} }))
         return resp.data.skill
       } catch (error) {
@@ -429,13 +417,9 @@ export const useAppStore = create(persist<State>((set,get) => ({
         get().setLoading(false)
       }
     },
-    getExperiences: async(token: string) => {
+    getExperiences: async() => {
       try {
-        const resp = await axios.get('/api/experiences', {
-          headers: {
-            Authorization: `Token ${token}`
-          }
-        }) 
+        const resp = await axios.get('/api/experiences') 
         set((state) => ({ ...state, experiences: {...state.experiences, data: resp.data.experience} }))
         return resp.data
       } catch (error) {
@@ -447,13 +431,9 @@ export const useAppStore = create(persist<State>((set,get) => ({
         set((state) => ({ ...state, experiences: {...state.experiences, experience: initialState.experiences.experience} }))
       }
     },
-    getExperience: async(id: string, token: string) => {
+    getExperience: async(id: string) => {
       try {
-        const resp = await axios.get(`/api/experiences/${id}`, {
-          headers: {
-            Authorization: `Token ${token}`
-          }
-        }) 
+        const resp = await axios.get(`/api/experiences/${id}`) 
         set((state) => ({ ...state, experiences: {...state.experiences, experience: resp.data.experience} }))
         return resp.data.experience
       } catch (error) {
@@ -556,13 +536,9 @@ export const useAppStore = create(persist<State>((set,get) => ({
         get().setLoading(false)
       }
     },
-    getProjects: async(token: string) => {
+    getProjects: async() => {
       try {
-        const resp = await axios.get('/api/projects', {
-          headers: {
-            Authorization: `Token ${token}`
-          }
-        })
+        const resp = await axios.get('/api/projects')
         set((state) => ({ ...state, projects: {...state.projects, data: resp.data.projects} }))
         return resp.data
       } catch (error) {
@@ -574,13 +550,9 @@ export const useAppStore = create(persist<State>((set,get) => ({
         set((state) => ({ ...state, projects: {...state.projects, project: initialState.projects.project} }))
       }
     },
-    getProject: async(id: string, token: string) => {
+    getProject: async(id: string) => {
       try {
-        const resp = await axios.get(`/api/projects/${id}`, {
-          headers: {
-            Authorization: `Token ${token}`
-          }
-        })
+        const resp = await axios.get(`/api/projects/${id}`)
         set((state) => ({ ...state, projects: {...state.projects, project: resp.data.project} }))
         return resp.data.project
       } catch (error) {
@@ -679,13 +651,9 @@ export const useAppStore = create(persist<State>((set,get) => ({
         get().setLoading(false)
       }
     },
-    getContacts: async(token: string) => {
+    getContacts: async() => {
       try {
-        const resp = await axios.get('/api/contacts', {
-          headers: {
-            Authorization: `Token ${token}`
-          }
-        }) 
+        const resp = await axios.get('/api/contacts',) 
         set((state) => ({ ...state, contacts: {...state.contacts, data: resp.data.contacts} }))
         return resp.data
       } catch (error) {
@@ -695,13 +663,9 @@ export const useAppStore = create(persist<State>((set,get) => ({
         set((state) => ({ ...state, contacts:  {...state.contacts, contact: initialState.contacts.contact} }))
       }
     },
-    getContact: async(id: string, token: string) => {
+    getContact: async(id: string) => {
       try {
-        const resp = await axios.get(`/api/contacts/${id}`, {
-          headers: {
-            Authorization: `Token ${token}`
-          }
-        }) 
+        const resp = await axios.get(`/api/contacts/${id}`) 
         set((state) => ({ ...state, contacts: {...state.contacts, contact: resp.data.contact} }))
         return resp.data.contact
       } catch (error) {

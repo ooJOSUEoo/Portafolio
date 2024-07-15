@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
+body.white {
   --background-color: #dbdbdb;
   --background-min-color: #fff;
   --background-max-color: #949494;
@@ -42,9 +42,22 @@ body.green {
 }
 
 body {
-  color: var(--secondary-color);
-  background: var(--background-color);
+  --background-color: #9adcf1;
+  --background-min-color: #b1e2f1;
+  --background-max-color: #79d5f1;
+  --header-color: #00ace6;
+  --footer-color: #00bfff;
+  --secondary-color: #000;
+  --alternate-color: #00ff0d;
+  --error-color: #ff0000;
+  --success-color: #0400ff;
+  --warning-color: #ff9900;
+}
 
+body {
+  color: var(--secondary-color);
+  /* background: var(--background-color); */
+  background: linear-gradient(90deg, var(--background-min-color) 0%, var(--background-max-color) 100%);
   transition: all 0.5s ease;
 }
 
